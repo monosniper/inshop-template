@@ -15,4 +15,4 @@ const Product = () => {
     );
 };
 
-export default Id;
+export default Product;
