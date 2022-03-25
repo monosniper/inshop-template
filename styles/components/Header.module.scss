@@ -1,0 +1,64 @@
+@import "../vars";
+
+.header {
+  background: #fff;
+  padding: 10px 0;
+
+  &__logo {
+    width: 70px;
+    cursor: pointer;
+    height: 70px;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  &__subtitle {
+    font-weight: 400;
+    font-size: 14px;
+    color: #707070;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__button {
+    cursor: pointer;
+    border: none;
+    background: $purple;
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 8px 30px;
+
+    &:hover {
+      opacity: .9;
+    }
+  }
+
+  &__shop {
+    display: flex;
+    gap: 1rem;
+
+    &-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

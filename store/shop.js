@@ -4,18 +4,89 @@ import store from "./store";
 import constructor from "./constructor";
 
 class Shop {
-    id = null
-    defaultOptions = {
-        title: '',
-        slogan: '',
-        hasOwnPalette: false,
-        ownPalette: [],
-        palette: [],
-        layout: {},
-        modules: []
+    q = ''
+    filters = {
+        sort: 'newest',
+        inStock: true,
+        price_from: 0,
+        price_to: 0,
     }
-    oldOptions = this.defaultOptions
-    options = this.defaultOptions
+    products = [
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+            inStock: true,
+            created_at: ''
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+        {
+            id: 1,
+            title: 'Air Max pegasus 37',
+            subtitle: 'Men’s Running shoe',
+            price: 129,
+        },
+    ]
 
     constructor() {
         makeAutoObservable(this)

@@ -1,0 +1,168 @@
+@import "../vars";
+
+.filter {
+  &__container {
+    padding: .5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__items {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  &__item {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+  }
+
+  &__input {
+    border: none;
+    border-radius: 7px;
+    background: #fff;
+    outline: none;
+    padding: 5px 15px;
+    cursor: pointer;
+  }
+  
+  &__name {
+    cursor: pointer;
+  }
+
+  &__sm {
+    display: none;
+  }
+
+  &__modal {
+    max-width: 100%;
+    width: 450px;
+    overflow: hidden;
+    margin: 0 auto;
+    background: $bg;
+    inset: 40px;
+    position: absolute;
+    padding: 40px;
+    border-radius: 10px;
+    height: fit-content;
+
+    .filter__button {
+      margin-top: 1.5rem;
+      padding: 10px 20px;
+      font-size: 18px;
+    }
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0px;
+    background-color: #000000ab;
+  }
+
+  &__button {
+    color: white;
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    padding: 5px 15px;
+    background: $purple;
+    border-radius: 5px;
+    border: none;
+
+    svg {
+      transform: scale(0.8);
+
+      path {
+        fill: white;
+      }
+    }
+  }
+}
+
+input.filter__input[type=number] {
+  width: 100px;
+}
+
+input.filter__input[type=checkbox] {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  opacity: 0;
+
+  &:checked+span svg path {
+    fill: $purple;
+  }
+  
+  &+span {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg path {
+      fill: #fff;
+    }
+  }
+}
+
+.search {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  height: 40px;
+  border-radius: 7px;
+  padding: 0 .5rem;
+  width: 250px;
+
+  &__input {
+    width: 100%;
+    outline: none;
+    border: none;
+    height: 100%;
+    padding-left: .5rem;
+  }
+
+  &__icon {
+    width: 40px;
+  }
+}
+
+@media screen and (max-width: 980px){
+  .filter__sm {
+    display: block !important;
+  }
+  .filter__lg {
+    display: none;
+  }
+  .filter__items {
+    flex-wrap: wrap;
+    font-size: 20px;
+  }
+  .filter__input {
+    padding: 8px 20px !important;
+    font-size: 18px !important;
+
+    &[type=number] {
+      width: 140px !important;
+    }
+
+    &[type=checkbox] + span {
+      width: 30px !important;
+      height: 30px !important;
+
+      svg {
+        transform: scale(1.5);
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+@import "../vars";
+
+.categories {
+  display: flex;
+  padding: 1rem 0;
+  overflow-X: scroll;
+  width: 100%;
+  position: relative;
+}
+
+.category {
+  margin: 0 .5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border-radius: 20px;
+  background: #fff;
+  cursor: pointer;
+  transition: .1s ease-in;
+  width: calc(10% - .5rem);
+  
+  &:hover {
+    background: #f7f7f7;
+  }
+
+  &__icon {
+
+  }
+
+  &__name {
+    font-size: 14px;
+  }
+
+  &_active {
+    border: 2px solid $purple;
+  }
+}
+
+@media screen and (max-width: 1050px){
+  .category {
+    width: calc(13% - 0.5rem) !important;
+  }
+}
+
+@media screen and (max-width: 980px){
+  .category {
+    width: calc(17% - 0.5rem) !important;
+  }
+}

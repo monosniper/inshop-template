@@ -1,6 +1,6 @@
 export const $routes = {
     login: '/login',
-    shop: (id) => `/constructor/${id}`
+    product: (id) => `/product/${id}`,
 }
 
 export const $apiRoutes = {
