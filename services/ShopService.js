@@ -21,4 +21,10 @@ export default class ShopService {
 
         return response.data.data;
     }
+
+    static async getProduct(id) {
+        const response = await $api.get($apiRoutes.products.get(id));
+
+        return response.data.data;
+    }
 }

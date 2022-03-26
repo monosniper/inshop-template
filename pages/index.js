@@ -11,14 +11,16 @@ import Filters from "../components/filters";
 export default function Home() {
     return (
         <>
-            <Header/>
+           <div className={'wrapper'}>
+               <Header/>
 
-            <Container>
-                <Categories/>
-                <Filters/>
+               <Container>
+                   <Categories/>
+                   <Filters/>
 
-                <Products/>
-            </Container>
+                   <Products/>
+               </Container>
+           </div>
 
             <Footer/>
         </>

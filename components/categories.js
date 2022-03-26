@@ -76,9 +76,6 @@ const Categories = () => {
         <ScrollingCarousel className={styles.categories}>
             {categories.map((category, i) => <Category key={'category-'+i} category={category} />)}
         </ScrollingCarousel>
-        // <div className={styles.categories}>
-        //     {categories.map((category, i) => <Category key={'category-'+i} category={category} />)}
-        // </div>
     );
 };
 

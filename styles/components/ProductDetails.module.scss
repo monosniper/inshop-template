@@ -1,0 +1,124 @@
+@import "../vars";
+
+.product {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &__price {
+    color: $purple;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  &__left {
+    display: flex;
+  }
+
+  &__slider {
+    width: 140px !important;
+  }
+
+  &__image {
+    margin: .5rem;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F4F4F4;
+    border-radius: 15px;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: #616161;
+    margin-bottom: 1rem;
+  }
+
+  &__description {
+    margin-bottom: 2rem;
+    color: #888E9A;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  &__category {
+    color: #8E8E8E;
+    font-size: 14px;
+    margin-bottom: .5rem;
+    cursor: pointer;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__button {
+    color: white;
+    background: $purple;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: 18px;
+    border: none;
+    border-radius: 40px;
+    padding: 1rem 2rem;
+    cursor: pointer;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+}
+
+.property-selector {
+  margin-bottom: 2rem;
+
+  &__name {
+    margin-bottom: .5rem;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  &__options {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__option {
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.25);
+    height: 60px;
+    border-radius: 15px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 .5rem;
+    width: -webkit-fill-available;
+    font-weight: 400;
+    cursor: pointer;
+
+    &:hover {
+      background: #f9f9f9;
+    }
+
+    &.active {
+      color: white;
+      background: $purple !important;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import UserService from "../services/UserService";
+import ShopService from "../services/ShopService";
 
 class Store {
     user = null;
@@ -68,6 +69,12 @@ class Store {
         this.setShops(shops);
 
         return shops;
+    }
+
+    async getProduct(id) {
+        const product = await ShopService.getProduct(id);
+
+        return product;
     }
 }
 

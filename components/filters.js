@@ -28,9 +28,9 @@ function FilterItems() {
             pathname: '/',
             query: {
                 ...router.query,
-                sort,
+                sort: e.target.value,
             }
-        })
+        }, undefined, {scroll: false})
     }
 
     const handlePriceFromChange = (e) => {
@@ -39,9 +39,9 @@ function FilterItems() {
             pathname: '/',
             query: {
                 ...router.query,
-                price_from,
+                price_from: e.target.value,
             }
-        })
+        }, undefined, {scroll: false})
     }
 
     const handlePriceToChange = (e) => {
@@ -50,20 +50,20 @@ function FilterItems() {
             pathname: '/',
             query: {
                 ...router.query,
-                price_to,
+                price_to: e.target.value,
             }
-        })
+        }, undefined, {scroll: false})
     }
 
     const handleInStockClick = () => {
+        setInStock(!inStock)
         router.push({
             pathname: '/',
             query: {
                 ...router.query,
-                inStock,
+                inStock: !inStock,
             }
-        })
-        setInStock(!inStock)
+        }, undefined, {scroll: false})
     }
 
     return (
@@ -87,7 +87,11 @@ function FilterItems() {
             </div>
             <div className={styles.filter__item}>
                 <span onClick={handleInStockClick} className={styles.filter__name}>В наличии</span>
-                <input checked={inStock} type="checkbox" className={styles.filter__input} />
+                <input
+                    checked={inStock}
+                    type="checkbox"
+                    className={styles.filter__input}
+                />
                 <span onClick={handleInStockClick} className={styles.filter__checkbox}><CheckIcon/></span>
             </div>
         </div>
@@ -114,14 +118,14 @@ const Filters = () => {
 
     const handleSearch = (e) => {
         setSearchQuery(e.target.value)
-        console.log(searchQuery)
+
         router.push({
             pathname: '/',
             query: {
                 ...router.query,
-                q: searchQuery
+                q: e.target.value
             }
-        })
+        }, undefined, {scroll: false})
     }
 
     return (

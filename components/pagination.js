@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PrevIcon from '../public/assets/icons/prev.svg';
 import NextIcon from '../public/assets/icons/next.svg';
 import styles from '../styles/components/Pagination.module.scss'
+import {useRouter} from "next/router";
 
 
 const Page = (props) => {
@@ -70,20 +71,42 @@ function Pages({pages, currentPage, handlePageClick}) {
 }
 
 const Pagination = () => {
-
+    
+    const router = useRouter()
     const [pages, setPages] = useState(9)
-    const [currentPage, setCurrentPage] = useState(6)
+    const [currentPage, setCurrentPage] = useState(1)
+
+    useEffect(() => {
+        const { page } = router.query
+
+        page && setCurrentPage(parseInt(page))
+    }, [router.query])
+
+    const updateQuery = (page) => {
+        router.push({
+            pathname: '/',
+            query: {
+                ...router.query,
+                page,
+            }
+        }, undefined, {scroll: false})
+    }
+
+    const updateCurrentPage = (page) => {
+        setCurrentPage(page)
+        updateQuery(page)
+    }
 
     const handlePrevClick = () => {
-        setCurrentPage(currentPage - 1)
+        currentPage > 1 && updateCurrentPage(currentPage - 1)
     }
 
     const handleNextClick = () => {
-        setCurrentPage(currentPage + 1)
+        currentPage < pages && updateCurrentPage(currentPage + 1)
     }
 
     const handlePageClick = (page) => {
-        setCurrentPage(page)
+        updateCurrentPage(page)
     }
 
     return (

@@ -1,0 +1,33 @@
+@import "../vars";
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+
+  &__left {
+    cursor: pointer;
+
+    svg {
+      transform: scale(2);
+    }
+  }
+
+  &__right {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  &__title {
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  &__price {
+    color: $purple;
+    font-size: 18px;
+  }
+}

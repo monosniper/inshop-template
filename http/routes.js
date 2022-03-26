@@ -1,14 +1,14 @@
 export const $routes = {
+    register: '/register',
     login: '/login',
     product: (id) => `/product/${id}`,
 }
 
 export const $apiRoutes = {
     user: '/user',
-    token: '/oauth/token',
-    shops: {
-        list: 'user/shops',
-        update: (id) => `shops/${id}`,
-        get: (id) => `/shops/${id}`
+    products: {
+        list: 'shops/{shop_id}/products',
+        update: (id) => `shops/{shop_id}/products/${id}`,
+        get: (id) => `shops/{shop_id}/products/${id}`
     }
 }
