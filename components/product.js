@@ -1,12 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../styles/components/Products.module.scss'
 import HeartIcon from "../public/assets/icons/heart.svg";
 import Link from "next/link";
 import {$routes} from "../http/routes";
 
-const Product = ({product}) => {
+const Product = ({className, product}) => {
+    const [itemClass, setItemClass] = useState(styles.product)
+
+    useEffect(() => {
+        if(className) {
+            setItemClass(itemClass + ' ' + className)
+        }
+    }, [])
+
     return (
-        <div className={styles.product}>
+        <div className={itemClass}>
                 <span className={styles.product__wish}>
                     <HeartIcon/>
                 </span>

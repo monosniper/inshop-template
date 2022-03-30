@@ -217,6 +217,12 @@ class Shop {
             }
         }
     }
+
+    async makeOrder(shipping_data, products) {
+        const response = await ShopService.makeOrder(shipping_data, products)
+
+        return response.status
+    }
 }
 
 export default new Shop()

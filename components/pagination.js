@@ -84,7 +84,7 @@ const Pagination = () => {
 
     const updateQuery = (page) => {
         router.push({
-            pathname: '/',
+            pathname: router.basePath,
             query: {
                 ...router.query,
                 page,

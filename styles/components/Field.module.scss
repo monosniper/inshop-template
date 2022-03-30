@@ -1,0 +1,34 @@
+@import "../vars";
+
+.field {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+
+    svg path {
+      fill: $purple;
+    }
+  }
+
+  &__title {
+    text-transform: capitalize;
+    font-size: 18px;
+    color: #797979;
+  }
+
+  &__content {
+    background: #fff;
+    border-radius: 20px;
+    padding: 1rem 2rem;
+  }
+
+  &__input {
+    border: none;
+    outline: none;
+    font-size: 18px;
+    width: 100%;
+    max-width: 100%;
+  }
+}

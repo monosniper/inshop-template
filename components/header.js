@@ -3,6 +3,7 @@ import styles from '../styles/components/Header.module.scss'
 import {Container} from "react-bootstrap";
 import Image from "next/image";
 import Link from "next/link";
+import BasketButton from "./basketButton";
 
 const Header = () => {
     return (
@@ -31,8 +32,9 @@ const Header = () => {
                     </div>
                     <div className={styles.header__right}>
                         <div className={styles.header__buttons}>
-                            <button className={styles.header__button}>Регистрация</button>
-                            <button className={styles.header__button}>Войти</button>
+                            <BasketButton />
+                            <button className={'button'}>Регистрация</button>
+                            <button className={'button'}>Войти</button>
                         </div>
                     </div>
                 </div>

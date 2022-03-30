@@ -4,8 +4,13 @@ import Product from "./product";
 import Pagination from "./pagination";
 import shop from "../store/shop";
 
-const Products = () => {
-    const [products, setProducts] = useState(shop.products)
+const Products = ({ items, pagination = true }) => {
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        if(items) setProducts(items)
+        else setProducts(shop.products)
+    }, [items])
 
     return (
         <>
@@ -13,7 +18,7 @@ const Products = () => {
                 {products.map((product, i) => <Product key={'product-'+i} product={product} />)}
             </div>
 
-            <Pagination />
+            {pagination ? <Pagination /> : null}
         </>
     );
 };
