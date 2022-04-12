@@ -21,6 +21,6 @@ export default class ShopService {
     static async requestShop() {
         const response = await $api.get($apiRoutes.getMe(window.location.host.split('.')[0]));
 
-        return response.data;
+        return response.data.data;
     }
 }
