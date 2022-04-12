@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, toJS} from "mobx";
 import UserService from "../services/UserService";
 import ShopService from "../services/ShopService";
 
@@ -80,7 +80,8 @@ class Store {
 
         this.setOptions(data.options);
         this.setShopId(data.id);
-
+        console.log(data)
+        console.log(this.shop_id, toJS(this.options))
         return data;
     }
 

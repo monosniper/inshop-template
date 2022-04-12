@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    store.requestShop()
     // shopCheck();
 
     // const hideContent = () => setIsShop(false);
@@ -26,16 +27,13 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
-    console.log(store.options)
-    store.requestShop().then(() => {
-      console.log(store.shop_id)
-      if (!store.shop_id) {
-        router.push($routes.undefined)
-      } else {
-        setIsShop(true);
-      }
-      setLoading(false);
-    });
+    console.log(store.shop_id)
+    if (!store.shop_id) {
+      router.push($routes.undefined)
+    } else {
+      setIsShop(true);
+    }
+    setLoading(false);
   }, [store.shop_id])
 
   function shopCheck(request=true) {
