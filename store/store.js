@@ -78,10 +78,11 @@ class Store {
     async requestShop() {
         const data = await ShopService.requestShop();
 
-        this.setOptions(data.options);
-        this.setShopId(data.id);
-        console.log(data)
-        console.log(this.shop_id, toJS(this.options))
+        if(data.options && data.id) {
+            this.setOptions(data.options);
+            this.setShopId(data.id);
+        }
+
         return data;
     }
 

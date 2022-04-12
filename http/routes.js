@@ -1,4 +1,5 @@
 export const $routes = {
+    index: '/',
     register: '/register',
     login: '/login',
     undefined: '/undefined',
