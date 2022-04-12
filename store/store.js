@@ -4,6 +4,11 @@ import ShopService from "../services/ShopService";
 
 class Store {
     user = null;
+    shop_id = null;
+    options = {
+        title: '',
+        subtitle: '',
+    };
     localStorage = {
         token: 'token',
         user: 'user',
@@ -13,6 +18,10 @@ class Store {
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    setOptions(options) {
+        this.options = {...this.options, ...options};
     }
 
     getShops() {
@@ -29,6 +38,10 @@ class Store {
 
     setUser(user) {
         this.user = user
+    }
+
+    setShopId(id) {
+        this.shop_id = id
     }
 
     setShops(shops) {
@@ -60,6 +73,15 @@ class Store {
         this.setUser(user);
 
         return user;
+    }
+
+    async requestShop() {
+        const data = await ShopService.requestShop();
+
+        this.setOptions(data.options);
+        this.setShopId(data.id);
+
+        return data;
     }
 
     async requestShops() {

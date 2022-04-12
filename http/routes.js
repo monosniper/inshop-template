@@ -1,6 +1,7 @@
 export const $routes = {
     register: '/register',
     login: '/login',
+    undefined: '/undefined',
     basket: '/basket',
     checkout: '/checkout',
     successOrder: '/checkout/success',
@@ -8,7 +9,7 @@ export const $routes = {
 }
 
 export const $apiRoutes = {
-    getMyId: '/get-shop-id',
+    getMe: (name) => `/get-shop?domain_name=${name}`,
     user: '/user',
     products: {
         list: 'shops/{shop_id}/products',
@@ -18,5 +19,8 @@ export const $apiRoutes = {
     orders: {
         create: 'shops/{shop_id}/orders',
         get: (id) => `shops/{shop_id}/orders/${id}`
+    },
+    shops: {
+        create: 'shops',
     }
 }
