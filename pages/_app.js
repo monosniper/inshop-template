@@ -26,6 +26,7 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
+    console.log(store.options)
     store.requestShop().then(() => {
       if (!store.shop_id) {
         router.push($routes.undefined)
