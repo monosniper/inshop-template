@@ -34,8 +34,8 @@ const Header = () => {
                                         </Link>
                                     </div> : null}
                                 <div className={styles['header__shop-details']}>
-                                    {layout.get('title') ? <h4 className={styles.header__title}>{ shop.options.title }</h4> : null}
-                                    {layout.get('subtitle') ? <p className={styles.header__subtitle}>{ shop.options.slogan }</p> : null}
+                                    {layout.get('title') ? <h4 className={styles.header__title}>{ shop.title }</h4> : null}
+                                    {layout.get('subtitle') ? <p className={styles.header__subtitle}>{ shop.slogan }</p> : null}
                                 </div>
                             </div>
                         </Link>
