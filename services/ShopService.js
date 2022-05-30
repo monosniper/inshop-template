@@ -19,7 +19,8 @@ export default class ShopService {
     }
 
     static async requestShop() {
-        const response = await $api.get($apiRoutes.getMe(window.location.host.split('.')[0]));
+        // const response = await $api.get($apiRoutes.getMe(window.location.host.split('.')[0]));
+        const response = await $api.get($apiRoutes.getMe('magaz'));
 
         return response.data.data;
     }

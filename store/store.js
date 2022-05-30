@@ -78,7 +78,7 @@ class Store {
     async requestShop() {
         const data = await ShopService.requestShop();
 
-        if(data.options && data.id) {
+        if(data) {
             this.setOptions(data.options);
             this.setShopId(data.id);
         }

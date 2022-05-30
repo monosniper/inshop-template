@@ -5,6 +5,7 @@ import {useRouter} from "next/router";
 import store from "../store/store";
 import {$routes} from "../http/routes";
 import {observer} from "mobx-react-lite";
+import Loader from "../components/loader";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -23,7 +24,7 @@ function MyApp({ Component, pageProps }) {
     setLoading(false);
   }, [store.shop_id])
 
-  return loading ? <h1>loading</h1> : <Component {...pageProps} />;
+  return loading ? <Loader /> : <Component {...pageProps} />;
 }
 
 export default observer(MyApp)
