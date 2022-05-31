@@ -26,9 +26,7 @@ export default class ShopService {
 
         try {
             response = await $api.get($apiRoutes.getMe(window.location.host.split('.')[0]));
-            // const response = await $api.get($apiRoutes.getMe('magaz'));
-
-            showMessage($messages.created.shop)
+            // response = await $api.get($apiRoutes.getMe('magaz'));
         } catch (e) {
             showError(e.response.data.message)
         }
@@ -41,8 +39,6 @@ export default class ShopService {
 
         try {
             response = await $api.get($apiRoutes.products.list(shop_id));
-
-            showMessage($messages.created.shop)
         } catch (e) {
             showError(e.response.data.message)
         }
