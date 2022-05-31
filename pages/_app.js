@@ -10,22 +10,26 @@ import shop from "../store/shop";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const [data, setData] = useState({id: null});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    shop.requestData().then(() => shop.requestProducts())
+    shop.requestData().then((rs) => {
+      setData(rs)
+      shop.requestProducts().then(() => setLoading(false))
+    })
   }, []);
 
   useEffect(() => {
-    if (!shop.id) {
+    if (!data.id) {
       router.push($routes.undefined)
     } else {
       router.push($routes.index)
     }
     setLoading(false);
-  }, [shop.id])
+  }, [data])
 
   return loading ? <Loader /> : <Component {...pageProps} />;
 }
 
-export default observer(MyApp)
+export default MyApp
