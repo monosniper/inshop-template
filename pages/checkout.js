@@ -12,6 +12,8 @@ import EmailField from "../components/checkout/EmailField";
 import shop from "../store/shop";
 import {useRouter} from "next/router";
 import {$routes} from "../http/routes";
+import basket from "../store/basket";
+import {observer} from "mobx-react-lite";
 
 const Checkout = () => {
     const products = [
@@ -42,7 +44,7 @@ const Checkout = () => {
     ]
 
     const router = useRouter()
-    const [sum, setSum] = useState(129)
+    const [sum, setSum] = useState(basket.getSum())
     const [delivery, setDelivery] = useState(0)
     const [email, setEmail] = useState(0)
     const [name, setName] = useState('')
@@ -63,7 +65,7 @@ const Checkout = () => {
                 <Container>
                     <SubHeader text={'Новый заказ'} />
 
-                    <CheckList items={products} />
+                    <CheckList items={basket.items} />
 
                     <Row className={'mb'}>
                         <Col className={'mt'} lg={4} sm={12} md={6}><EmailField address={email} setAddres={setEmail} /></Col>
@@ -90,4 +92,4 @@ const Checkout = () => {
     );
 };
 
-export default Checkout;
+export default observer(Checkout)

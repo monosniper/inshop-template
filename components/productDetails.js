@@ -38,8 +38,9 @@ const PropertySelector = ({ property }) => {
         </div>
     </div>;
 }
-const ProductDetails = () => {
+const ProductDetails = ({ id, title, price, subtitle, category, description }) => {
     const router = useRouter()
+    console.log(id)
     const images = [
         '/assets/images/products/1/1.png',
         '/assets/images/products/1/2.png',
@@ -89,7 +90,7 @@ const ProductDetails = () => {
     }
 
     const handleBasketClick = () => {
-        basket.addItem(1, 100)
+        basket.addItem(id, title, price)
     }
 
     return (
@@ -107,15 +108,15 @@ const ProductDetails = () => {
                 </Col>
                 <Col>
                     <Link href={'/?category=category_name'}>
-                        <div className={styles.product__category}>Кроссовки</div>
+                        <div className={styles.product__category}>{category}</div>
                     </Link>
                     <div className={styles.product__header}>
-                        <span className={styles.product__title}>AIR MAX PEGASUS 37</span>
-                        <span className={styles.product__price}>$189</span>
+                        <span className={styles.product__title}>{title}</span>
+                        <span className={styles.product__price}>${price}</span>
                     </div>
-                    <div className={styles.product__subtitle}>Men’s Running shoe</div>
+                    <div className={styles.product__subtitle}>{subtitle}</div>
                     <div className={styles.product__description}>
-                        An athletic shoe is a name for a shoe designed for sporting and physical activities, and is different in style.
+                        {description}
                     </div>
                     <div className={styles.product__properties}>
                         {properties.map((property, i) => <PropertySelector property={property} key={'property-selector-'+i} />)}

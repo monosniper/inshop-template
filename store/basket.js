@@ -1,4 +1,5 @@
 import {makeAutoObservable, toJS} from "mobx";
+import shop from "./shop";
 
 class Basket {
     items = []
@@ -29,8 +30,9 @@ class Basket {
         this.items = newItems
     }
 
-    addItem(id, price, count=1) {
-        if(!this.hasItem(id)) this.items = [...toJS(this.items), {id, price, count}]
+    addItem(id, title, price, count=1) {
+        console.log(this.hasItem(id))
+        if(!this.hasItem(id)) this.items = [...this.items, {id, title, price, count}]
     }
 
     removeItem(id) {
@@ -44,7 +46,7 @@ class Basket {
     }
 
     hasItem(id) {
-        return [...toJS(this.items)].find(item => item.id === id)
+        return this.items.find(item => item.id === id)
     }
 
     getSum() {

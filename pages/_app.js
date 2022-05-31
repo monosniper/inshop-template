@@ -6,23 +6,24 @@ import store from "../store/store";
 import {$routes} from "../http/routes";
 import {observer} from "mobx-react-lite";
 import Loader from "../components/loader";
+import shop from "../store/shop";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    store.requestShop()
+    shop.requestData().then(() => shop.requestProducts())
   }, []);
 
   useEffect(() => {
-    if (!store.shop_id) {
+    if (!shop.id) {
       router.push($routes.undefined)
     } else {
       router.push($routes.index)
     }
     setLoading(false);
-  }, [store.shop_id])
+  }, [shop.id])
 
   return loading ? <Loader /> : <Component {...pageProps} />;
 }

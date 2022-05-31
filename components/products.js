@@ -3,6 +3,7 @@ import styles from '../styles/components/Products.module.scss'
 import Product from "./product";
 import Pagination from "./pagination";
 import shop from "../store/shop";
+import {observer} from "mobx-react-lite";
 
 const Products = ({ items, pagination = true }) => {
     const [products, setProducts] = useState([])
@@ -10,7 +11,7 @@ const Products = ({ items, pagination = true }) => {
     useEffect(() => {
         if(items) setProducts(items)
         else setProducts(shop.products)
-    }, [items])
+    }, [items, shop.products])
 
     return (
         <>
@@ -23,4 +24,4 @@ const Products = ({ items, pagination = true }) => {
     );
 };
 
-export default Products;
+export default observer(Products);

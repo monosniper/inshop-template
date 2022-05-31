@@ -4,6 +4,7 @@ import store from "./store";
 import constructor from "./constructor";
 
 class Shop {
+    id = null
     q = ''
     filters = {
         sort: 'newest',
@@ -87,41 +88,11 @@ class Shop {
             price: 129,
         },
     ]
+    categories = null
+    options = {}
 
     constructor() {
         makeAutoObservable(this)
-    }
-
-    setTitle(title) {
-        this.options.title = title;
-    }
-
-    setSlogan(slogan) {
-        this.options.slogan = slogan;
-    }
-
-    getLayoutOption(name) {
-        return this.options.layout[name];
-    }
-
-    setLayoutOption(name, state) {
-        this.options.layout[name] = state;
-    }
-
-    setHasOwnPalette(state) {
-        this.options.hasOwnPalette = state;
-    }
-
-    setOwnPalette(palette) {
-        this.options.ownPalette = palette
-    }
-
-    setModules(modules) {
-        this.options.modules = modules;
-    }
-
-    setPalette(palette) {
-        this.options.palette = palette
     }
 
     getModules() {
@@ -182,46 +153,47 @@ class Shop {
         this.options = options;
     }
 
+    setProducts(products) {
+        this.products = products
+    }
+
+    setCategories(categories) {
+        this.categories = categories
+    }
+
     setOldOption(options) {
         this.oldOptions = options;
     }
 
-    resetOptions() {
-        this.setOldOption({...this.defaultOptions})
-        this.setOptions({...this.defaultOptions})
-    }
-
-    async sendShopUpdate() {
-        const options = await ShopService.sendUpdate(this.id, this.options)
-
-        if(options) {
-            store.setShopData(this.id, options)
-        }
-    }
-
     async requestData() {
-        const response = await ShopService.requestData(this.id)
+        const data = await ShopService.requestShop();
 
-        this.resetOptions()
-
-        if(response.options) {
-            this.setOldOption({...response.options})
-            this.setOptions({...response.options})
-
-            const layout = response.options.layout;
-
-            if(layout) {
-                if((Array.isArray(layout) && !layout.length) || layout.logo === undefined) {
-                    this.options.layout = constructor.processLayout()
-                }
-            }
+        if(data) {
+            console.log(data.categories)
+            this.setCategories(data.categories);
+            this.setOptions(data.options);
+            this.setId(data.id);
         }
+
+        return data;
+    }
+
+    async requestProducts() {
+        const rs = await ShopService.getProducts(this.id);
+
+        this.setProducts(rs)
+
+        return rs;
     }
 
     async makeOrder(shipping_data, products) {
         const response = await ShopService.makeOrder(shipping_data, products)
 
         return response.status
+    }
+
+    getProduct(id) {
+        return this.products.find(product => product.id+'' === id+'')
     }
 }
 

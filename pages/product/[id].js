@@ -10,6 +10,8 @@ import store from "../../store/store";
 import Categories from "../../components/categories";
 import Filters from "../../components/filters";
 import Products from "../../components/products";
+import shop from "../../store/shop";
+import {observer} from "mobx-react-lite";
 
 const Product = () => {
     const router = useRouter()
@@ -18,7 +20,7 @@ const Product = () => {
     useEffect(() => {
         const {id} = router.query
 
-        // setProduct(store.getProduct(id))
+        setProduct(shop.getProduct(id))
     }, [router.query])
 
     return (
@@ -27,10 +29,10 @@ const Product = () => {
                 <Header/>
 
                 <Container>
-                    <ProductHeader/>
-                    <ProductDetails/>
+                    <ProductHeader {...product} />
+                    <ProductDetails {...product} />
 
-                    <RelatedProducts/>
+                    <RelatedProducts {...product} />
                 </Container>
             </div>
 
@@ -39,4 +41,4 @@ const Product = () => {
     );
 };
 
-export default Product;
+export default observer(Product);

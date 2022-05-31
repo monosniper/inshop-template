@@ -7,6 +7,8 @@ import Products from "../components/products";
 import Footer from "../components/footer";
 import SubHeader from "../components/subHeader";
 import BasketFooter from "../components/basketFooter";
+import basket from "../store/basket";
+import shop from "../store/shop";
 
 const Basket = () => {
     return (
@@ -17,7 +19,7 @@ const Basket = () => {
                 <Container>
                     <SubHeader text={'Корзина'} />
 
-                    <Products/>
+                    <Products items={shop.products.filter(product => basket.hasItem(product.id))} />
 
                     <BasketFooter/>
                 </Container>

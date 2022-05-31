@@ -7,6 +7,7 @@ import BasketButton from "./basketButton";
 import {useShop} from "../hooks/useShop";
 import {useLayout} from "../hooks/useLayout";
 import {useModules} from "../hooks/useModules";
+import {observer} from "mobx-react-lite";
 
 const Header = () => {
     const shop = useShop()
@@ -53,4 +54,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default observer(Header);

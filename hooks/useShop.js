@@ -1,5 +1,6 @@
 import store from "../store/store";
+import shop from "../store/shop";
 
 export const useShop = () => {
-    return store.options
+    return shop.options
 }

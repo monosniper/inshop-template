@@ -51,7 +51,7 @@ const Category = (props) => {
                     />
                 </div>
                 : null}
-            <div className={styles.category__name}>{props.category.name}</div>
+            <div className={styles.category__name}>{props.category.title}</div>
         </div>
     );
 };

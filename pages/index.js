@@ -7,8 +7,9 @@ import {Container} from "react-bootstrap";
 import Footer from "../components/footer";
 import Products from "../components/products";
 import Filters from "../components/filters";
+import {observer} from "mobx-react-lite";
 
-export default function Home() {
+export default observer(() => {
     return (
         <>
            <div className={'wrapper'}>
@@ -25,4 +26,4 @@ export default function Home() {
             <Footer/>
         </>
     )
-}
+})
