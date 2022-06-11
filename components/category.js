@@ -30,13 +30,24 @@ const Category = (props) => {
     }, [active])
 
     const handleClick = () => {
-        router.push({
-            pathname: '/',
-            query: {
-                ...router.query,
-                category: props.category.id,
-            }
-        })
+        if(router.query.category && router.query.category+'' === props.category.id+'') {
+            let query = {...router.query}
+
+            delete query.category
+
+            router.push({
+                pathname: '/',
+                query
+            })
+        } else {
+            router.push({
+                pathname: '/',
+                query: {
+                    ...router.query,
+                    category: props.category.id,
+                }
+            })
+        }
     }
 
     return (

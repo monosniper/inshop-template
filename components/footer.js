@@ -3,6 +3,7 @@ import styles from '../styles/components/Footer.module.scss'
 import {Container} from "react-bootstrap";
 import Watermark from "./watermark";
 import {useModules} from "../hooks/useModules";
+import {$modules} from "../utils/config";
 
 const Footer = () => {
     const modules = useModules()
@@ -11,7 +12,7 @@ const Footer = () => {
         <div className={styles.footer}>
             <Container className={styles.footer__container}>
                 <span>2022 Ваш магазин.</span>
-                {modules.get('hide-watermark') ? null :  <Watermark />}
+                {modules.get($modules.watermark) ? null :  <Watermark />}
             </Container>
         </div>
     );

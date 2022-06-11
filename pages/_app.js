@@ -2,11 +2,10 @@ import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import '../styles/globals.scss'
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
-import store from "../store/store";
 import {$routes} from "../http/routes";
-import {observer} from "mobx-react-lite";
 import Loader from "../components/loader";
 import shop from "../store/shop";
+import auth from "../store/auth";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -18,10 +17,12 @@ function MyApp({ Component, pageProps }) {
       setData(rs)
       shop.requestProducts().then(() => setLoading(false))
     })
+
+    auth.refresh()
   }, []);
 
   useEffect(() => {
-    if (!data.id) {
+    if (!data || !data.id) {
       router.push($routes.undefined)
     } else {
       router.push($routes.index)

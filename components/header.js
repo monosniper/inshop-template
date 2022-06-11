@@ -8,13 +8,14 @@ import {useShop} from "../hooks/useShop";
 import {useLayout} from "../hooks/useLayout";
 import {useModules} from "../hooks/useModules";
 import {observer} from "mobx-react-lite";
+import {$layout, $modules} from "../utils/config";
+import Auth from "./AuthButtons";
+import AuthButtons from "./AuthButtons";
 
 const Header = () => {
     const shop = useShop()
     const layout = useLayout()
     const modules = useModules()
-
-    console.log(shop)
 
     return (
         <header className={styles.header}>
@@ -23,7 +24,7 @@ const Header = () => {
                     <div className={styles.header__left}>
                         <Link href={'/'}>
                             <div className={styles.header__shop}>
-                                {layout.get('logo') ?
+                                {layout.get($layout.logo) ?
                                     <div className={styles.header__logo}>
                                         <Link href={'/'}>
                                             <Image
@@ -35,17 +36,16 @@ const Header = () => {
                                         </Link>
                                     </div> : null}
                                 <div className={styles['header__shop-details']}>
-                                    {layout.get('title') ? <h4 className={styles.header__title}>{ shop.title }</h4> : null}
-                                    {layout.get('subtitle') ? <p className={styles.header__subtitle}>{ shop.slogan }</p> : null}
+                                    {layout.get($layout.title) && <h4 className={styles.header__title}>{ shop.title }</h4>}
+                                    {layout.get($layout.subtitle) && <p className={styles.header__subtitle}>{ shop.slogan }</p>}
                                 </div>
                             </div>
                         </Link>
                     </div>
                     <div className={styles.header__right}>
                         <div className={styles.header__buttons}>
-                            {modules.get('basket') ? <BasketButton /> : null}
-                            <button className={'button'}>Регистрация</button>
-                            <button className={'button'}>Войти</button>
+                            {modules.get($modules.basket) && <BasketButton />}
+                            {modules.get($modules.auth) && <AuthButtons />}
                         </div>
                     </div>
                 </div>

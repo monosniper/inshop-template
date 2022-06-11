@@ -25,10 +25,10 @@ export default class ShopService {
         let response = {data: {data: null}}
 
         try {
-            response = await $api.get($apiRoutes.getMe(window.location.host.split('.')[0]));
-            // response = await $api.get($apiRoutes.getMe('magaz'));
+            // response = await $api.get($apiRoutes.getMe(window.location.host.split('.')[0]));
+            response = await $api.get($apiRoutes.getShop('magaz'));
         } catch (e) {
-            showError(e.response.data.message)
+            e && e.response && showError(e.response.data.message)
         }
 
         return response.data.data;
@@ -40,7 +40,7 @@ export default class ShopService {
         try {
             response = await $api.get($apiRoutes.products.list(shop_id));
         } catch (e) {
-            showError(e.response.data.message)
+            e && e.response && showError(e.response.data.message)
         }
 
         return response.data.data;

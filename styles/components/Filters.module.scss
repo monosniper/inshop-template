@@ -19,15 +19,6 @@
     gap: .5rem;
     align-items: center;
   }
-
-  &__input {
-    border: none;
-    border-radius: 7px;
-    background: #fff;
-    outline: none;
-    padding: 5px 15px;
-    cursor: pointer;
-  }
   
   &__name {
     cursor: pointer;
@@ -35,50 +26,6 @@
 
   &__sm {
     display: none;
-  }
-
-  &__modal {
-    max-width: 100%;
-    width: 450px;
-    overflow: hidden;
-    margin: 0 auto;
-    background: $bg;
-    inset: 40px;
-    position: absolute;
-    padding: 40px;
-    border-radius: 10px;
-    height: fit-content;
-
-    .filter__button {
-      margin-top: 1.5rem;
-      padding: 10px 20px;
-      font-size: 18px;
-    }
-  }
-
-  &__overlay {
-    position: fixed;
-    inset: 0px;
-    background-color: #000000ab;
-  }
-
-  &__button {
-    color: white;
-    display: flex;
-    gap: .5rem;
-    align-items: center;
-    padding: 5px 15px;
-    background: $purple;
-    border-radius: 5px;
-    border: none;
-
-    svg {
-      transform: scale(0.8);
-
-      path {
-        fill: white;
-      }
-    }
   }
 }
 

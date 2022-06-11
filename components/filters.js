@@ -70,7 +70,7 @@ function FilterItems() {
         <div className={styles.filter__items}>
             <div className={styles.filter__item}>
                 <span className={styles.filter__name}>Сортировка</span>
-                <select value={sort} className={styles.filter__input} onChange={handleSortChange}>
+                <select value={sort} className={'input'} onChange={handleSortChange}>
                     <option value="newest">Сначала новые</option>
                     <option value="expensive">Дороже</option>
                     <option value="cheapest">Дешевле</option>
@@ -80,9 +80,9 @@ function FilterItems() {
             </div>
             <div className={styles.filter__item}>
                 <span className={styles.filter__name}>Цена</span>
-                <input value={price_from} placeholder={'От'} type="number" className={styles.filter__input}
+                <input value={price_from} placeholder={'От'} type="number" className={'input'}
                        onChange={handlePriceFromChange}/>
-                <input value={price_to} placeholder={'До'} type="number" className={styles.filter__input}
+                <input value={price_to} placeholder={'До'} type="number" className={'input'}
                        onChange={handlePriceToChange}/>
             </div>
             <div className={styles.filter__item}>
@@ -90,9 +90,10 @@ function FilterItems() {
                 <input
                     checked={inStock}
                     type="checkbox"
-                    className={styles.filter__input}
+                    className={'input'}
+                    onChange={handleInStockClick}
                 />
-                <span onClick={handleInStockClick} className={styles.filter__checkbox}><CheckIcon/></span>
+                <span className={styles.filter__checkbox}><CheckIcon/></span>
             </div>
         </div>
     );

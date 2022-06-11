@@ -1,0 +1,72 @@
+@import "vars";
+
+.modal {
+  max-width: 100%;
+  width: 450px;
+  overflow: hidden;
+  margin: 0 auto;
+  background: $bg;
+  inset: 40px;
+  position: absolute;
+  padding: 40px;
+  border-radius: 10px;
+  height: fit-content;
+
+  &__title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 1rem;
+  }
+
+  &__input {
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    border-radius: 7px;
+    background: #fff;
+    outline: none;
+    padding: 5px 15px;
+    cursor: pointer;
+  }
+
+  &__row + .modal__row {
+    margin-top: 1rem;
+  }
+
+  &__button {
+    margin-top: 1.5rem;
+    padding: 10px 20px;
+    font-size: 18px;
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background-color: #000000ab;
+  }
+
+  &__button {
+    color: white;
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    padding: 5px 15px;
+    background: $purple;
+    border-radius: 5px;
+    border: none;
+
+    svg {
+      transform: scale(0.8);
+
+      path {
+        fill: white;
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .5rem;
+  }
+}

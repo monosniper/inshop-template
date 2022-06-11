@@ -1,0 +1,12 @@
+.user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  &__avatar {
+    img {
+      border-radius: 100%;
+
+    }
+  }
+}
