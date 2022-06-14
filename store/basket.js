@@ -1,11 +1,23 @@
 import {makeAutoObservable, toJS} from "mobx";
 import shop from "./shop";
+import BasketService from "../services/BasketService";
+import auth from "./auth";
 
 class Basket {
     items = []
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    loadBasket() {
+        console.log(shop.id, auth.data)
+       if(shop.id && auth.data.id) {
+           BasketService.loadItems(shop.id, auth.data.id).then(rs => {
+               console.log(rs)
+               // this.setItems(rs)
+           })
+       }
     }
 
     isEmpty() {
@@ -31,7 +43,6 @@ class Basket {
     }
 
     addItem(id, title, price, count=1) {
-        console.log(this.hasItem(id))
         if(!this.hasItem(id)) this.items = [...this.items, {id, title, price, count}]
     }
 

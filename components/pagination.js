@@ -20,7 +20,7 @@ const Pagination = props => {
         siblingCount,
         pageSize
     });
-    console.log(currentPage, paginationRange)
+
     if (currentPage === 0 || paginationRange.length < 2) {
         return null;
     }

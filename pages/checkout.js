@@ -14,47 +14,21 @@ import {useRouter} from "next/router";
 import {$routes} from "../http/routes";
 import basket from "../store/basket";
 import {observer} from "mobx-react-lite";
+import auth from "../store/auth";
 
 const Checkout = () => {
-    const products = [
-        {
-            img: '/assets/images/products/1.png',
-            title: 'Air Max pegasus 37',
-            count: 1,
-            price: 129
-        },
-        {
-            img: '/assets/images/products/1.png',
-            title: 'Air Max pegasus 37',
-            count: 3,
-            price: 129
-        },
-        {
-            img: '/assets/images/products/1.png',
-            title: 'Air Max pegasus 37',
-            count: 1,
-            price: 129
-        },
-        {
-            img: '/assets/images/products/1.png',
-            title: 'Air Max pegasus 37',
-            count: 5,
-            price: 129
-        }
-    ]
-
     const router = useRouter()
     const [sum, setSum] = useState(basket.getSum())
     const [delivery, setDelivery] = useState(0)
-    const [email, setEmail] = useState(0)
-    const [name, setName] = useState('')
-    const [phone, setPhone] = useState('')
-    const [address, setAddress] = useState('')
+    const [email, setEmail] = useState(auth.data.email)
+    const [name, setName] = useState(auth.data.fio)
+    const [phone, setPhone] = useState(auth.data.phone)
+    const [address, setAddress] = useState(auth.data.address)
 
     const handleSubmit = () => {
         shop.makeOrder({
             name, email, phone, address
-        }, products).then(() => router.push($routes.successOrder))
+        }, basket.items).then(() => router.push($routes.successOrder))
     }
 
     return (
@@ -68,9 +42,9 @@ const Checkout = () => {
                     <CheckList items={basket.items} />
 
                     <Row className={'mb'}>
-                        <Col className={'mt'} lg={4} sm={12} md={6}><EmailField address={email} setAddres={setEmail} /></Col>
-                        <Col className={'mt'} lg={4} sm={12} md={6}><PhoneField address={phone} setAddres={setPhone} /></Col>
-                        <Col className={'mt'} lg={4} sm={12} md={6}><NameField address={name} setAddres={setName} /></Col>
+                        <Col className={'mt'} lg={4} sm={12} md={6}><EmailField email={email} setEmail={setEmail} /></Col>
+                        <Col className={'mt'} lg={4} sm={12} md={6}><PhoneField phone={phone} setPhone={setPhone} /></Col>
+                        <Col className={'mt'} lg={4} sm={12} md={6}><NameField name={name} setName={setName} /></Col>
                     </Row>
 
                     <Row className={'mb'}>

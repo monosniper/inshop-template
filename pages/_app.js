@@ -6,6 +6,8 @@ import {$routes} from "../http/routes";
 import Loader from "../components/loader";
 import shop from "../store/shop";
 import auth from "../store/auth";
+import basket from "../store/basket";
+
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -15,6 +17,9 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     shop.requestData().then((rs) => {
       setData(rs)
+
+      basket.loadBasket();
+
       shop.requestProducts().then(() => setLoading(false))
     })
 

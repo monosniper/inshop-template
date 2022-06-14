@@ -11,6 +11,8 @@ class Auth {
         id: '',
         email: '',
         fio: '',
+        phone: '',
+        address: '',
     }
     localStorage = {
         user_data: 'user',
@@ -27,7 +29,7 @@ class Auth {
 
         if(user_data) {
             this.setIsAuthorized(true)
-            this.setData(user_data)
+            this.setData(JSON.parse(user_data))
         }
 
         api_token && this.loadUserByToken(api_token);
@@ -36,7 +38,7 @@ class Auth {
     async loadUserByToken(token) {
         try {
             const rs = await AuthService.refresh(token)
-            console.log(rs)
+
             this.setIsAuthorized(true)
             this.setData(rs.data)
 
