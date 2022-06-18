@@ -38,7 +38,11 @@ const PropertySelector = ({ property }) => {
         </div>
     </div>;
 }
-const ProductDetails = ({ id, title, price, subtitle, category, description }) => {
+const ProductDetails = (product) => {
+    const {
+        id, title, price, subtitle, category, description
+    } = product
+
     const router = useRouter()
     console.log(id)
     const images = [
@@ -90,7 +94,7 @@ const ProductDetails = ({ id, title, price, subtitle, category, description }) =
     }
 
     const handleBasketClick = () => {
-        basket.addItem(id, title, price)
+        basket.addItem(id, product)
     }
 
     return (

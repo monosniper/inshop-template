@@ -13,6 +13,7 @@ class Auth {
         fio: '',
         phone: '',
         address: '',
+        basket_id: null,
     }
     localStorage = {
         user_data: 'user',

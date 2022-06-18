@@ -19,7 +19,7 @@ const Basket = () => {
                 <Container>
                     <SubHeader text={'Корзина'} />
 
-                    <Products items={shop.products.filter(product => basket.hasItem(product.id))} />
+                    <Products items={basket.items.map(item => item.product)} />
 
                     <BasketFooter/>
                 </Container>

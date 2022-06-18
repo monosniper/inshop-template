@@ -31,7 +31,7 @@ const $api_sanctum = axios.create({
 })
 
 $api_sanctum.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('api_token')}`;
+    config.headers.Authorization = `Bearer ${Cookies.getItem('api_token')}`;
     return config;
 });
 

@@ -17,8 +17,8 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     shop.requestData().then((rs) => {
       setData(rs)
-
-      basket.loadBasket();
+      console.log(auth.isAuthorized , auth.data.basket_id)
+      auth.isAuthorized && auth.data.basket_id !== '' && basket.loadBasket();
 
       shop.requestProducts().then(() => setLoading(false))
     })

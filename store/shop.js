@@ -34,7 +34,6 @@ class Shop {
         const data = await ShopService.requestShop();
 
         if(data) {
-            console.log(data.categories)
             this.setCategories(data.categories);
             this.setOptions(data.options);
             this.setId(data.id);

@@ -29,9 +29,11 @@ export const $apiRoutes = {
         create: 'shops',
     },
     basket: {
-        list: (shop_id, client_id) => `/user/basket/${shop_id}/${client_id}`,
-        add: '/user/basket/add',
-        remove: (item_id) => `/user/basket/remove/${item_id}`,
+        // list: (shop_id, basket_id) => `shops/${shop_id}/basket`,
+        list: (shop_id, basket_id) => `shops/${shop_id}/basket/${basket_id}`,
+        update: (shop_id, basket_id) => `shops/${shop_id}/basket/${basket_id}`,
+        // add: '/user/basket/add',
+        // remove: (item_id) => `/user/basket/remove/${item_id}`,
     },
     sanctum: {
         csrf: `sanctum/csrf-cookie`,

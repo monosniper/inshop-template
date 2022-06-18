@@ -10,12 +10,15 @@ class Basket {
         makeAutoObservable(this)
     }
 
+    setItems(items, update=true) {
+        this.items = items;
+        update && BasketService.update(shop.id, auth.data.basket_id, items)
+    }
+
     loadBasket() {
-        console.log(shop.id, auth.data)
-       if(shop.id && auth.data.id) {
-           BasketService.loadItems(shop.id, auth.data.id).then(rs => {
-               console.log(rs)
-               // this.setItems(rs)
+       if(shop.id && auth.data.basket_id) {
+           BasketService.loadItems(shop.id, auth.data.basket_id).then(rs => {
+               this.setItems(rs.data, false)
            })
        }
     }
@@ -30,7 +33,7 @@ class Basket {
             if(item.id === id) item.count++
             return item
         })
-        this.items = newItems
+        this.setItems(newItems)
     }
 
     decrement(id) {
@@ -39,17 +42,17 @@ class Basket {
             if(item.id === id) item.count--
             return item.count ? item : false
         })
-        this.items = newItems
+        this.setItems(newItems)
     }
 
-    addItem(id, title, price, count=1) {
-        if(!this.hasItem(id)) this.items = [...this.items, {id, title, price, count}]
+    addItem(id, product, count=1) {
+        if(!this.hasItem(id)) this.setItems([...this.items, {id, product, count}])
     }
 
     removeItem(id) {
         let newItems = [...toJS(this.items)]
         newItems.map(item => item.id !== id)
-        this.items = newItems
+        this.setItems(newItems)
     }
 
     getItemsCount() {
@@ -57,14 +60,14 @@ class Basket {
     }
 
     hasItem(id) {
-        return this.items.find(item => item.id === id)
+        return this.items.find(item => item.product.id === id)
     }
 
     getSum() {
         let sum = 0
 
         toJS(this.items).forEach(item => {
-            sum += item.price * item.count
+            sum += item.product.price * item.count
         })
 
         return sum
