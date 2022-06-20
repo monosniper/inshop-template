@@ -9,6 +9,7 @@
     cursor: pointer;
     height: 70px;
 
+
     img {
       height: 100%;
       width: 100%;
@@ -17,10 +18,12 @@
 
   &__title {
     font-size: 24px;
+    cursor: pointer;
     font-weight: 500;
   }
 
   &__subtitle {
+    cursor: pointer;
     font-weight: 400;
     font-size: 14px;
     color: #707070;

@@ -3,6 +3,7 @@ import styles from '../styles/components/Categories.module.scss'
 import Image from "next/image";
 import {useRouter} from "next/router";
 import {useLayout} from "../hooks/useLayout";
+import shop from "../store/shop";
 
 const Category = (props) => {
 
@@ -31,6 +32,8 @@ const Category = (props) => {
 
     const handleClick = () => {
         if(router.query.category && router.query.category+'' === props.category.id+'') {
+            shop.setFilter('category', null)
+
             let query = {...router.query}
 
             delete query.category
@@ -40,6 +43,7 @@ const Category = (props) => {
                 query
             })
         } else {
+            shop.setFilter('category', props.category.title)
             router.push({
                 pathname: '/',
                 query: {

@@ -5,6 +5,7 @@ import CheckIcon from '../public/assets/icons/check.svg'
 import FilterIcon from '../public/assets/icons/filter.svg'
 import ReactModal from 'react-modal';
 import {useRouter} from "next/router";
+import shop from "../store/shop";
 
 function FilterItems() {
     const router = useRouter()
@@ -12,50 +13,110 @@ function FilterItems() {
     const [price_from, setPriceFrom] = useState(0)
     const [price_to, setPriceTo] = useState(0)
     const [inStock, setInStock] = useState(false)
+    const sortOptions = [
+        {
+            value: 'newest',
+            text: 'Самые новые',
+        },
+        {
+            value: 'expensive',
+            text: 'Дороже',
+        },
+        {
+            value: 'cheaper',
+            text: 'Дешевле',
+        },
+        {
+            value: 'a-z',
+            text: 'Алфавит [а-я]',
+        },
+        {
+            value: 'z-a',
+            text: 'Алфавит [я-а]',
+        },
+    ]
+
+    // useEffect(() => {
+    //     router.push({
+    //         pathname: '/',
+    //         query: {
+    //             ...router.query,
+    //             sort: e.target.value,
+    //         }
+    //     }, undefined, {scroll: false})
+    // }, [])
 
     useEffect(() => {
-        const { sort, price_from, price_to, inStock } = router.query
-
-        setSort(sort)
-        setPriceFrom(price_from)
-        setPriceTo(price_to)
-        setInStock(inStock === 'true')
+        const { sort, price_from, price_to, inStock, category, q } = router.query
+        if(sort) {
+            setSort(sort)
+        } else {
+            shop.setFilter('sort', null)
+        }
+        if(price_from) {
+            setPriceFrom(price_from)
+        } else {
+            shop.setFilter('price_from', null)
+        }
+        if(price_to) {
+            setPriceTo(price_to)
+        } else {
+            shop.setFilter('price_to', null)
+        }
+        if(inStock) {
+            setInStock(inStock === 'true')
+        } else {
+            shop.setFilter('inStock', null)
+        }
+        if(!q) {
+            shop.setFilter('q', null)
+        }
+        if(!category) {
+            shop.setFilter('category', null)
+        }
     }, [router.query])
 
     const handleSortChange = (e) => {
-        setSort(e.target.value)
+        const value = e.target.value
+        shop.setFilter('sort', value)
+        setSort(value)
         router.push({
             pathname: '/',
             query: {
                 ...router.query,
-                sort: e.target.value,
+                sort: value,
             }
         }, undefined, {scroll: false})
     }
 
     const handlePriceFromChange = (e) => {
-        setPriceFrom(e.target.value)
+        const value = e.target.value
+        shop.setFilter('price_from', value)
+        setPriceFrom(value)
         router.push({
             pathname: '/',
             query: {
                 ...router.query,
-                price_from: e.target.value,
+                price_from: value,
             }
         }, undefined, {scroll: false})
     }
 
     const handlePriceToChange = (e) => {
-        setPriceTo(e.target.value)
+        const value = e.target.value
+        shop.setFilter('price_to', value)
+        setPriceTo(value)
         router.push({
             pathname: '/',
             query: {
                 ...router.query,
-                price_to: e.target.value,
+                price_to: value,
             }
         }, undefined, {scroll: false})
     }
 
     const handleInStockClick = () => {
+        shop.setFilter('inStock', !inStock)
         setInStock(!inStock)
         router.push({
             pathname: '/',
@@ -71,11 +132,9 @@ function FilterItems() {
             <div className={styles.filter__item}>
                 <span className={styles.filter__name}>Сортировка</span>
                 <select value={sort} className={'input'} onChange={handleSortChange}>
-                    <option value="newest">Сначала новые</option>
-                    <option value="expensive">Дороже</option>
-                    <option value="cheapest">Дешевле</option>
-                    <option value="a-z">Алфавит [а-я]</option>
-                    <option value="z-a">Алфавит [я-а]</option>
+                    {sortOptions.map((option, i) => (
+                        <option key={'sort-option-'+i} value={option.value}>{option.text}</option>
+                    ))}
                 </select>
             </div>
             <div className={styles.filter__item}>
@@ -106,7 +165,12 @@ const Filters = () => {
     const [searchQuery, setSearchQuery] = useState('')
 
     useEffect(() => {
-        setSearchQuery(router.query.q)
+        const query = router.query.q;
+        if(query) {
+            setSearchQuery(query)
+        } else {
+            shop.setFilter('inStock', null)
+        }
     }, [router.query])
 
     const handleOpenFilterModal = () => {
@@ -118,13 +182,15 @@ const Filters = () => {
     }
 
     const handleSearch = (e) => {
-        setSearchQuery(e.target.value)
+        const value = e.target.value
+        shop.setFilter('q', value)
+        setSearchQuery(value)
 
         router.push({
             pathname: '/',
             query: {
                 ...router.query,
-                q: e.target.value
+                q: value
             }
         }, undefined, {scroll: false})
     }

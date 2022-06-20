@@ -2,6 +2,7 @@ import {makeAutoObservable, toJS} from "mobx";
 import ShopService from "../services/ShopService";
 import store from "./store";
 import constructor from "./constructor";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 class Shop {
     id = null
@@ -9,6 +10,57 @@ class Shop {
     products = []
     categories = null
     options = {}
+    filters = {
+        'category': {
+            value: null,
+            handler: (items, value) => {
+                return items.filter(item => item.category === value)
+            }
+        },
+        'q': {
+            value: null,
+            handler: (items, value) => {
+                return items.filter(item => item.title.trim().toLowerCase().search(value.trim().toLowerCase()) !== -1)
+            }
+        },
+        'price_from': {
+            value: null,
+            handler: (items, value) => {
+                return items.filter(item => item.price >= value)
+            }
+        },
+        'price_to': {
+            value: null,
+            handler: (items, value) => {
+                return items.filter(item => item.price <= value)
+            }
+        },
+        'inStock': {
+            value: null,
+            handler: (items, value) => {
+                return items.filter(item => item.inStock <= value)
+            }
+        },
+        'sort': {
+            value: null,
+            handler: (items, value) => {
+                switch (value) {
+                    case 'newest':
+                        return items.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                    case 'cheaper':
+                        return items.sort((a, b) => a.price - b.price)
+                    case 'expensive':
+                        return items.sort((a, b) => b.price - a.price)
+                    case 'a-z':
+                        return items.sort((a, b) => a.title.localeCompare(b.title))
+                    case 'z-a':
+                        return items.sort((a, b) => b.title.localeCompare(a.title))
+                    default:
+                        return items
+                }
+            }
+        },
+    }
 
     constructor() {
         makeAutoObservable(this)
@@ -48,6 +100,22 @@ class Shop {
         this.setProducts(rs)
 
         return rs;
+    }
+
+    setFilter(name, value) {
+        const newFilters = {...this.filters}
+        newFilters[name].value = value
+        this.filters = newFilters
+    }
+
+    getFilteredProducts() {
+        let filtered_products = [...this.products]
+        console.log(toJS(filtered_products), Object.entries(this.filters))
+        Object.entries(this.filters).forEach(([name, filter]) => {
+            if(filter.value) filtered_products = filter.handler(filtered_products, filter.value)
+        })
+
+        return filtered_products
     }
 
     async makeOrder(shipping_data, products) {

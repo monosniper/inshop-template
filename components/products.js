@@ -4,12 +4,12 @@ import Product from "./product";
 import Pagination from "./pagination";
 import shop from "../store/shop";
 import {observer} from "mobx-react-lite";
+import {useRouter} from "next/router";
 
 const PageSize = 12
 
 const Products = ({ items, pagination = true }) => {
     const [products, setProducts] = useState([])
-
     const [currentPage, setCurrentPage] = useState(1);
 
     const pageProducts = useMemo(() => {
@@ -22,6 +22,11 @@ const Products = ({ items, pagination = true }) => {
         if(items) setProducts(items)
         else setProducts(shop.products)
     }, [items, shop.products])
+
+    useEffect(() => {
+        console.log(shop.getFilteredProducts())
+        setProducts(shop.getFilteredProducts())
+    }, [shop.filters])
 
     return (
         <>

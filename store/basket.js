@@ -51,8 +51,12 @@ class Basket {
 
     removeItem(id) {
         let newItems = [...toJS(this.items)]
-        newItems.map(item => item.id !== id)
+        newItems = newItems.filter(item => item.product.id !== id)
         this.setItems(newItems)
+    }
+
+    toggleItem(product) {
+        this.hasItem(product.id) ? this.removeItem(product.id) : this.addItem(product.id, product);
     }
 
     getItemsCount() {
