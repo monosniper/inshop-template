@@ -7,6 +7,8 @@ import Loader from "../components/loader";
 import shop from "../store/shop";
 import auth from "../store/auth";
 import basket from "../store/basket";
+import './i18n';
+import {appWithTranslation} from "next-i18next";
 
 
 function MyApp({ Component, pageProps }) {
@@ -37,4 +39,4 @@ function MyApp({ Component, pageProps }) {
   return loading ? <Loader /> : <Component {...pageProps} />;
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

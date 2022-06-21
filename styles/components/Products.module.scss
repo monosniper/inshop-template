@@ -70,6 +70,7 @@
   
   &__image {
     cursor: pointer;
+    text-align: center;
   }
 }
 
@@ -82,5 +83,11 @@
 @media screen and (max-width: 980px){
   .product {
     width: calc(50% - 0.5rem) !important;
+  }
+}
+
+@media screen and (max-width: 550px){
+  .product {
+    width: 100% !important;
   }
 }
