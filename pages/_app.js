@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
 
           i18n.changeLanguage(shop.options.language)
 
-          auth.isAuthorized && auth.data.basket_id !== '' && modules.has($modules.basket) && basket.loadBasket();
+          auth.isAuthorized && auth.data.basket_id !== '' && modules.get($modules.basket) && basket.loadBasket();
 
           router.push($routes.index)
         }
