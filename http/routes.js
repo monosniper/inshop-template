@@ -4,6 +4,8 @@ export const $routes = {
     login: '/login',
     undefined: '/undefined',
     basket: '/basket',
+    profile: '/profile',
+    wishlist: '/wishlist',
     checkout: '/checkout',
     successOrder: '/checkout/success',
     product: (id) => `/product/${id}`,

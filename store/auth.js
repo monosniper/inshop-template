@@ -7,6 +7,8 @@ import {$messages} from "../utils/messages";
 
 class Auth {
     isAuthorized = false
+    isLoginOpen = false
+    isRegisterOpen = false
     data = {
         id: '',
         email: '',
@@ -22,6 +24,24 @@ class Auth {
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    openLogin() {
+        this.isLoginOpen = true;
+        this.isRegisterOpen = false;
+    }
+
+    closeLogin() {
+        this.isLoginOpen = false;
+    }
+
+    openRegister() {
+        this.isRegisterOpen = true;
+        this.isLoginOpen = false;
+    }
+
+    closeRegister() {
+        this.isRegisterOpen = false;
     }
 
     refresh() {

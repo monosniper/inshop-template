@@ -1,42 +1,45 @@
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import '../styles/globals.scss'
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {$routes} from "../http/routes";
 import Loader from "../components/loader";
 import shop from "../store/shop";
 import auth from "../store/auth";
 import basket from "../store/basket";
+import i18n from 'i18next';
 import './i18n';
 import {appWithTranslation} from "next-i18next";
+import ReactModal from "react-modal";
+import AuthModals from "../components/AuthModals";
+import {observer} from "mobx-react-lite";
 
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const [data, setData] = useState({id: null});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    shop.requestData().then((rs) => {
-      setData(rs)
-      auth.isAuthorized && auth.data.basket_id !== '' && basket.loadBasket();
+      shop.requestData().then(rs => {
+        auth.refresh()
 
-      shop.requestProducts().then(() => setLoading(false))
-    })
+        if(rs && rs.id) {
+          setLoading(false)
 
-    auth.refresh()
-  }, []);
+          i18n.changeLanguage(shop.options.language)
 
-  useEffect(() => {
-    if (!data || !data.id) {
-      router.push($routes.undefined)
-    } else {
-      router.push($routes.index)
-    }
-    setLoading(false);
-  }, [data])
+          auth.isAuthorized && auth.data.basket_id !== '' && basket.loadBasket();
 
-  return loading ? <Loader /> : <Component {...pageProps} />;
+          router.push($routes.index)
+        }
+        else router.push($routes.undefined)
+      })
+  }, [])
+
+  return loading ? <Loader /> : <>
+    <AuthModals />
+    <Component {...pageProps} />
+  </>;
 }
 
-export default appWithTranslation(MyApp)
+export default appWithTranslation(observer(MyApp))

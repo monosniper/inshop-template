@@ -15,6 +15,7 @@ import {$routes} from "../http/routes";
 import basket from "../store/basket";
 import {observer} from "mobx-react-lite";
 import auth from "../store/auth";
+import {useTranslation} from "react-i18next";
 
 const Checkout = () => {
     const router = useRouter()
@@ -24,6 +25,7 @@ const Checkout = () => {
     const [name, setName] = useState(auth.data.fio)
     const [phone, setPhone] = useState(auth.data.phone)
     const [address, setAddress] = useState(auth.data.address)
+    const { t, i18n } = useTranslation();
 
     const handleSubmit = () => {
         shop.makeOrder({
@@ -37,7 +39,7 @@ const Checkout = () => {
                 <Header/>
 
                 <Container>
-                    <SubHeader text={'Новый заказ'} />
+                    <SubHeader text={t('new order')} />
 
                     <CheckList items={basket.items} />
 
@@ -57,7 +59,7 @@ const Checkout = () => {
                         </Col>
                     </Row>
 
-                    <button onClick={handleSubmit} className={'button button_lg mb mx-auto'}>Оформить заказ</button>
+                    <button onClick={handleSubmit} className={'button button_lg mb mx-auto'}>{t('make order')}</button>
                 </Container>
             </div>
 

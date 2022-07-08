@@ -9,7 +9,7 @@ import {useRouter} from "next/router";
 const PageSize = 12
 
 const Products = ({ items, pagination = true }) => {
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState(items)
     const [currentPage, setCurrentPage] = useState(1);
 
     const pageProducts = useMemo(() => {
@@ -19,14 +19,12 @@ const Products = ({ items, pagination = true }) => {
     }, [currentPage, products]);
 
     useEffect(() => {
-        if(items) setProducts(items)
-        else setProducts(shop.products)
-    }, [items, shop.products])
-
-    useEffect(() => {
-        console.log(shop.getFilteredProducts())
         setProducts(shop.getFilteredProducts())
     }, [shop.filters])
+
+    useEffect(() => {
+        setProducts(items)
+    }, [items])
 
     return (
         <>

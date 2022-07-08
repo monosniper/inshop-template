@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 1rem 0;
+  flex-wrap: wrap;
 
   &__left {
     cursor: pointer;
@@ -30,5 +31,6 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    flex-wrap: wrap;
   }
 }

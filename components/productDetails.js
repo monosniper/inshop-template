@@ -8,6 +8,8 @@ import * as PropTypes from "prop-types";
 import {Col, Row} from "react-bootstrap";
 import Carousel from 'react-elastic-carousel'
 import basket from "../store/basket";
+import {useTranslation} from "react-i18next";
+import {useIsMobile} from "../hooks/useIsMobile";
 
 const ProductImage = ({ handleImageClick, src, mainSrc }) => {
     const [itemClass, setItemClass] = useState(styles.product__image)
@@ -31,8 +33,10 @@ const PropertySelectorOption = ({ option, handleClick }) => {
     return <span onClick={() => handleClick(option.value)} className={styles['property-selector__option']}>{option.name}</span>;
 }
 const PropertySelector = ({ property }) => {
+    const { t, i18n } = useTranslation();
+
     return <div className={styles['property-selector']}>
-        <span className={styles['property-selector__name']}>Выберите {property.name}</span>
+        <span className={styles['property-selector__name']}>{t('choose')} {property.name}</span>
         <div className={styles['property-selector__options']}>
             {property.options.map((option, i) => <PropertySelectorOption option={option} key={'property-option-'+i} />)}
         </div>
@@ -44,7 +48,9 @@ const ProductDetails = (product) => {
     } = product
 
     const router = useRouter()
-    console.log(id)
+    const isMobile = useIsMobile()
+    const { t, i18n } = useTranslation();
+
     const images = [
         '/assets/images/products/1/1.png',
         '/assets/images/products/1/2.png',
@@ -102,7 +108,7 @@ const ProductDetails = (product) => {
             <Row>
                 <Col>
                     <div className={styles.product__left}>
-                        <Carousel className={styles.product__slider} verticalMode pagination={false} showArrows={false} itemsToShow={4}>
+                        <Carousel className={styles.product__slider} verticalMode={!isMobile} pagination={false} showArrows={false} itemsToShow={4}>
                             {images.map((src, i) => <ProductImage mainSrc={mainImage} handleImageClick={handleImageClick} key={'image-'+i} src={src} />)}
                         </Carousel>
                         <div className={styles.product__current}>
@@ -127,7 +133,7 @@ const ProductDetails = (product) => {
                     </div>
                     <div className={styles.product__footer}>
                         <button onClick={handleBasketClick} className={styles.product__button}>
-                            <BasketIcon /> Добавить в корзину
+                            <BasketIcon /> {t('add to basket')}
                         </button>
                     </div>
                 </Col>

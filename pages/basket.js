@@ -9,15 +9,19 @@ import SubHeader from "../components/subHeader";
 import BasketFooter from "../components/basketFooter";
 import basket from "../store/basket";
 import shop from "../store/shop";
+import {useTranslation} from "react-i18next";
 
 const Basket = () => {
+    const { t, i18n } = useTranslation();
+
+
     return (
         <>
             <div className={'wrapper'}>
                 <Header/>
 
                 <Container>
-                    <SubHeader text={'Корзина'} />
+                    <SubHeader text={t('basket')} />
 
                     <Products items={basket.items.map(item => item.product)} />
 

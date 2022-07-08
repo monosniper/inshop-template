@@ -5,7 +5,25 @@
     padding: .5rem 0;
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
     align-items: center;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__modal {
+    background: $bg;
+    position: absolute;
+    inset: 40px;
+    border: 1px solid rgb(204, 204, 204);
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
   }
 
   &__items {
@@ -18,6 +36,7 @@
     display: flex;
     gap: .5rem;
     align-items: center;
+    flex-wrap: wrap;
   }
   
   &__name {
@@ -70,6 +89,7 @@ input.filter__input[type=checkbox] {
   border-radius: 7px;
   padding: 0 .5rem;
   width: 250px;
+  max-width: 90vw;
 
   &__input {
     width: 100%;
@@ -111,5 +131,16 @@ input.filter__input[type=checkbox] {
         transform: scale(1.5);
       }
     }
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .filter__container {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .filter__button {
+    width: 100%;
   }
 }

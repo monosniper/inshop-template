@@ -22,6 +22,7 @@
 
   &__left {
     display: flex;
+
   }
 
   &__slider {
@@ -132,5 +133,12 @@
       color: white;
       background: $purple !important;
     }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .product__left {
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
   }
 }

@@ -6,7 +6,7 @@
   overflow: hidden;
   margin: 0 auto;
   background: $bg;
-  inset: 40px;
+  inset: 40px 0;
   position: absolute;
   padding: 40px;
   border-radius: 10px;
@@ -16,6 +16,15 @@
     font-weight: bold;
     font-size: 20px;
     margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .link {
+      font-size: 14px;
+      font-weight: normal;
+      cursor: pointer;
+    }
   }
 
   &__input {

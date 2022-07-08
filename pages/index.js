@@ -8,8 +8,22 @@ import Footer from "../components/footer";
 import Products from "../components/products";
 import Filters from "../components/filters";
 import {observer} from "mobx-react-lite";
+import {useEffect, useState} from "react";
+import shop from "../store/shop";
 
 export default observer(() => {
+    const [items, setItems] = useState(shop.products)
+
+    useEffect(() => {
+        shop.requestProducts().then(() => {
+            setItems(shop.products)
+        })
+    }, [])
+
+    useEffect(() => {
+        setItems(shop.products)
+    }, [shop.products])
+
     return (
         <>
            <div className={'wrapper'}>
@@ -19,7 +33,7 @@ export default observer(() => {
                    <Categories/>
                    <Filters/>
 
-                   <Products/>
+                   <Products items={items}/>
                </Container>
            </div>
 
