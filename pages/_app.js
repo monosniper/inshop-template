@@ -8,7 +8,7 @@ import shop from "../store/shop";
 import auth from "../store/auth";
 import basket from "../store/basket";
 import i18n from 'i18next';
-import './i18n';
+import '../utils/i18n';
 import {appWithTranslation} from "next-i18next";
 import ReactModal from "react-modal";
 import AuthModals from "../components/AuthModals";
