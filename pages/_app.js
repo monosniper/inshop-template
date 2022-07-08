@@ -13,11 +13,14 @@ import {appWithTranslation} from "next-i18next";
 import ReactModal from "react-modal";
 import AuthModals from "../components/AuthModals";
 import {observer} from "mobx-react-lite";
+import {$modules} from "../utils/config";
+import {useModules} from "../hooks/useModules";
 
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const modules = useModules()
 
   useEffect(() => {
       shop.requestData().then(rs => {
@@ -28,7 +31,7 @@ function MyApp({ Component, pageProps }) {
 
           i18n.changeLanguage(shop.options.language)
 
-          auth.isAuthorized && auth.data.basket_id !== '' && basket.loadBasket();
+          auth.isAuthorized && auth.data.basket_id !== '' && modules.has($modules.basket) && basket.loadBasket();
 
           router.push($routes.index)
         }

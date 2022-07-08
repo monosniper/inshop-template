@@ -11,7 +11,7 @@ export default class BasketService {
 
             return response.data;
         } catch (e) {
-            e && e.response && showError(e.response.data.message)
+
         }
 
         return response.data.data;
