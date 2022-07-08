@@ -3,6 +3,7 @@ import ShopService from "../services/ShopService";
 import store from "./store";
 import constructor from "./constructor";
 import {forEach} from "react-bootstrap/ElementChildren";
+import {$layout} from "../utils/config";
 
 class Shop {
     id = null
@@ -61,13 +62,24 @@ class Shop {
             }
         },
     }
+    defaultLayout = {}
 
     constructor() {
         makeAutoObservable(this)
+
+        const layout = {}
+        Object.values($layout).forEach(name => {
+            layout[name] = true
+        })
+        this.setDefaultLayout(layout)
+    }
+
+    setDefaultLayout(layout) {
+        this.defaultLayout = layout;
     }
 
     setId(id) {
-        this.id = id
+        this.id = id;
     }
 
     setOptions(options) {
@@ -89,6 +101,10 @@ class Shop {
             this.setCategories(data.categories);
             this.setOptions(data.options);
             this.setId(data.id);
+
+            if(Array.isArray(data.options.layout) && !data.options.layout.length) {
+                this.setLayout(this.defaultLayout);
+            }
         }
 
         return data;
