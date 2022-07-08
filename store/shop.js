@@ -78,6 +78,10 @@ class Shop {
         this.defaultLayout = layout;
     }
 
+    setLayout(layout) {
+        this.options.layout = layout;
+    }
+
     setId(id) {
         this.id = id;
     }
