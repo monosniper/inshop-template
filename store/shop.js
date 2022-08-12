@@ -10,12 +10,15 @@ class Shop {
     q = ''
     products = []
     categories = null
+    modules = []
     options = {}
+    layout = []
     filters = {
         'category': {
             value: null,
             handler: (items, value) => {
-                return items.filter(item => item.category === value)
+                console.log(items, value)
+                return items.filter(item => item.category_id === value)
             }
         },
         'q': {
@@ -39,7 +42,10 @@ class Shop {
         'inStock': {
             value: null,
             handler: (items, value) => {
-                return items.filter(item => item.inStock <= value)
+                return items.filter(item => {
+                    console.log(item.inStock, value)
+                    return false
+                })
             }
         },
         'sort': {
@@ -62,24 +68,13 @@ class Shop {
             }
         },
     }
-    defaultLayout = {}
 
     constructor() {
         makeAutoObservable(this)
-
-        const layout = {}
-        Object.values($layout).forEach(name => {
-            layout[name] = true
-        })
-        this.setDefaultLayout(layout)
-    }
-
-    setDefaultLayout(layout) {
-        this.defaultLayout = layout;
     }
 
     setLayout(layout) {
-        this.options.layout = layout;
+        this.layout = layout;
     }
 
     setId(id) {
@@ -98,17 +93,20 @@ class Shop {
         this.categories = categories
     }
 
+    setModules(modules) {
+        this.modules = modules
+    }
+
     async requestData() {
         const data = await ShopService.requestShop();
 
         if(data) {
+            this.setProducts(data.products);
             this.setCategories(data.categories);
+            this.setModules(data.modules);
             this.setOptions(data.options);
+            this.setLayout(data.layout);
             this.setId(data.id);
-
-            if(Array.isArray(data.options.layout) && !data.options.layout.length) {
-                this.setLayout(this.defaultLayout);
-            }
         }
 
         return data;
@@ -130,7 +128,7 @@ class Shop {
 
     getFilteredProducts() {
         let filtered_products = [...this.products]
-        console.log(toJS(filtered_products), Object.entries(this.filters))
+
         Object.entries(this.filters).forEach(([name, filter]) => {
             if(filter.value) filtered_products = filter.handler(filtered_products, filter.value)
         })

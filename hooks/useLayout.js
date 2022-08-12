@@ -1,9 +1,13 @@
-import store from "../store/store";
 import shop from "../store/shop";
+import {useMemo} from "react";
 
 export const useLayout = () => {
-    // console.log(store.options)
+    const layout = useMemo(() => shop.layout, [shop.layout])
+
     return {
-        get: (name) => shop.options.layout && shop.options.layout[name]
+        get: (name) => {
+            const option = layout.find(option => option.slug === name)
+            return layout && option && option.isActive
+        }
     }
 }

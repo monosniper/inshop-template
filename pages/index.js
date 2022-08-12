@@ -14,11 +14,11 @@ import shop from "../store/shop";
 export default observer(() => {
     const [items, setItems] = useState(shop.products)
 
-    useEffect(() => {
-        shop.requestProducts().then(() => {
-            setItems(shop.products)
-        })
-    }, [])
+    // useEffect(() => {
+    //     shop.requestProducts().then(() => {
+    //         setItems(shop.products)
+    //     })
+    // }, [])
 
     useEffect(() => {
         setItems(shop.products)

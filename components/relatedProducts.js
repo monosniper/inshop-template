@@ -8,7 +8,6 @@ const RelatedProducts = () => {
     const [products, setProducts] = useState(shop.products)
     const { t, i18n } = useTranslation();
 
-
     return (
         <div className={styles['related-products']}>
             <h2 className={styles['related-products__title']}>{t('related products')}</h2>

@@ -12,7 +12,7 @@ class Auth {
     data = {
         id: '',
         email: '',
-        fio: '',
+        name: '',
         phone: '',
         address: '',
         basket_id: null,
@@ -74,7 +74,8 @@ class Auth {
             const rs = await AuthService.register(shop.id, data)
 
             this.setIsAuthorized(true)
-            this.setData(rs.data)
+            this.setData(rs)
+            console.log(rs)
 
             showMessage($messages.registered)
 
@@ -89,7 +90,7 @@ class Auth {
             const rs = await AuthService.login(shop.id, data)
 
             this.setIsAuthorized(true)
-            this.setData(rs.data)
+            this.setData(rs)
 
             showMessage($messages.loggedIn)
 
@@ -108,7 +109,7 @@ class Auth {
     }
 
     getName() {
-        return this.data.fio !== '' ? this.data.fio : this.data.email;
+        return this.data && this.data.fio !== '' ? this.data.fio : this.data.email;
     }
 }
 

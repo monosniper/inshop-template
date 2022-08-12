@@ -7,6 +7,7 @@ import {$modules} from "../utils/config";
 import {useShop} from "../hooks/useShop";
 import {useIsMobile} from "../hooks/useIsMobile";
 import FooterPanel from "./FooterPanel";
+import {observer} from "mobx-react-lite";
 
 const Footer = () => {
     const modules = useModules()
@@ -29,4 +30,4 @@ const Footer = () => {
     );
 };
 
-export default Footer;
+export default observer(Footer);

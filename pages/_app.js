@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
   }, [])
 
   return loading ? <Loader /> : <>
-    <AuthModals />
+    {modules.get($modules.auth) ? <AuthModals /> : null}
     <Component {...pageProps} />
   </>;
 }

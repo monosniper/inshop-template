@@ -40,12 +40,16 @@
     margin: .5rem 0;
     cursor: pointer;
     width: 100px;
-    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
     background: #F4F4F4;
     border-radius: 15px;
+    height: 100px;
+
+    img {
+      border-radius: 12px;
+    }
 
     &.active {
       border: 2px solid $purple;

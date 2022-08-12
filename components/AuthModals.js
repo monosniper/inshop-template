@@ -104,12 +104,12 @@ const AuthModals = () => {
 
             <div className="modal__row">
                 <span className={'modal__label'}>E-mail</span>
-                <input type="email" value={loginEmail} placeholder={'E-mail'} onChange={handleChangeLoginEmail} className="modal__input"/>
+                <input name={'email'} type="email" value={loginEmail} placeholder={'E-mail'} onChange={handleChangeLoginEmail} className="modal__input"/>
             </div>
 
             <div className="modal__row">
                 <span className={'modal__label'}>Пароль</span>
-                <input type="password" value={loginPassword} onChange={handleChangeLoginPassword} className="modal__input"/>
+                <input name={'password'} type="password" value={loginPassword} onChange={handleChangeLoginPassword} className="modal__input"/>
             </div>
 
             <div className="modal__footer">

@@ -6,6 +6,7 @@ import Image from "next/image";
 import Dropdown from "./Dropdown";
 import {$routes} from "../http/routes";
 import {useRouter} from "next/router";
+import {toJS} from "mobx";
 
 const User = (props) => {
     const router = useRouter()

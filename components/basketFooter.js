@@ -5,6 +5,7 @@ import Link from "next/link";
 import {observer} from "mobx-react-lite";
 import {$routes} from "../http/routes";
 import {useTranslation} from "react-i18next";
+import CheckoutBtn from "./CheckoutBtn";
 
 const BasketFooter = () => {
     const { t, i18n } = useTranslation();
@@ -16,9 +17,7 @@ const BasketFooter = () => {
             </div>
             <div className={styles['basket-footer__right']}>
                 <span className={styles['basket-footer__price']}>${basket.getSum()}</span>
-                <Link href={$routes.checkout}>
-                    <button className="button">{t('pay')}</button>
-                </Link>
+                <CheckoutBtn>{t('pay')}</CheckoutBtn>
             </div>
         </div>
     );

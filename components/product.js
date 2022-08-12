@@ -6,9 +6,13 @@ import Link from "next/link";
 import {$routes} from "../http/routes";
 import basket from "../store/basket";
 import {observer} from "mobx-react-lite";
+import {$modules} from "../utils/config";
+import AuthModals from "./AuthModals";
+import {useModules} from "../hooks/useModules";
 
 const Product = ({className, product}) => {
     const [itemClass, setItemClass] = useState(styles.product)
+    const modules = useModules();
 
     const handleWishToggle = () => {
         basket.toggleItem(product)
@@ -22,12 +26,13 @@ const Product = ({className, product}) => {
 
     return (
         <div className={itemClass}>
-            <span onClick={handleWishToggle} className={styles.product__wish}>
+            {modules.get($modules.basket) ?<span onClick={handleWishToggle} className={styles.product__wish}>
                 {basket.hasItem(product.id) ? <HeartIcon /> : <HeartIconOutline />}
-            </span>
+            </span> : null}
+
             <Link href={$routes.product(product.id)}>
                 <div className={styles.product__image}>
-                    <img src="/assets/images/products/1.png" alt={product.name}/>
+                    <img src={product.images[0]} alt={product.name}/>
                 </div>
             </Link>
             <div className={styles.product__footer}>

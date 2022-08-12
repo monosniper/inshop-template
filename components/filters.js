@@ -155,7 +155,7 @@ function FilterItems() {
                     className={'input'}
                     onChange={handleInStockClick}
                 />
-                <span className={styles.filter__checkbox}><CheckIcon/></span>
+                {/*<span className={styles.filter__checkbox}><CheckIcon/></span>*/}
             </div>
         </div>
     );

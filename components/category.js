@@ -4,6 +4,7 @@ import Image from "next/image";
 import {useRouter} from "next/router";
 import {useLayout} from "../hooks/useLayout";
 import shop from "../store/shop";
+import {$layout} from "../utils/config";
 
 const Category = (props) => {
 
@@ -43,7 +44,7 @@ const Category = (props) => {
                 query
             })
         } else {
-            shop.setFilter('category', props.category.title)
+            shop.setFilter('category', props.category.id)
             router.push({
                 pathname: '/',
                 query: {
@@ -56,13 +57,11 @@ const Category = (props) => {
 
     return (
         <div onClick={handleClick} className={itemClass}>
-            {layout.get('icons') ?
+            {layout.get($layout.categories.icons) ?
                 <div className={styles.category__icon}>
-                    <Image
-                        src={'/assets/images/categories/' + props.category.id + '.png'}
-                        width={40}
-                        height={40}
-                        alt={'Category name'}
+                    <img
+                        src={props.category.icon_url}
+                        alt={props.category.title}
                     />
                 </div>
                 : null}

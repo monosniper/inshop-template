@@ -5,6 +5,8 @@ import {ScrollingCarousel} from "@trendyol-js/react-carousel";
 import {useCategories} from "../hooks/useCategories";
 import ContentLoader from "react-content-loader";
 import {observer} from "mobx-react-lite";
+import {$layout} from "../utils/config";
+import {useLayout} from "../hooks/useLayout";
 
 function LoaderBoxes() {
     const rects_count = 16
@@ -26,14 +28,14 @@ function LoaderBoxes() {
 }
 
 const Categories = () => {
-
     const categories = useCategories()
+    const layout= useLayout();
 
-    return (
-        <ScrollingCarousel className={styles.categories}>
-            {categories ? categories.map((category, i) => <Category key={'category-'+i} category={category} />) : <LoaderBoxes />}
-        </ScrollingCarousel>
-    );
+    return layout.get($layout.categories.slug) ? (
+                <ScrollingCarousel className={styles.categories}>
+                    {categories ? categories.map((category, i) => <Category key={'category-'+i} category={category} />) : <LoaderBoxes />}
+                </ScrollingCarousel>
+            ) : null;
 };
 
 export default observer(Categories);

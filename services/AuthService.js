@@ -20,6 +20,8 @@ export default class AuthService {
                     }
 
                     localStorage.setItem('user', JSON.stringify(response.data))
+
+                    return response.data;
                 }).catch((e) => {
                     return Promise.reject(e);
                 })
@@ -44,10 +46,12 @@ export default class AuthService {
 
                 localStorage.setItem('user', JSON.stringify(response.data))
 
-                return $api.post($apiRoutes.sanctum.token(shop_id), data).then(response => {
+                $api.post($apiRoutes.sanctum.token(shop_id), data).then(response => {
                     const token = response.data;
                     localStorage.setItem('api_token', token)
                 })
+
+                return response.data
             }).catch((e) => {
                 return Promise.reject(e);
             })

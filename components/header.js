@@ -16,15 +16,15 @@ import auth from "../store/auth";
 
 const Buttons = observer(({modules}) => {
     return <div className={styles.header__buttons}>
-        {modules.get($modules.basket) && auth.isAuthorized && <BasketButton />}
-        {modules.get($modules.auth) && <AuthButtons />}
+        {modules.get($modules.basket) ? auth.isAuthorized && <BasketButton /> : null}
+        {modules.get($modules.auth) ? <AuthButtons /> : null}
     </div>;
 })
 
 function ShopDetails({layout, shop}) {
     return <div className={styles['header__shop-details']}>
-        {layout.get($layout.title) && <h4 className={styles.header__title}>{ shop.title }</h4>}
-        {layout.get($layout.subtitle) && <p className={styles.header__subtitle}>{ shop.slogan }</p>}
+        {layout.get($layout.header.title) ? <h4 className={styles.header__title}>{ shop.title }</h4> : null}
+        {layout.get($layout.header.slogan) ? <p className={styles.header__subtitle}>{ shop.slogan }</p> : null}
     </div>;
 }
 
@@ -34,35 +34,35 @@ const Header = () => {
     const modules = useModules()
     const isMobile = useIsMobile()
 
-    return (
-        <header className={styles.header}>
-            <Container>
-                <div className={styles.header__container}>
-                    <div className={styles.header__left}>
-                        <Link href={'/'}>
-                            <div className={styles.header__shop}>
-                                {layout.get($layout.logo) ?
-                                    <div className={styles.header__logo}>
-                                        <Link href={'/'}>
-                                            <Image
-                                                src={'/assets/images/logo.png'}
-                                                width={70}
-                                                height={70}
-                                                alt={shop.title}
-                                            />
-                                        </Link>
-                                    </div> : null}
-                                {!isMobile && <ShopDetails layout={layout} shop={shop} />}
-                            </div>
-                        </Link>
+    return layout.get($layout.header.slug) ? (
+            <header className={styles.header}>
+                <Container>
+                    <div className={styles.header__container}>
+                        <div className={styles.header__left}>
+                            <Link href={'/'}>
+                                <div className={styles.header__shop}>
+                                    {layout.get($layout.header.logo) ?
+                                        <div className={styles.header__logo}>
+                                            <Link href={'/'}>
+                                                <Image
+                                                    src={'/assets/images/logo.png'}
+                                                    width={70}
+                                                    height={70}
+                                                    alt={shop.title}
+                                                />
+                                            </Link>
+                                        </div> : null}
+                                    {!isMobile ? <ShopDetails layout={layout} shop={shop} /> : null}
+                                </div>
+                            </Link>
+                        </div>
+                        <div className={styles.header__right}>
+                            {isMobile ? <ShopDetails layout={layout} shop={shop} /> : <Buttons modules={modules} />}
+                        </div>
                     </div>
-                    <div className={styles.header__right}>
-                        {isMobile ? <ShopDetails layout={layout} shop={shop} /> : <Buttons modules={modules} />}
-                    </div>
-                </div>
-            </Container>
-        </header>
-    );
+                </Container>
+            </header>
+        ) : null;
 };
 
 export default observer(Header);

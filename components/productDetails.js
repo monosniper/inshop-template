@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import styles from '../styles/components/ProductDetails.module.scss'
 import {useRouter} from "next/router";
 import Link from 'next/link'
@@ -10,6 +10,11 @@ import Carousel from 'react-elastic-carousel'
 import basket from "../store/basket";
 import {useTranslation} from "react-i18next";
 import {useIsMobile} from "../hooks/useIsMobile";
+import {$modules} from "../utils/config";
+import HeartIcon from "../public/assets/icons/heart.svg";
+import HeartIconOutline from "../public/assets/icons/heart_outline.svg";
+import {useModules} from "../hooks/useModules";
+import CheckoutBtn from "./CheckoutBtn";
 
 const ProductImage = ({ handleImageClick, src, mainSrc }) => {
     const [itemClass, setItemClass] = useState(styles.product__image)
@@ -44,28 +49,15 @@ const PropertySelector = ({ property }) => {
 }
 const ProductDetails = (product) => {
     const {
-        id, title, price, subtitle, category, description
+        id, title, price, subtitle, category, description, images
     } = product
 
     const router = useRouter()
+    const modules = useModules()
     const isMobile = useIsMobile()
     const { t, i18n } = useTranslation();
 
-    const images = [
-        '/assets/images/products/1/1.png',
-        '/assets/images/products/1/2.png',
-        '/assets/images/products/1/3.png',
-        '/assets/images/products/1/4.png',
-        '/assets/images/products/1/1.png',
-        '/assets/images/products/1/2.png',
-        '/assets/images/products/1/3.png',
-        '/assets/images/products/1/4.png',
-        '/assets/images/products/1/1.png',
-        '/assets/images/products/1/2.png',
-        '/assets/images/products/1/3.png',
-        '/assets/images/products/1/4.png',
-    ]
-    const [mainImage, setMainImage] = useState(images[0])
+    const [mainImage, setMainImage] = useState(undefined)
     const properties = [
         {
             name: 'Размер',
@@ -103,14 +95,23 @@ const ProductDetails = (product) => {
         basket.addItem(id, product)
     }
 
+    useEffect(() => {
+        if(images) {
+            setMainImage(images[0])
+        }
+    }, [images])
+
     return (
         <div className={styles.product + ' white-block'}>
             <Row>
                 <Col>
                     <div className={styles.product__left}>
-                        <Carousel className={styles.product__slider} verticalMode={!isMobile} pagination={false} showArrows={false} itemsToShow={4}>
-                            {images.map((src, i) => <ProductImage mainSrc={mainImage} handleImageClick={handleImageClick} key={'image-'+i} src={src} />)}
-                        </Carousel>
+                        {images && <Carousel className={styles.product__slider} verticalMode={!isMobile} pagination={false}
+                                   showArrows={false} itemsToShow={4}>
+                            {images.map((src, i) => <ProductImage mainSrc={mainImage}
+                                                                  handleImageClick={handleImageClick} key={'image-' + i}
+                                                                  src={src}/>)}
+                        </Carousel>}
                         <div className={styles.product__current}>
                             <img src={mainImage} alt="Item name"/>
                         </div>
@@ -132,9 +133,9 @@ const ProductDetails = (product) => {
                         {properties.map((property, i) => <PropertySelector property={property} key={'property-selector-'+i} />)}
                     </div>
                     <div className={styles.product__footer}>
-                        <button onClick={handleBasketClick} className={styles.product__button}>
+                        {modules.get($modules.basket) ? <button onClick={handleBasketClick} className={styles.product__button}>
                             <BasketIcon /> {t('add to basket')}
-                        </button>
+                        </button> : <CheckoutBtn size={'lg'}>{t('buy')}</CheckoutBtn>}
                     </div>
                 </Col>
             </Row>
