@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
+import 'react-awesome-slider/dist/styles.css';
 import '../styles/globals.scss'
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
@@ -10,12 +11,11 @@ import basket from "../store/basket";
 import i18n from 'i18next';
 import '../utils/i18n';
 import {appWithTranslation} from "next-i18next";
-import ReactModal from "react-modal";
 import AuthModals from "../components/AuthModals";
 import {observer} from "mobx-react-lite";
 import {$modules} from "../utils/config";
 import {useModules} from "../hooks/useModules";
-
+import ConfigStyles from "../components/ConfigStyles";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -33,15 +33,21 @@ function MyApp({ Component, pageProps }) {
 
           auth.isAuthorized && auth.data.basket_id !== '' && modules.get($modules.basket) && basket.loadBasket();
 
-          router.push($routes.index)
+          // router.push({
+          //   pathname: router.pathname + '[slug]',
+          //   query: {slug: router.query.slug}
+          // })
         }
         else router.push($routes.undefined)
       })
   }, [])
 
   return loading ? <Loader /> : <>
-    {modules.get($modules.auth) ? <AuthModals /> : null}
-    <Component {...pageProps} />
+    <div className="layout">
+      <ConfigStyles />
+      {modules.get($modules.auth) ? <AuthModals /> : null}
+      <Component {...pageProps} />
+    </div>
   </>;
 }
 

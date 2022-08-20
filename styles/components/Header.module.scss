@@ -16,10 +16,23 @@
     }
   }
 
+  &__link {
+    display: flex;
+    align-items: center;
+    margin: 0 1rem;
+    cursor: pointer;
+  }
+
   &__title {
     font-size: 24px;
     cursor: pointer;
     font-weight: 500;
+  }
+
+  &__more {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
   }
 
   &__subtitle {

@@ -15,13 +15,14 @@ import HeartIcon from "../public/assets/icons/heart.svg";
 import HeartIconOutline from "../public/assets/icons/heart_outline.svg";
 import {useModules} from "../hooks/useModules";
 import CheckoutBtn from "./CheckoutBtn";
+import auth from "../store/auth";
 
 const ProductImage = ({ handleImageClick, src, mainSrc }) => {
     const [itemClass, setItemClass] = useState(styles.product__image)
     
     useEffect(() => {
         if(src === mainSrc) {
-            setItemClass(styles.product__image + ' ' + styles.active)
+            setItemClass(styles.product__image + ' contrast_border ' + styles.active)
         } else {
             setItemClass(styles.product__image)
         }
@@ -92,7 +93,7 @@ const ProductDetails = (product) => {
     }
 
     const handleBasketClick = () => {
-        basket.addItem(id, product)
+        auth.isAuthorized ? basket.addItem(id, product) : auth.openLogin()
     }
 
     useEffect(() => {
@@ -123,17 +124,17 @@ const ProductDetails = (product) => {
                     </Link>
                     <div className={styles.product__header}>
                         <span className={styles.product__title}>{title}</span>
-                        <span className={styles.product__price}>${price}</span>
+                        <span className={styles.product__price + ' contrast'}>${price}</span>
                     </div>
                     <div className={styles.product__subtitle}>{subtitle}</div>
                     <div className={styles.product__description}>
                         {description}
                     </div>
-                    <div className={styles.product__properties}>
-                        {properties.map((property, i) => <PropertySelector property={property} key={'property-selector-'+i} />)}
-                    </div>
+                    {/*<div className={styles.product__properties}>*/}
+                    {/*    {properties.map((property, i) => <PropertySelector property={property} key={'property-selector-'+i} />)}*/}
+                    {/*</div>*/}
                     <div className={styles.product__footer}>
-                        {modules.get($modules.basket) ? <button onClick={handleBasketClick} className={styles.product__button}>
+                        {modules.get($modules.basket) && auth.isAuthorized ? <button onClick={handleBasketClick} className={styles.product__button + ' contrast_bg'}>
                             <BasketIcon /> {t('add to basket')}
                         </button> : <CheckoutBtn size={'lg'}>{t('buy')}</CheckoutBtn>}
                     </div>

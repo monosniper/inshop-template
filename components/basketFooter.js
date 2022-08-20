@@ -16,7 +16,7 @@ const BasketFooter = () => {
                 <span className={styles['basket-footer__text']}>{t('total')}:</span>
             </div>
             <div className={styles['basket-footer__right']}>
-                <span className={styles['basket-footer__price']}>${basket.getSum()}</span>
+                <span className={styles['basket-footer__price'] + ' contrast'}>${basket.getSum()}</span>
                 <CheckoutBtn>{t('pay')}</CheckoutBtn>
             </div>
         </div>

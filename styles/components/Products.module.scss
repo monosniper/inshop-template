@@ -14,6 +14,27 @@
   position: relative;
   width: calc(25% - .8rem);
 
+  &__old_price {
+    font-size: 14px;
+    text-decoration-line: line-through;
+    color: #747474;
+  }
+
+  &__term {
+    color: white;
+    background: #a840bf;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    display: block;
+    width: fit-content;
+    position: absolute;
+  }
+
+  &__discount {
+    text-align: center;
+  }
+
   &:hover {
     .product__title {
       color: $purple;

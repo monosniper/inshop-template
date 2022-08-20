@@ -52,17 +52,17 @@ const FooterPanel = () => {
                     handler={openSearch}
                     icon={<AiOutlineSearch size={28} />}
                 />
-                {auth.isAuthorized ? <FooterPanelButton
+                {modules.get($modules.auth) ? auth.isAuthorized ? <FooterPanelButton
                     to={$routes.profile}
                     icon={<AiOutlineUser size={28} />}
                 /> : <FooterPanelButton
                     handler={() => auth.openLogin()}
                     icon={<AiOutlineUser size={28} />}
-                />}
-                {modules.get($modules.basket) && auth.isAuthorized && <FooterPanelButton
+                /> : null}
+                {modules.get($modules.basket) ? auth.isAuthorized && <FooterPanelButton
                     to={$routes.basket}
                     icon={<RiShoppingCartLine size={28} />}
-                />}
+                /> : null}
             </ScrollingCarousel>
         </div>
 

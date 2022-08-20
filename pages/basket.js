@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from "../components/header";
 import {Container} from "react-bootstrap";
 import Categories from "../components/categories";
@@ -10,10 +10,19 @@ import BasketFooter from "../components/basketFooter";
 import basket from "../store/basket";
 import shop from "../store/shop";
 import {useTranslation} from "react-i18next";
+import {useModules} from "../hooks/useModules";
+import {$modules} from "../utils/config";
+import {$routes} from "../http/routes";
+import {useRouter} from "next/router";
 
 const Basket = () => {
     const { t, i18n } = useTranslation();
+    const modules = useModules()
+    const router = useRouter()
 
+    useEffect(() => {
+        if(!modules.get($modules.basket)) router.push($routes.index)
+    }, [])
 
     return (
         <>

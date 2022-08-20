@@ -25,7 +25,7 @@ const Category = (props) => {
 
     useEffect(() => {
         if (active) {
-            setItemClass(styles.category + ' ' + styles.category_active)
+            setItemClass(styles.category + ' contrast_border ' + styles.category_active)
         } else {
             setItemClass(styles.category)
         }

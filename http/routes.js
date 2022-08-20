@@ -8,7 +8,9 @@ export const $routes = {
     wishlist: '/wishlist',
     checkout: '/checkout',
     successOrder: '/checkout/success',
+    reviews: '/reviews',
     product: (id) => `/product/${id}`,
+    custom_page: (slug) => `/page/${slug}`,
 }
 
 export const $apiRoutes = {

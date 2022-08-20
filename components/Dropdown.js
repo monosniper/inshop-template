@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from "../styles/components/Dropdown.module.scss";
+import Link from "next/link";
 
 const Dropdown = (props) => {
 
@@ -27,17 +28,25 @@ const Dropdown = (props) => {
     }
 
     return (
-        <div className={styles.dropdown}>
+        <div style={props.style} className={styles.dropdown + ' ' + props.className}>
             <div className={styles.dropdown__target} onClick={handleToggle}>
                 {props.target}
             </div>
             {isOpen ? (
                 <div style={{top: `${pageY}px`, left: `${pageX}px`}} className={styles.dropdown__menu}>
-                    {props.options.map((option, i) => (
-                        <div key={'option-'+i} className={styles.dropdown__item} onClick={option.handle}>
-                            {option.title}
-                        </div>
-                    ))}
+                    {props.options.map((option, i) => {
+                        return option.handle ? (
+                            <div key={'option-'+i} className={styles.dropdown__item} onClick={option.handle}>
+                                {option.title}
+                            </div>
+                        ) : (
+                            <Link href={option.link}>
+                                <div key={'option-'+i} className={styles.dropdown__item}>
+                                    {option.title}
+                                </div>
+                            </Link>
+                        )
+                    })}
                     {props.children}
                 </div>
             ) : <></>}

@@ -23,7 +23,7 @@ const BasketButton = observer(() => {
         <Link href={$routes.basket}>
             <button className={itemClass}>
                 <BasketIcon />
-                <span className={styles.button__count}>{basket.getItemsCount()}</span>
+                <span className={styles.button__count + ' contrast_bg'}>{basket.getItemsCount()}</span>
             </button>
         </Link>
     );

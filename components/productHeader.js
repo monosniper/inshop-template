@@ -6,7 +6,7 @@ const ProductHeader = ({ title, price }) => {
     return (
         <SubHeader>
             <span className={styles['product-header__title']}>{ title }</span>
-            <span className={styles['product-header__price']}>${price}</span>
+            <span className={styles['product-header__price'] + ' contrast'}>${price}</span>
         </SubHeader>
     );
 };

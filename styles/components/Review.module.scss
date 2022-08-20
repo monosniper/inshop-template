@@ -1,0 +1,39 @@
+.review {
+  padding: 20px 30px;
+  border: 1px solid #D1D9EA;
+  border-radius: 12px;
+
+  &+.review {
+    margin-top: .5rem;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  &__rating {
+    color: #dbca00;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+
+    path {
+      color: #dbca00;
+    }
+  }
+
+  &__content {
+    font-size: 18px;
+    margin-bottom: 1rem;
+  }
+
+  &__date {
+    color: #858585;
+    font-size: 14px;
+  }
+}

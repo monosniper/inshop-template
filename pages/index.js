@@ -8,17 +8,16 @@ import Footer from "../components/footer";
 import Products from "../components/products";
 import Filters from "../components/filters";
 import {observer} from "mobx-react-lite";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import shop from "../store/shop";
-
+import Carousel from "react-elastic-carousel";
+import AwesomeSlider from 'react-awesome-slider';
+import {$modules} from "../utils/config";
+import {useModules} from "../hooks/useModules";
+import Banner from "../components/Banner";
 export default observer(() => {
     const [items, setItems] = useState(shop.products)
-
-    // useEffect(() => {
-    //     shop.requestProducts().then(() => {
-    //         setItems(shop.products)
-    //     })
-    // }, [])
+    const modules = useModules()
 
     useEffect(() => {
         setItems(shop.products)
@@ -30,6 +29,8 @@ export default observer(() => {
                <Header/>
 
                <Container>
+                   {modules.get($modules.banner) ? <Banner /> : null}
+
                    <Categories/>
                    <Filters/>
 

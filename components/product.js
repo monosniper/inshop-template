@@ -9,6 +9,8 @@ import {observer} from "mobx-react-lite";
 import {$modules} from "../utils/config";
 import AuthModals from "./AuthModals";
 import {useModules} from "../hooks/useModules";
+import auth from "../store/auth";
+import {useTranslation} from "react-i18next";
 
 const Product = ({className, product}) => {
     const [itemClass, setItemClass] = useState(styles.product)
@@ -24,11 +26,23 @@ const Product = ({className, product}) => {
         }
     }, [])
 
+    const getDiscountPrice = () => {
+        const _discount = product.price / 100 * product.discount
+
+        return product.price - _discount;
+    }
+
+    const { t, i18n } = useTranslation();
+
     return (
-        <div className={itemClass}>
-            {modules.get($modules.basket) ?<span onClick={handleWishToggle} className={styles.product__wish}>
+        <div className={itemClass + ' product'}>
+            {modules.get($modules.basket) && auth.isAuthorized ? <span onClick={handleWishToggle} className={styles.product__wish + ' contrast_path'}>
                 {basket.hasItem(product.id) ? <HeartIcon /> : <HeartIconOutline />}
             </span> : null}
+
+            {modules.get($modules.discounts) && product.discount
+                ? <span className={styles.product__term}>-{product.discount}%</span>
+                : null}
 
             <Link href={$routes.product(product.id)}>
                 <div className={styles.product__image}>
@@ -38,11 +52,16 @@ const Product = ({className, product}) => {
             <div className={styles.product__footer}>
                 <div className={styles.product__details}>
                     <Link href={$routes.product(product.id)}>
-                        <div className={styles.product__title}>{product.title}</div>
+                        <div className={styles.product__title + ' contrast_hover product__title'}>{product.title}</div>
                     </Link>
                     <div className={styles.product__subtitle}>{product.subtitle}</div>
                 </div>
-                <div className={styles.product__price}>${product.price}</div>
+                <div className={styles.product__price + ' contrast'}>
+                    {modules.get($modules.discounts) && product.discount ? <div className={styles.product__discount}>
+                        <p className={styles.product__old_price}>${product.price}</p>
+                        <p className={styles.product__new_price + ' contrast'}>${getDiscountPrice()}</p>
+                    </div> : '$'+product.price}
+                </div>
             </div>
         </div>
     );

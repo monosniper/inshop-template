@@ -1,7 +1,11 @@
 const $modules = {
     basket: 'basket',
     auth: 'auth',
-    watermark: 'hide-watermark',
+    watermark: 'watermark',
+    banner: 'banner',
+    custom_pages: 'custom_pages',
+    discounts: 'discounts',
+    reviews: 'reviews',
 }
 
 const $layout = {
@@ -17,6 +21,21 @@ const $layout = {
 
         icons: 'icons',
     },
+    social: {
+        slug: 'social',
+
+        in_header: 'in_header',
+        in_footer: 'in_footer',
+        is_light: 'is_light',
+    }
+}
+
+const $colors = {
+    background: 'background',
+    header_color: 'header_color',
+    footer_color: 'footer_color',
+    font_color: 'font_color',
+    contrast_color: 'contrast_color',
 }
 
 for(let option in $layout) {
@@ -27,4 +46,4 @@ for(let option in $layout) {
     }
 }
 
-export {$modules, $layout}
+export {$modules, $layout, $colors}
