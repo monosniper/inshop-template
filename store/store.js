@@ -96,9 +96,7 @@ class Store {
     }
 
     async getProduct(id) {
-        const product = await ShopService.getProduct(id);
-
-        return product;
+        return await ShopService.getProduct(id);
     }
 }
 

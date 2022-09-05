@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import Header from "../components/header";
 import {Col, Container, Row} from "react-bootstrap";
 import SubHeader from "../components/subHeader";
@@ -16,21 +16,53 @@ import basket from "../store/basket";
 import {observer} from "mobx-react-lite";
 import auth from "../store/auth";
 import {useTranslation} from "react-i18next";
+import styles from "../styles/components/Filters.module.scss";
+import ReactModal from "react-modal";
+import store from "../store/store";
+import {$modules} from "../utils/config";
+import {useModules} from "../hooks/useModules";
+import {useShop} from "../hooks/useShop";
+
+function OrderHelpText({orderId}) {
+    const shop_data = useShop()
+    const content = shop_data.orderText.replaceAll("%instagram%", "<a class='contrast' target='_blank' href='"+shop.getInstagramLink()+"'>instagram</a>");
+    return <div dangerouslySetInnerHTML={{__html:content}} style={{textAlign: 'center', wordBreak: 'break-word'}}></div>;
+}
+
+function OrderHelpTitle({orderId}) {
+    return <p style={{textAlign: 'center'}}>Номер заказа - #{orderId}</p>;
+}
 
 const Checkout = () => {
     const router = useRouter()
-    const [sum, setSum] = useState(basket.getSum())
-    const [delivery, setDelivery] = useState(0)
+    const modules = useModules()
+    const {product_id} = router.query
     const [email, setEmail] = useState(auth.data.email)
     const [name, setName] = useState(auth.data.fio)
     const [phone, setPhone] = useState(auth.data.phone)
     const [address, setAddress] = useState(auth.data.address)
+    const [orderId, setOrderId] = useState(null)
     const { t, i18n } = useTranslation();
+    const [showModal, setShowModal] = useState(false)
+    const items = useMemo(() => product_id ? [
+        shop.getProduct(product_id)
+    ] : (modules.get($modules.basket) ? basket.items : []), [router.query])
+    const [sum, setSum] = useState(basket.getSum(items))
+    const [delivery, setDelivery] = useState(0)
+    const [orderCreated, setOrderCreated] = useState(false)
+
+    const handleOpenModal = () => setShowModal(true)
+    const handleCloseModal = () => setShowModal(false)
 
     const handleSubmit = () => {
         shop.makeOrder({
             name, email, phone, address
-        }, basket.items).then(() => router.push($routes.successOrder))
+        }, items).then((rs) => {
+            // router.push($routes.successOrder
+            setOrderId(rs)
+            setOrderCreated(true)
+            handleOpenModal()
+        })
     }
 
     return (
@@ -41,7 +73,7 @@ const Checkout = () => {
                 <Container>
                     <SubHeader text={t('new order')} />
 
-                    <CheckList items={basket.items} />
+                    <CheckList items={items} />
 
                     <Row className={'mb'}>
                         <Col className={'mt'} lg={4} sm={12} md={6}><EmailField email={email} setEmail={setEmail} /></Col>
@@ -50,7 +82,7 @@ const Checkout = () => {
                     </Row>
 
                     <Row className={'mb'}>
-                        <Col className={'mt'} lg={4} sm={12} md={6}><AddressField address={address} setAddres={setAddress} /></Col>
+                        <Col className={'mt'} lg={4} sm={12} md={6}><AddressField address={address} setAddress={setAddress} /></Col>
                         <Col className={'mt'} lg={4} sm={12} md={6}>
                             <TotalField
                                 sum={sum}
@@ -58,12 +90,26 @@ const Checkout = () => {
                             />
                         </Col>
                     </Row>
-
-                    <button onClick={handleSubmit} className={'button button_lg mb mx-auto'}>{t('make order')}</button>
+                    {orderCreated ? <>
+                        <OrderHelpTitle orderId={orderId} />
+                        <OrderHelpText orderId={orderId} />
+                    </> : null}
+                    <br/>
+                    <button onClick={handleSubmit} disabled={orderCreated} className={'button button_lg mb mx-auto'}>{t('make order')}</button>
                 </Container>
             </div>
 
             <Footer/>
+
+            <ReactModal
+                isOpen={showModal}
+                className={'modal'}
+                overlayClassName={'modals-overlay'}
+            >
+                <div className="modal__title"><OrderHelpTitle orderId={orderId} /></div>
+                <OrderHelpText orderId={orderId} />
+                <button onClick={handleCloseModal} className={'modal__button button'}>Ок</button>
+            </ReactModal>
         </>
     );
 };

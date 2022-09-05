@@ -13,7 +13,7 @@ const User = (props) => {
 
     const handleLogout = () => {
         localStorage.clear()
-        router.push($routes.login)
+        router.push($routes.index)
     }
 
     return (

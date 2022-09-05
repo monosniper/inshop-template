@@ -4,6 +4,10 @@ const { i18n } = require('./next-i18next.config');
 
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: ['localhost', 'inshop-online.com'],
+    formats: ['image/avif', 'image/webp'],
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.module.rules.push({
       test: /\.svg$/,

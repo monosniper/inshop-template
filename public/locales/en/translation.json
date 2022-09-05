@@ -31,5 +31,9 @@
     "loading": "Loading",
     "discount": "Discount",
     "reviews": "Reviews",
-    "published": "Published"
+    "published": "Published",
+    "content": "content",
+    "ok": "Ok",
+    "close_tab": "Close the site",
+    "adult_text": "Attention! This site contains content rated 18+. If you are under 18, please leave the site immediately."
 }

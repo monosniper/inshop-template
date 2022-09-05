@@ -23,6 +23,34 @@ body {
   margin: 1rem 0;
 }
 
+.modal {
+  background: $bg;
+  position: absolute;
+  inset: 40px;
+  border: 1px solid rgb(204, 204, 204);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+
+.modal-overlay {
+  z-index: 100;
+  position: fixed;
+  inset: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
+
+  &_adult::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    backdrop-filter: blur(3px);
+  }
+}
+
 img {
   max-width: 100%;
   max-height: 100%;
@@ -96,6 +124,14 @@ img {
   display: flex;
 }
 
+.discount {
+  color: white;
+  margin: 0 0.5rem;
+  font-size: 14px;
+  border-radius: 17px;
+  padding: 5px 10px;
+}
+
 .button {
   cursor: pointer;
   border: none;
@@ -106,6 +142,11 @@ img {
   text-align: center;
   justify-content: center;
   padding: 8px 30px;
+
+  &[disabled] {
+    pointer-events: none;
+    opacity: .5;
+  }
 
   &:hover {
     opacity: .9;

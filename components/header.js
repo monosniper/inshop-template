@@ -78,7 +78,7 @@ const Header = () => {
                                         <div className={styles.header__logo}>
                                             <Link href={'/'}>
                                                 <Image
-                                                    src={'/assets/images/logo.png'}
+                                                    src={shop.logo_url}
                                                     width={70}
                                                     height={70}
                                                     alt={shop_data.title}

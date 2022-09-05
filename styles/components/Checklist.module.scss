@@ -29,9 +29,10 @@
   }
 
   &__price {
-    color: $purple;
     font-size: 18px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
   }
 
   &__count {

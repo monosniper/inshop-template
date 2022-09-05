@@ -16,6 +16,7 @@ import {observer} from "mobx-react-lite";
 import {$modules} from "../utils/config";
 import {useModules} from "../hooks/useModules";
 import ConfigStyles from "../components/ConfigStyles";
+import AdultModal from "../components/modals/AdultModal";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -32,11 +33,6 @@ function MyApp({ Component, pageProps }) {
           i18n.changeLanguage(shop.options.language)
 
           auth.isAuthorized && auth.data.basket_id !== '' && modules.get($modules.basket) && basket.loadBasket();
-
-          // router.push({
-          //   pathname: router.pathname + '[slug]',
-          //   query: {slug: router.query.slug}
-          // })
         }
         else router.push($routes.undefined)
       })
@@ -45,6 +41,7 @@ function MyApp({ Component, pageProps }) {
   return loading ? <Loader /> : <>
     <div className="layout">
       <ConfigStyles />
+      {modules.get($modules.adult_content) ? <AdultModal /> : null}
       {modules.get($modules.auth) ? <AuthModals /> : null}
       <Component {...pageProps} />
     </div>

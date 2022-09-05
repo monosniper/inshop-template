@@ -3,7 +3,7 @@ import Field from "./Field";
 import styles from "../../styles/components/Field.module.scss";
 import {useTranslation} from "react-i18next";
 
-const AddressField = ({ address, setAddres }) => {
+const AddressField = ({ address, setAddress }) => {
     const { t, i18n } = useTranslation();
 
     const handleChangeAddress = (e) => {

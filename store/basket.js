@@ -67,11 +67,22 @@ class Basket {
         return this.items.find(item => item.product.id === id)
     }
 
-    getSum() {
+    getSum(items=false) {
+        if(!items) items = this.items
         let sum = 0
 
-        toJS(this.items).forEach(item => {
-            sum += item.product.price * item.count
+        const getDiscountPrice = (price, discount) => {
+            const _discount = price / 100 * discount
+
+            return price - _discount;
+        }
+
+        toJS(items).forEach(item => {
+            item = item.product ? item.product : item
+            const discount_price = getDiscountPrice(item.price, item.discount)
+            const count = item.count ?? 1;
+
+            sum += discount_price * count
         })
 
         return sum

@@ -18,6 +18,8 @@ class Shop {
     social_networks = []
     custom_pages = []
     reviews = []
+    logo_url = ''
+    logo_name = ''
     filters = {
         'category': {
             value: null,
@@ -86,6 +88,14 @@ class Shop {
         this.id = id;
     }
 
+    setLogoUrl(logo_url) {
+        this.logo_url = logo_url;
+    }
+
+    setLogoName(logo_name) {
+        this.logo_name = logo_name;
+    }
+
     setOptions(options) {
         this.options = options;
     }
@@ -137,6 +147,8 @@ class Shop {
             this.setBanners(data.banners);
             this.setCustomPages(data.custom_pages);
             this.setReviews(data.reviews);
+            this.setLogoUrl(data.logo_url);
+            this.setLogoName(data.logo_name);
         }
 
         return data;
@@ -167,9 +179,14 @@ class Shop {
     }
 
     async makeOrder(shipping_data, products) {
-        const response = await ShopService.makeOrder(shipping_data, products)
+        const response = await ShopService.makeOrder(this.id, shipping_data, products)
 
-        return response.status
+        return response.data
+    }
+
+    getInstagramLink() {
+        const network = this.social_networks.find(network => network.slug === 'instagram')
+        return network ? network.value : '#'
     }
 
     getProduct(id) {

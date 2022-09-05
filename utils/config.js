@@ -6,6 +6,7 @@ const $modules = {
     custom_pages: 'custom_pages',
     discounts: 'discounts',
     reviews: 'reviews',
+    adult_content: 'content.adult',
 }
 
 const $layout = {

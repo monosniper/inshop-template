@@ -50,7 +50,14 @@ const PropertySelector = ({ property }) => {
 }
 const ProductDetails = (product) => {
     const {
-        id, title, price, subtitle, category, description, images
+        id,
+        title,
+        price,
+        subtitle,
+        category,
+        description,
+        images,
+        discount,
     } = product
 
     const router = useRouter()
@@ -124,7 +131,10 @@ const ProductDetails = (product) => {
                     </Link>
                     <div className={styles.product__header}>
                         <span className={styles.product__title}>{title}</span>
-                        <span className={styles.product__price + ' contrast'}>${price}</span>
+                        <span className={styles.product__price + ' contrast'}>
+                            {discount ? <span className={'discount contrast_bg'}>-{discount}%</span> : null}
+                            ${discount ? price - (price / 100 * discount) : price}
+                        </span>
                     </div>
                     <div className={styles.product__subtitle}>{subtitle}</div>
                     <div className={styles.product__description}>
@@ -136,7 +146,7 @@ const ProductDetails = (product) => {
                     <div className={styles.product__footer}>
                         {modules.get($modules.basket) && auth.isAuthorized ? <button onClick={handleBasketClick} className={styles.product__button + ' contrast_bg'}>
                             <BasketIcon /> {t('add to basket')}
-                        </button> : <CheckoutBtn size={'lg'}>{t('buy')}</CheckoutBtn>}
+                        </button> : <CheckoutBtn product_id={id} size={'lg'}>{t('buy')}</CheckoutBtn>}
                     </div>
                 </Col>
             </Row>
