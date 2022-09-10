@@ -77,12 +77,13 @@ const Header = () => {
                                     {layout.get($layout.header.logo) ?
                                         <div className={styles.header__logo}>
                                             <Link href={'/'}>
-                                                <Image
-                                                    src={shop.logo_url}
-                                                    width={70}
-                                                    height={70}
-                                                    alt={shop_data.title}
-                                                />
+                                                {/*<Image*/}
+                                                {/*    src={shop.logo_url}*/}
+                                                {/*    width={70}*/}
+                                                {/*    height={70}*/}
+                                                {/*    alt={shop_data.title}*/}
+                                                {/*/>*/}
+                                                <img src={shop.logo_url} alt={shop_data.title} width={70} height={70}/>
                                             </Link>
                                         </div> : null}
                                     {!isMobile ? <ShopDetails modules={modules} layout={layout} shop={shop_data} custom_pages={shop.custom_pages} /> : null}
