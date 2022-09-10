@@ -59,7 +59,7 @@ const Checkout = () => {
         const billId = uuid();
         shop.makeOrder({
             name, email, phone, address, billId
-        }, items).then((rs) => {
+        }, items.map(item => item.id)).then((rs) => {
             // router.push($routes.successOrder
             if(modules.get($modules.payment.qiwi)) {
                 const params = {

@@ -135,7 +135,7 @@ const ProductDetails = (product) => {
                         <span className={styles.product__title}>{title}</span>
                         <span className={styles.product__price + ' contrast'}>
                             {discount ? <span className={'discount contrast_bg'}>-{discount}%</span> : null}
-                            {shop.currency}{discount ? price - (price / 100 * discount) : price}
+                            {discount ? price - (price / 100 * discount) : price}{shop.currency}
                         </span>
                     </div>
                     <div className={styles.product__subtitle}>{subtitle}</div>

@@ -1,9 +1,11 @@
 import React from 'react';
 import styles from "../../styles/components/Checklist.module.scss";
 import * as PropTypes from "prop-types";
+import {useShop} from "../../hooks/useShop";
 
 function CheckListItem(props) {
     const count = props.count ?? 1;
+    const shop = useShop()
 
     return <div className={styles.item}>
         <div className={styles.item__left}>
@@ -15,7 +17,7 @@ function CheckListItem(props) {
         </div>
         <span className={styles.item__price + ' contrast'}>
             {props.discount ? <span className={'discount contrast_bg'}>-{props.discount}%</span> : null}
-            ${props.price * count}
+            {props.price * count}{shop.currency}
         </span>
     </div>;
 }

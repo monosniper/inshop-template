@@ -9,7 +9,7 @@ const ProductHeader = ({ title, price, discount }) => {
         <SubHeader>
             <span className={styles['product-header__title']}>{ title }</span>
             <span className={styles['product-header__price'] + ' contrast'}>
-                {shop.currency}{price}
+                {price}{shop.currency}
             </span>
         </SubHeader>
     );
