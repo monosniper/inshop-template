@@ -25,8 +25,8 @@ export default class ShopService {
         let response = {data: {data: null}}
 
         try {
-            response = await $api.get($apiRoutes.getShop(window.location.host.split('.')[0]));
-            // response = await $api.get($apiRoutes.getShop('dsadsad'));
+            // response = await $api.get($apiRoutes.getShop(window.location.host.split('.')[0]));
+            response = await $api.get($apiRoutes.getShop('dsadsad'));
         } catch (e) {
             e && e.response && showError(e.response.data.message)
         }

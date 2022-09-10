@@ -41,7 +41,7 @@ const Product = ({className, product}) => {
             </span> : null}
 
             {modules.get($modules.discounts) && product.discount
-                ? <span className={styles.product__term}>-{product.discount}%</span>
+                ? <span className={styles.product__term + ' contrast_bg'}>-{product.discount}%</span>
                 : null}
 
             <Link href={$routes.product(product.id)}>
