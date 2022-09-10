@@ -31,7 +31,8 @@
     "react-elastic-carousel": "^0.11.5",
     "react-i18next": "^11.17.2",
     "react-icons": "^4.4.0",
-    "react-modal": "^3.14.4"
+    "react-modal": "^3.14.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.2.1",

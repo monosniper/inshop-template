@@ -16,6 +16,7 @@ import HeartIconOutline from "../public/assets/icons/heart_outline.svg";
 import {useModules} from "../hooks/useModules";
 import CheckoutBtn from "./CheckoutBtn";
 import auth from "../store/auth";
+import {useShop} from "../hooks/useShop";
 
 const ProductImage = ({ handleImageClick, src, mainSrc }) => {
     const [itemClass, setItemClass] = useState(styles.product__image)
@@ -64,6 +65,7 @@ const ProductDetails = (product) => {
     const modules = useModules()
     const isMobile = useIsMobile()
     const { t, i18n } = useTranslation();
+    const shop = useShop()
 
     const [mainImage, setMainImage] = useState(undefined)
     const properties = [
@@ -133,7 +135,7 @@ const ProductDetails = (product) => {
                         <span className={styles.product__title}>{title}</span>
                         <span className={styles.product__price + ' contrast'}>
                             {discount ? <span className={'discount contrast_bg'}>-{discount}%</span> : null}
-                            ${discount ? price - (price / 100 * discount) : price}
+                            {shop.currency}{discount ? price - (price / 100 * discount) : price}
                         </span>
                     </div>
                     <div className={styles.product__subtitle}>{subtitle}</div>

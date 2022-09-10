@@ -6,9 +6,11 @@ import {observer} from "mobx-react-lite";
 import {$routes} from "../http/routes";
 import {useTranslation} from "react-i18next";
 import CheckoutBtn from "./CheckoutBtn";
+import {useShop} from "../hooks/useShop";
 
 const BasketFooter = () => {
     const { t, i18n } = useTranslation();
+    const shop = useShop()
 
     return (
         <div className={styles['basket-footer'] + ' white-block'}>
@@ -16,7 +18,7 @@ const BasketFooter = () => {
                 <span className={styles['basket-footer__text']}>{t('total')}:</span>
             </div>
             <div className={styles['basket-footer__right']}>
-                <span className={styles['basket-footer__price'] + ' contrast'}>${basket.getSum()}</span>
+                <span className={styles['basket-footer__price'] + ' contrast'}>{basket.getSum()}{shop.currency}</span>
                 <CheckoutBtn>{t('pay')}</CheckoutBtn>
             </div>
         </div>

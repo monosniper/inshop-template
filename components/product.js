@@ -11,10 +11,12 @@ import AuthModals from "./AuthModals";
 import {useModules} from "../hooks/useModules";
 import auth from "../store/auth";
 import {useTranslation} from "react-i18next";
+import {useShop} from "../hooks/useShop";
 
 const Product = ({className, product}) => {
     const [itemClass, setItemClass] = useState(styles.product)
     const modules = useModules();
+    const shop = useShop()
 
     const handleWishToggle = () => {
         basket.toggleItem(product)
@@ -58,9 +60,9 @@ const Product = ({className, product}) => {
                 </div>
                 <div className={styles.product__price + ' contrast'}>
                     {modules.get($modules.discounts) && product.discount ? <div className={styles.product__discount}>
-                        <p className={styles.product__old_price}>${product.price}</p>
-                        <p className={styles.product__new_price + ' contrast'}>${getDiscountPrice()}</p>
-                    </div> : '$'+product.price}
+                        <p className={styles.product__old_price}>{product.price}{shop.currency}</p>
+                        <p className={styles.product__new_price + ' contrast'}>{getDiscountPrice()}{shop.currency}</p>
+                    </div> : product.price + shop.currency}
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ class Shop {
     q = ''
     products = []
     categories = null
+    domain = ''
     modules = []
     options = {}
     layout = []
@@ -128,6 +129,10 @@ class Shop {
         this.modules = modules
     }
 
+    setDomain(domain) {
+        this.domain = domain
+    }
+
     setSocialNetworks(social_networks) {
         this.social_networks = social_networks
     }
@@ -141,6 +146,7 @@ class Shop {
             this.setModules(data.modules);
             this.setOptions(data.options);
             this.setLayout(data.layout);
+            this.setDomain(data.domain);
             this.setId(data.id);
             this.setColors(data.colors);
             this.setSocialNetworks(data.social_networks);

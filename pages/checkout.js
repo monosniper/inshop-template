@@ -22,6 +22,7 @@ import store from "../store/store";
 import {$modules} from "../utils/config";
 import {useModules} from "../hooks/useModules";
 import {useShop} from "../hooks/useShop";
+import {v4 as uuid} from 'uuid';
 
 function OrderHelpText({orderId}) {
     const shop_data = useShop()
@@ -55,13 +56,33 @@ const Checkout = () => {
     const handleCloseModal = () => setShowModal(false)
 
     const handleSubmit = () => {
+        const billId = uuid();
         shop.makeOrder({
-            name, email, phone, address
+            name, email, phone, address, billId
         }, items).then((rs) => {
             // router.push($routes.successOrder
-            setOrderId(rs)
-            setOrderCreated(true)
-            handleOpenModal()
+            if(modules.get($modules.payment.qiwi)) {
+                const params = {
+                    public_key: shop.options.qiwiPublicKey,
+                    'customFields[themeCode]': shop.options.qiwiTheme,
+                    // successUrl: 'http://localhost:3004/success',
+                    successUrl: 'https://' + shop.domain + $routes.successOrder,
+                    comment: ' - ' + items.map(item => item.title).join(', '),
+                    // account : '79643210393',
+                    phone,
+                    email,
+                    billId,
+                    amount: basket.getSum(items),
+                }
+
+                let url = 'https://oplata.qiwi.com/create?' + new URLSearchParams(params).toString();
+
+                window.location.replace(url)
+            } else {
+                setOrderId(rs)
+                setOrderCreated(true)
+                handleOpenModal()
+            }
         })
     }
 

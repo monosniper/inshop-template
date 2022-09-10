@@ -7,6 +7,9 @@ const $modules = {
     discounts: 'discounts',
     reviews: 'reviews',
     adult_content: 'content.adult',
+    payment: {
+        qiwi: 'payment.qiwi'
+    },
 }
 
 const $layout = {
