@@ -1,11 +1,14 @@
 import React from 'react';
 import AwesomeSlider from "react-awesome-slider";
+import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import {useEffect, useState} from "react";
 import shop from "../store/shop";
 import {observer} from "mobx-react-lite";
 
 const Banner = () => {
     const [banners, setBanners] = useState(shop.banners)
+
+    const AutoplaySlider = withAutoplay(AwesomeSlider)
 
     useEffect(() => {
         const banners_list = []
@@ -22,7 +25,7 @@ const Banner = () => {
     }, [shop.banners])
 
     return banners.length ? (
-            <AwesomeSlider
+            <AutoplaySlider
                 bullets={false}
                 className={'slider'}
                 play={true}
@@ -34,7 +37,7 @@ const Banner = () => {
                         className={'banner__inner'}
                         style={{
                             backgroundColor: banner.background ? banner.background : '#3a3a3a',
-                            backgroundImage: banner.type.indexOf('image') ? 'url(' + banner.image_url + ')' : 'none'
+                            backgroundImage: banner.type.indexOf('image') !== -1 ? 'url(' + banner.image_url + ')' : 'none'
                         }}
                     >
                         {banner.type.indexOf('text') !== -1
@@ -48,7 +51,7 @@ const Banner = () => {
                             : null}
                     </div>
                 </div>)}
-            </AwesomeSlider>
+            </AutoplaySlider>
         ) : null;
 };
 

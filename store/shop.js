@@ -184,8 +184,8 @@ class Shop {
         return filtered_products
     }
 
-    async makeOrder(shipping_data, products) {
-        const response = await ShopService.makeOrder(this.id, shipping_data, products)
+    async makeOrder(billId, shipping_data, products) {
+        const response = await ShopService.makeOrder(this.id, {billId, shipping_data, products})
 
         return response.data
     }

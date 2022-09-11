@@ -11,10 +11,8 @@ export default class ShopService {
         return response.data.data;
     }
 
-    static async makeOrder(shop_id, shipping_data, products) {
-        return await $api.post($apiRoutes.orders.create(shop_id), {
-            shipping_data, products
-        });
+    static async makeOrder(shop_id, data) {
+        return await $api.post($apiRoutes.orders.create(shop_id), data);
     }
 
     static async createShop(name, domain_id) {

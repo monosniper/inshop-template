@@ -24,9 +24,9 @@ body {
 }
 
 .modal {
+  max-width: calc(100% - 40px) !important;
   background: $bg;
   position: absolute;
-  inset: 40px;
   border: 1px solid rgb(204, 204, 204);
   overflow: auto;
   border-radius: 4px;
@@ -232,7 +232,7 @@ a {
 
 
 .input {
-  border: none;
+  border: 1px solid lightgrey;
   border-radius: 7px;
   background: #fff;
   outline: none;
