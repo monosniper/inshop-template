@@ -15,7 +15,7 @@ export const $routes = {
 
 export const $apiRoutes = {
     getMe: (token) => `/me?token=${token}`,
-    getShop: (name) => `/get-shop?domain_name=${name}`,
+    getShop: (subdomain, domain='') => `/get-shop?subdomain=${subdomain}&domain=${domain}`,
     user: '/user',
     login: (shop_id) => `/shops/${shop_id}/login`,
     register: (shop_id) => `/shops/${shop_id}/register`,

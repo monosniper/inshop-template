@@ -7,6 +7,8 @@ import ReactModal from 'react-modal';
 import {useRouter} from "next/router";
 import shop from "../store/shop";
 import {useTranslation} from "react-i18next";
+import {useFilters} from "../hooks/useFilters";
+import {$filters} from "../utils/config";
 
 function FilterItems() {
     const router = useRouter()
@@ -15,6 +17,7 @@ function FilterItems() {
     const [price_to, setPriceTo] = useState(0)
     const [inStock, setInStock] = useState(false)
     const { t, i18n } = useTranslation();
+    const filters = useFilters()
 
     const sortOptions = [
         {
@@ -38,16 +41,6 @@ function FilterItems() {
             text: t('z-a'),
         },
     ]
-
-    // useEffect(() => {
-    //     router.push({
-    //         pathname: '/',
-    //         query: {
-    //             ...router.query,
-    //             sort: e.target.value,
-    //         }
-    //     }, undefined, {scroll: false})
-    // }, [])
 
     useEffect(() => {
         const { sort, price_from, price_to, inStock, category, q } = router.query
@@ -132,22 +125,22 @@ function FilterItems() {
 
     return (
         <div className={styles.filter__items}>
-            <div className={styles.filter__item}>
+            {filters.get($filters.sorting) ? <div className={styles.filter__item}>
                 <span className={styles.filter__name}>{t('sorting')}</span>
                 <select value={sort} className={'input'} onChange={handleSortChange}>
                     {sortOptions.map((option, i) => (
                         <option key={'sort-option-'+i} value={option.value}>{option.text}</option>
                     ))}
                 </select>
-            </div>
-            <div className={styles.filter__item}>
+            </div> : null}
+            {filters.get($filters.pricing) ? <div className={styles.filter__item}>
                 <span className={styles.filter__name}>{t('price')}</span>
                 <input value={price_from} placeholder={t('from')} type="number" className={'input'}
                        onChange={handlePriceFromChange}/>
                 <input value={price_to} placeholder={t('to')} type="number" className={'input'}
                        onChange={handlePriceToChange}/>
-            </div>
-            <div className={styles.filter__item}>
+            </div> : null}
+            {filters.get($filters.availability) ? <div className={styles.filter__item}>
                 <span onClick={handleInStockClick} className={styles.filter__name}>{t('in stock')}</span>
                 <input
                     checked={inStock}
@@ -156,7 +149,7 @@ function FilterItems() {
                     onChange={handleInStockClick}
                 />
                 {/*<span className={styles.filter__checkbox}><CheckIcon/></span>*/}
-            </div>
+            </div> : null}
         </div>
     );
 }
@@ -167,6 +160,7 @@ const Filters = () => {
     const [showFilterModal, setShowFilterModal] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
     const { t, i18n } = useTranslation();
+    const filters = useFilters()
 
     useEffect(() => {
         const query = router.query.q;
@@ -199,7 +193,7 @@ const Filters = () => {
         }, undefined, {scroll: false})
     }
 
-    return (
+    return !filters.isEmpty() ? (
         <div className={styles.filter__container}>
             <div className={styles.filter__left}>
                 <div className={styles.filter__sm}>
@@ -222,13 +216,12 @@ const Filters = () => {
                 </div>
             </div>
             <div className={styles.filter__right}>
-                <div className={styles.search}>
+                {filters.get($filters.search) ? <div className={styles.search}>
                     <input className={styles.search__input} type="text" onChange={handleSearch} value={searchQuery} placeholder={t('search')} />
                     <SearchIcon className={styles.search__icon}/>
-                </div>
+                </div> : null}
             </div>
-        </div>
-    );
+        </div>) : null;
 };
 
 export default Filters;

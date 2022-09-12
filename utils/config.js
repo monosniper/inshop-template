@@ -42,6 +42,13 @@ const $colors = {
     contrast_color: 'contrast_color',
 }
 
+const $filters = {
+    sorting: 'sorting',
+    search: 'search',
+    availability: 'availability',
+    pricing: 'pricing',
+}
+
 for(let option in $layout) {
     for(let child in $layout[option]) {
         if(child !== 'slug') {
@@ -50,4 +57,9 @@ for(let option in $layout) {
     }
 }
 
-export {$modules, $layout, $colors}
+export {
+    $modules,
+    $layout,
+    $colors,
+    $filters,
+}

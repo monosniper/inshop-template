@@ -23,6 +23,7 @@
     "node-sass": "^7.0.1",
     "noty": "^3.2.0-beta-deprecated",
     "prop-types": "^15.8.1",
+    "proxify-vercel": "^1.0.4",
     "react": "^17.0.2",
     "react-awesome-slider": "^4.1.0",
     "react-bootstrap": "^2.2.1",

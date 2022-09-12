@@ -21,7 +21,7 @@ class Shop {
     reviews = []
     logo_url = ''
     logo_name = ''
-    filters = {
+    filter_handlers = {
         'category': {
             value: null,
             handler: (items, value) => {
@@ -133,6 +133,10 @@ class Shop {
         this.domain = domain
     }
 
+    setFilters(filters) {
+        this.filters = filters
+    }
+
     setSocialNetworks(social_networks) {
         this.social_networks = social_networks
     }
@@ -155,6 +159,7 @@ class Shop {
             this.setReviews(data.reviews);
             this.setLogoUrl(data.logo_url);
             this.setLogoName(data.logo_name);
+            this.setFilters(data.filters);
         }
 
         return data;
@@ -169,15 +174,15 @@ class Shop {
     }
 
     setFilter(name, value) {
-        const newFilters = {...this.filters}
+        const newFilters = {...this.filter_handlers}
         newFilters[name].value = value
-        this.filters = newFilters
+        this.filter_handlers = newFilters
     }
 
     getFilteredProducts() {
         let filtered_products = [...this.products]
 
-        Object.entries(this.filters).forEach(([name, filter]) => {
+        Object.entries(this.filter_handlers).forEach(([name, filter]) => {
             if(filter.value) filtered_products = filter.handler(filtered_products, filter.value)
         })
 
