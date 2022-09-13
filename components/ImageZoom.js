@@ -1,22 +1,25 @@
-import {Component} from "react";
+import {useMemo, useState} from "react";
+import {observer} from "mobx-react-lite";
 
-class ImageZoom extends Component {
-    state = {
-        backgroundImage: `url(${this.props.src})`,
-        backgroundPosition: '0% 0%'
-    }
+const ImageZoom = ({ src, alt }) => {
+    const [x, setX] = useState(0)
+    const [y, setY] = useState(0)
+    const style = useMemo(() => {
+        return {
+            backgroundImage: `url(${src})`,
+            backgroundPosition: `${x}% ${y}%`
+        }
+    }, [src, x, y])
 
-    handleMouseMove = e => {
+    const handleMouseMove = e => {
         const { left, top, width, height } = e.target.getBoundingClientRect()
-        const x = (e.pageX - left) / width * 100
-        const y = (e.pageY - top) / height * 100
-        this.setState({ backgroundPosition: `${x}% ${y}%` })
+        setX((e.pageX - left) / width * 100)
+        setY((e.pageY - top) / height * 100)
     }
 
-    render = () =>
-        <figure onMouseMove={this.handleMouseMove} style={this.state}>
-            <img src={this.props.src}  alt={this.props.alt}/>
-        </figure>
+    return <figure onMouseMove={handleMouseMove} style={style}>
+        <img src={src} alt={alt}/>
+    </figure>
 }
 
-export default ImageZoom
+export default observer(ImageZoom)

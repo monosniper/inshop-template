@@ -86,7 +86,6 @@ const Checkout = () => {
     }
 
     useEffect(() => {
-        console.log(items)
         setSum(basket.getSum(items))
     }, [items])
 
