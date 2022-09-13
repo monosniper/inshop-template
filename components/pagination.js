@@ -26,7 +26,7 @@ const Pagination = props => {
     }
 
     const onNext = () => {
-        currentPage < pageSize && onPageChange(currentPage + 1);
+        currentPage < lastPage && onPageChange(currentPage + 1);
     };
 
     const onPrevious = () => {
@@ -34,6 +34,7 @@ const Pagination = props => {
     };
 
     let lastPage = paginationRange[paginationRange.length - 1];
+
     return (
         <ul
             className={styles.pagination__items}
@@ -57,7 +58,7 @@ const Pagination = props => {
                     <li
                         key={'page-'+i}
                         className={
-                            styles.pagination__item + ' ' + styles.pagination__page + ' ' + (pageNumber === currentPage ? styles.pagination__page_active : '')
+                            styles.pagination__item + ' ' + styles.pagination__page + ' ' + (pageNumber === currentPage ? styles.pagination__page_active + ' contrast_bg' : '')
                         }
                         onClick={() => onPageChange(pageNumber)}
                     >

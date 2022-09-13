@@ -12,12 +12,16 @@ class Basket {
 
     setItems(items, update=true) {
         this.items = items;
-        update && BasketService.update(shop.id, auth.data.basket_id, items)
+        update && BasketService.update(
+            shop.id,
+            auth.data.basket_id,
+            {items: items.map(item => item.product.id)}
+        )
     }
 
-    loadBasket() {
+    async loadBasket() {
        if(shop.id && auth.data.basket_id) {
-           BasketService.loadItems(shop.id, auth.data.basket_id).then(rs => {
+           await BasketService.loadItems(shop.id, auth.data.basket_id).then(rs => {
                this.setItems(rs.data, false)
            })
        }
@@ -64,26 +68,23 @@ class Basket {
     }
 
     hasItem(id) {
-        return this.items.find(item => item.product.id === id)
+        return toJS(this.items).find(item => item.product && item.product.id === id)
     }
 
     getSum(items=false) {
         if(!items) items = this.items
         let sum = 0
 
-        const getDiscountPrice = (price, discount) => {
-            const _discount = price / 100 * discount
-
-            return price - _discount;
-        }
-
         toJS(items).forEach(item => {
             item = item.product ? item.product : item
-            const discount_price = getDiscountPrice(item.price, item.discount)
+            const discount_price = item.discount_price
             const count = item.count ?? 1;
 
-            sum += discount_price * count
+            sum += parseInt(discount_price) * count
         })
+
+        // Delivery
+        sum += (parseInt(shop.options.delivery) || 0)
 
         return sum
     }

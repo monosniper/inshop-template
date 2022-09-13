@@ -17,6 +17,9 @@ import {useModules} from "../hooks/useModules";
 import CheckoutBtn from "./CheckoutBtn";
 import auth from "../store/auth";
 import {useShop} from "../hooks/useShop";
+import {$routes} from "../http/routes";
+import {observer} from "mobx-react-lite";
+import ImageZoom from "./ImageZoom";
 
 const ProductImage = ({ handleImageClick, src, mainSrc }) => {
     const [itemClass, setItemClass] = useState(styles.product__image)
@@ -66,8 +69,8 @@ const ProductDetails = (product) => {
     const isMobile = useIsMobile()
     const { t, i18n } = useTranslation();
     const shop = useShop()
-
     const [mainImage, setMainImage] = useState(undefined)
+    const [isActive, setIsActive] = useState(false)
     const properties = [
         {
             name: 'Размер',
@@ -105,6 +108,9 @@ const ProductDetails = (product) => {
         auth.isAuthorized ? basket.addItem(id, product) : auth.openLogin()
     }
 
+    const onZoom = () => setIsActive(true)
+    const onClose = () => setIsActive(false)
+
     useEffect(() => {
         if(images) {
             setMainImage(images[0])
@@ -122,8 +128,11 @@ const ProductDetails = (product) => {
                                                                   handleImageClick={handleImageClick} key={'image-' + i}
                                                                   src={src}/>)}
                         </Carousel>}
-                        <div className={styles.product__current}>
-                            <img src={mainImage} alt="Item name"/>
+                        <div className={styles.product__current + ' zoom'}>
+                            {modules.get($modules.image_zoom) ? (mainImage ? <ImageZoom
+                                src={mainImage}
+                                alt={'Item name'}
+                            /> : null) : <img src={mainImage} alt="Item name"/>}
                         </div>
                     </div>
                 </Col>
@@ -146,9 +155,13 @@ const ProductDetails = (product) => {
                     {/*    {properties.map((property, i) => <PropertySelector property={property} key={'property-selector-'+i} />)}*/}
                     {/*</div>*/}
                     <div className={styles.product__footer}>
-                        {modules.get($modules.basket) && auth.isAuthorized ? <button onClick={handleBasketClick} className={styles.product__button + ' contrast_bg'}>
+                        {modules.get($modules.basket) && auth.isAuthorized ? (basket.hasItem(id) ? <Link href={$routes.basket}>
+                            <button className={styles.product__button + ' contrast_bg'}>
+                                {t('go to basket')}
+                            </button>
+                        </Link> : <button onClick={handleBasketClick} className={styles.product__button + ' contrast_bg'}>
                             <BasketIcon /> {t('add to basket')}
-                        </button> : <CheckoutBtn product_id={id} size={'lg'}>{t('buy')}</CheckoutBtn>}
+                        </button>) : <CheckoutBtn product_id={id} size={'lg'}>{t('buy')}</CheckoutBtn>}
                     </div>
                 </Col>
             </Row>
@@ -156,4 +169,4 @@ const ProductDetails = (product) => {
     );
 };
 
-export default ProductDetails;
+export default observer(ProductDetails);

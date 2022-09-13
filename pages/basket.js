@@ -14,6 +14,7 @@ import {useModules} from "../hooks/useModules";
 import {$modules} from "../utils/config";
 import {$routes} from "../http/routes";
 import {useRouter} from "next/router";
+import {observer} from "mobx-react-lite";
 
 const Basket = () => {
     const { t, i18n } = useTranslation();
@@ -43,4 +44,4 @@ const Basket = () => {
     );
 };
 
-export default Basket;
+export default observer(Basket);

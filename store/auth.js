@@ -26,6 +26,11 @@ class Auth {
         makeAutoObservable(this)
     }
 
+    logout() {
+        localStorage.clear()
+        this.isAuthorized = false
+    }
+
     openLogin() {
         this.isLoginOpen = true;
         this.isRegisterOpen = false;

@@ -25,8 +25,7 @@ class Shop {
         'category': {
             value: null,
             handler: (items, value) => {
-                console.log(items, value)
-                return items.filter(item => item.category_id === value)
+                return items.filter(item => item.category_id === parseInt(value))
             }
         },
         'q': {
@@ -38,13 +37,13 @@ class Shop {
         'price_from': {
             value: null,
             handler: (items, value) => {
-                return items.filter(item => item.price >= value)
+                return items.filter(item => item.price >= parseInt(value))
             }
         },
         'price_to': {
             value: null,
             handler: (items, value) => {
-                return items.filter(item => item.price <= value)
+                return items.filter(item => item.price <= parseInt(value))
             }
         },
         'inStock': {
@@ -63,9 +62,9 @@ class Shop {
                     case 'newest':
                         return items.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
                     case 'cheaper':
-                        return items.sort((a, b) => a.price - b.price)
+                        return items.sort((a, b) => a.discount_price - b.discount_price)
                     case 'expensive':
-                        return items.sort((a, b) => b.price - a.price)
+                        return items.sort((a, b) => b.discount_price - a.discount_price)
                     case 'a-z':
                         return items.sort((a, b) => a.title.localeCompare(b.title))
                     case 'z-a':
@@ -181,7 +180,7 @@ class Shop {
 
     getFilteredProducts() {
         let filtered_products = [...this.products]
-
+        console.log(filtered_products)
         Object.entries(this.filter_handlers).forEach(([name, filter]) => {
             if(filter.value) filtered_products = filter.handler(filtered_products, filter.value)
         })

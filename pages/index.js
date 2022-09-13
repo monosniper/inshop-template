@@ -15,6 +15,7 @@ import AwesomeSlider from 'react-awesome-slider';
 import {$modules} from "../utils/config";
 import {useModules} from "../hooks/useModules";
 import Banner from "../components/Banner";
+
 export default observer(() => {
     const [items, setItems] = useState(shop.products)
     const modules = useModules()

@@ -5,7 +5,7 @@ import {observer} from "mobx-react-lite";
 import {useTranslation} from "react-i18next";
 import {useShop} from "../../hooks/useShop";
 
-const TotalField = ({ sum, delivery }) => {
+const TotalField = ({ sum }) => {
     const { t, i18n } = useTranslation();
     const shop = useShop()
 
@@ -17,11 +17,11 @@ const TotalField = ({ sum, delivery }) => {
             </div>
             <div className={styles.row}>
                 <span>{t('delivery')}:</span>
-                <span className={styles.price + ' contrast'}>{delivery}{shop.currency}</span>
+                <span className={styles.price + ' contrast'}>{shop.delivery || 0}{shop.currency}</span>
             </div>
             <div className={styles.row + ' ' + styles.row_total}>
                 <span>{t('all total')}:</span>
-                <span className={styles.price + ' contrast'}>{sum + delivery}{shop.currency}</span>
+                <span className={styles.price + ' contrast'}>{sum}{shop.currency}</span>
             </div>
         </Field>
     );

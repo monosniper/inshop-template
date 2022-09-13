@@ -1,17 +1,37 @@
 @import "vars";
 
+.modal-overlay {
+  z-index: 100;
+  position: fixed;
+  inset: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
+
+  &_adult::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    backdrop-filter: blur(3px);
+  }
+}
+
 .modal {
-  max-width: 100%;
   width: 450px;
-  overflow: hidden;
   margin: 0 auto;
   background: $bg;
   inset: 40px 0;
   position: absolute;
-  padding: 40px;
-  border-radius: 10px;
   height: fit-content;
   z-index: 100;
+  max-width: calc(100% - 40px) !important;
+  background: $bg;
+  border: 1px solid rgb(204, 204, 204);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
 
   &__title {
     font-weight: bold;

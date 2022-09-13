@@ -1,6 +1,7 @@
 @import "vars";
 @import "responsive";
 @import "modal.scss";
+@import "image_zoom.scss";
 @import "~noty/src/noty.scss";
 @import "~noty/src/themes/mint.scss";
 
@@ -23,33 +24,7 @@ body {
   margin: 1rem 0;
 }
 
-.modal {
-  max-width: calc(100% - 40px) !important;
-  background: $bg;
-  position: absolute;
-  border: 1px solid rgb(204, 204, 204);
-  overflow: auto;
-  border-radius: 4px;
-  outline: none;
-  padding: 20px;
-}
 
-.modal-overlay {
-  z-index: 100;
-  position: fixed;
-  inset: 0px;
-  background-color: rgba(255, 255, 255, 0.75);
-
-  &_adult::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    backdrop-filter: blur(3px);
-  }
-}
 
 img {
   max-width: 100%;
@@ -78,6 +53,33 @@ img {
   height: 300px;
   margin: 20px 0;
   z-index: 0;
+}
+
+.success-pay {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+
+  svg {
+    fill: #31bd31;
+    font-size: 60px;
+  }
+
+  &__btn {
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+    border-radius: 30px;
+    padding: 10px 30px;
+    border: none;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
 }
 
 .banner {
@@ -223,6 +225,8 @@ a {
     background: transparent;
   }
 }
+
+
 
 .watermark {
   display: flex;

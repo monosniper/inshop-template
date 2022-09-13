@@ -20,7 +20,7 @@ const Products = ({ items, pagination = true }) => {
 
     useEffect(() => {
         setProducts(shop.getFilteredProducts())
-    }, [shop.filters])
+    }, [shop.filter_handlers])
 
     useEffect(() => {
         setProducts(items)

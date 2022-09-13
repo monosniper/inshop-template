@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Header from "../components/header";
 import {Col, Container, Row} from "react-bootstrap";
 import SubHeader from "../components/subHeader";
@@ -47,9 +47,8 @@ const Checkout = () => {
     const [showModal, setShowModal] = useState(false)
     const items = useMemo(() => product_id ? [
         shop.getProduct(product_id)
-    ] : (modules.get($modules.basket) ? basket.items : []), [router.query])
-    const [sum, setSum] = useState(basket.getSum(items))
-    const [delivery, setDelivery] = useState(0)
+    ] : (modules.get($modules.basket) ? basket.items.map(item => item.product) : []), [modules, basket.items, router.query])
+    const [sum, setSum] = useState(0)
     const [orderCreated, setOrderCreated] = useState(false)
 
     const handleOpenModal = () => setShowModal(true)
@@ -86,6 +85,11 @@ const Checkout = () => {
         })
     }
 
+    useEffect(() => {
+        console.log(items)
+        setSum(basket.getSum(items))
+    }, [items])
+
     return (
         <>
             <div className={'wrapper'}>
@@ -105,10 +109,7 @@ const Checkout = () => {
                     <Row className={'mb'}>
                         <Col className={'mt'} lg={4} sm={12} md={6}><AddressField address={address} setAddress={setAddress} /></Col>
                         <Col className={'mt'} lg={4} sm={12} md={6}>
-                            <TotalField
-                                sum={sum}
-                                delivery={delivery}
-                            />
+                            <TotalField sum={sum}/>
                         </Col>
                     </Row>
                     {orderCreated ? <>

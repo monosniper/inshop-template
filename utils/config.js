@@ -7,8 +7,12 @@ const $modules = {
     discounts: 'discounts',
     reviews: 'reviews',
     adult_content: 'content.adult',
+    image_zoom: 'image_zoom',
     payment: {
         qiwi: 'payment.qiwi'
+    },
+    custom: {
+        loading: 'customization.loading'
     },
 }
 

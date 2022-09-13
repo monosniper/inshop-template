@@ -12,7 +12,7 @@ const User = (props) => {
     const router = useRouter()
 
     const handleLogout = () => {
-        localStorage.clear()
+        auth.logout()
         router.push($routes.index)
     }
 

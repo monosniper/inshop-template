@@ -28,15 +28,19 @@ function MyApp({ Component, pageProps }) {
         auth.refresh()
 
         if(rs && rs.id) {
-          setLoading(false)
+          setTimeout(() => {
+            setLoading(false)
+          }, 3000)
 
           i18n.changeLanguage(shop.options.language)
-
-          auth.isAuthorized && auth.data.basket_id !== '' && modules.get($modules.basket) && basket.loadBasket();
         }
         else router.push($routes.undefined)
       })
   }, [])
+
+  useEffect(() => {
+      auth.isAuthorized && auth.data.basket_id !== '' && modules.get($modules.basket) && basket.loadBasket();
+  }, [modules, auth])
 
   return loading ? <Loader /> : <>
     <div className="layout">
