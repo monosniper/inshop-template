@@ -19,6 +19,7 @@ const Products = ({ items, pagination = true }) => {
     }, [currentPage, products]);
 
     useEffect(() => {
+        setCurrentPage(1)
         setProducts(shop.getFilteredProducts())
     }, [shop.filter_handlers])
 

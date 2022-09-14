@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { usePagination, DOTS } from '../hooks/usePagination';
 import PrevIcon from '../public/assets/icons/prev.svg';
 import NextIcon from '../public/assets/icons/next.svg';
 import styles from '../styles/components/Pagination.module.scss'
+import {observer} from "mobx-react-lite";
 
 const Pagination = props => {
     const {
@@ -80,4 +81,4 @@ const Pagination = props => {
     );
 };
 
-export default Pagination;
+export default observer(Pagination);
