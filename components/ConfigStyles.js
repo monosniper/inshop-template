@@ -40,9 +40,11 @@ const ConfigStyles = () => {
           .contrast_bg {
             background: ${colors.get($colors.contrast_color)} !important;
           }
-          .contrast_path path {
-            stroke: ${colors.get($colors.contrast_color)} !important;
+          .contrast_path_fill path {
             fill: ${colors.get($colors.contrast_color)} !important;
+          }
+          .contrast_path_stroke path {
+            stroke: ${colors.get($colors.contrast_color)} !important;
           }
         `}</style>
     );

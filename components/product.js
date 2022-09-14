@@ -38,7 +38,7 @@ const Product = ({className, product}) => {
 
     return (
         <div className={itemClass + ' product'}>
-            {modules.get($modules.basket) && auth.isAuthorized ? <span onClick={handleWishToggle} className={styles.product__wish + ' contrast_path'}>
+            {modules.get($modules.basket) && auth.isAuthorized ? <span onClick={handleWishToggle} className={styles.product__wish + ' contrast_path_stroke' + (basket.hasItem(product.id) ? ' contrast_path_fill' : '')}>
                 {basket.hasItem(product.id) ? <HeartIcon /> : <HeartIconOutline />}
             </span> : null}
 

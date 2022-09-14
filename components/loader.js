@@ -27,7 +27,7 @@ function Custom({ title }) {
 const Loader = () => {
     const modules = useModules()
     const shop = useShop()
-    const [title, setTitle] = useState([])
+    const [title, setTitle] = useState(['.','.','.'])
 
     useEffect(() => {
         if(shop.title) setTitle(shop.title.split(''))
@@ -35,7 +35,7 @@ const Loader = () => {
 
     return (
         <div className={styles.div}>
-            {modules.loaded() ? modules.get($modules.custom.loading) ? <Custom title={title} /> : <Default /> : null}
+            {modules.loaded() ? modules.get($modules.custom.loading) ? <Custom title={title} /> : <Default /> : <Custom title={title} />}
         </div>
     );
 };
