@@ -19,7 +19,7 @@ function Default() {
 function Custom({ title }) {
     return <>
         {title.map((letter, i) => (
-            <span key={'letter-'+letter} style={i!==0?{animationDelay: i*0.1+'s'}:{}} className={styles.span}>{letter}</span>
+            <span key={'letter-'+letter+'-'+i} style={i!==0?{animationDelay: i*0.1+'s'}:{}} className={styles.span}>{letter}</span>
         ))}
     </>;
 }

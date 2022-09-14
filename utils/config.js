@@ -53,6 +53,8 @@ const $filters = {
     pricing: 'pricing',
 }
 
+// Add slug ton children e.g.
+// icons => categories.icons
 for(let option in $layout) {
     for(let child in $layout[option]) {
         if(child !== 'slug') {

@@ -38,4 +38,4 @@ const Categories = () => {
             ) : null;
 };
 
-export default observer(Categories);
+export default Categories;

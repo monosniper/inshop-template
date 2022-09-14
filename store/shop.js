@@ -178,12 +178,19 @@ class Shop {
         this.filter_handlers = newFilters
     }
 
+    getFilter(name) {
+        return this.filter_handlers[name].value
+    }
+
     getFilteredProducts() {
+        // this.setFilterLoading(true)
         let filtered_products = [...this.products]
-        console.log(filtered_products)
+
         Object.entries(this.filter_handlers).forEach(([name, filter]) => {
             if(filter.value) filtered_products = filter.handler(filtered_products, filter.value)
         })
+
+        // this.setFilterLoading(false)
 
         return filtered_products
     }
