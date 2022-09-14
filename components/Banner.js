@@ -38,7 +38,7 @@ const Banner = () => {
                         style={{
                             backgroundColor: banner.background ? banner.background : '#3a3a3a',
                             backgroundImage: banner.type.indexOf('image') !== -1 ? 'url(' + banner.image_url + ')' : 'none',
-                            pointerEvents: banner.type.indexOf('image') !== -1 ? 'all' : 'none',
+                            pointerEvents: banner.type !== 'image' ? 'all' : 'none',
                         }}
                     >
                         {banner.type.indexOf('text') !== -1
