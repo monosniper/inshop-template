@@ -13,7 +13,7 @@ const TotalField = ({ sum }) => {
         <Field title={t('total')}>
             <div className={styles.row}>
                 <span>{t('order sum')}:</span>
-                <span className={styles.price + ' contrast'}>{sum}{shop.currency}</span>
+                <span className={styles.price + ' contrast'}>{sum - shop.delivery}{shop.currency}</span>
             </div>
             <div className={styles.row}>
                 <span>{t('delivery')}:</span>
