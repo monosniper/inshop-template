@@ -4,11 +4,12 @@ import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import {useEffect, useState} from "react";
 import shop from "../store/shop";
 import {observer} from "mobx-react-lite";
+import {useIsMobile} from "../hooks/useIsMobile";
 
 const Banner = () => {
     const [banners, setBanners] = useState(shop.banners)
-
     const AutoplaySlider = withAutoplay(AwesomeSlider)
+    const isMobile = useIsMobile()
 
     useEffect(() => {
         const banners_list = []
@@ -37,7 +38,7 @@ const Banner = () => {
                         className={'banner__inner'}
                         style={{
                             backgroundColor: banner.background ? banner.background : '#3a3a3a',
-                            backgroundImage: banner.type.indexOf('image') !== -1 ? 'url(' + banner.image_url + ')' : 'none',
+                            backgroundImage: banner.type.indexOf('image') !== -1 ? 'url(' + banner[isMobile ? 'mobile_image_url' : 'desktop_image_url'] + ')' : 'none',
                             pointerEvents: banner.type !== 'image' ? 'all' : 'none',
                         }}
                     >
