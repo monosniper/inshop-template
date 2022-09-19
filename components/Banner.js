@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import {useEffect, useState} from "react";
@@ -7,23 +7,9 @@ import {observer} from "mobx-react-lite";
 import {useIsMobile} from "../hooks/useIsMobile";
 
 const Banner = () => {
-    const [banners, setBanners] = useState(shop.banners)
+    const banners = useMemo(() => shop.banners, [shop.banners])
     const AutoplaySlider = withAutoplay(AwesomeSlider)
     const isMobile = useIsMobile()
-
-    useEffect(() => {
-        const banners_list = []
-
-        const firstBanner = shop.banners.find(banner => banner.order === 1)
-        const secondBanner = shop.banners.find(banner => banner.order === 2)
-        const thirstBanner = shop.banners.find(banner => banner.order === 3)
-
-        firstBanner && banners_list.push(firstBanner)
-        secondBanner && banners_list.push(secondBanner)
-        thirstBanner && banners_list.push(thirstBanner)
-
-        setBanners(banners_list)
-    }, [shop.banners])
 
     return banners.length ? (
             <AutoplaySlider
