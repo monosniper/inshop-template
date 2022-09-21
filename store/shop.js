@@ -19,6 +19,7 @@ class Shop {
     social_networks = []
     custom_pages = []
     reviews = []
+    selectedProperties = {}
     logo_url = ''
     logo_name = ''
     filter_handlers = {
@@ -124,6 +125,10 @@ class Shop {
         this.categories = categories
     }
 
+    setSelectedProps(data) {
+        this.selectedProperties = data;
+    }
+
     setModules(modules) {
         this.modules = modules
     }
@@ -195,8 +200,8 @@ class Shop {
         return filtered_products
     }
 
-    async makeOrder(billId, shipping_data, products) {
-        const response = await ShopService.makeOrder(this.id, {billId, shipping_data, products})
+    async makeOrder(billId, shipping_data, products, properties) {
+        const response = await ShopService.makeOrder(this.id, {billId, shipping_data, products, properties})
 
         return response.data
     }

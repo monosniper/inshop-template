@@ -15,7 +15,12 @@ class Basket {
         update && BasketService.update(
             shop.id,
             auth.data.basket_id,
-            {items: items.map(item => item.product.id)}
+            {items: items.map(item => {
+                return {
+                    id: item.product.id,
+                    properties: item.properties
+                }
+            })}
         )
     }
 
@@ -49,8 +54,8 @@ class Basket {
         this.setItems(newItems)
     }
 
-    addItem(id, product, count=1) {
-        if(!this.hasItem(id)) this.setItems([...this.items, {id, product, count}])
+    addItem(id, product, count=1, properties) {
+        if(!this.hasItem(id)) this.setItems([...this.items, {id, product, count, properties}])
     }
 
     removeItem(id) {

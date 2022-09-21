@@ -20,6 +20,7 @@ import {useShop} from "../hooks/useShop";
 import {$routes} from "../http/routes";
 import {observer} from "mobx-react-lite";
 import ImageZoom from "./ImageZoom";
+import shop from "../store/shop";
 
 const ProductImage = ({ handleImageClick, src, mainSrc }) => {
     const [itemClass, setItemClass] = useState(styles.product__image)
@@ -39,20 +40,28 @@ const ProductImage = ({ handleImageClick, src, mainSrc }) => {
 
 ProductImage.propTypes = {src: PropTypes.string};
 
-const PropertySelectorOption = ({ option, handleClick }) => {
-    return <span onClick={() => handleClick(option.value)} className={styles['property-selector__option']}>{option.name}</span>;
+const PropertySelectorOption = ({ option, handleClick, title, selected }) => {
+    return <span onClick={() => handleClick(title, option)} className={styles['property-selector__option'] + ' ' + (selected === option ? styles.active : '')}>{option}</span>;
 }
-const PropertySelector = ({ property }) => {
+
+const PropertySelector = ({ property, handleClick, selected }) => {
     const { t, i18n } = useTranslation();
 
     return <div className={styles['property-selector']}>
-        <span className={styles['property-selector__name']}>{t('choose')} {property.name}</span>
+        <span className={styles['property-selector__name']}>{t('choose')} {property.title}</span>
         <div className={styles['property-selector__options']}>
-            {property.options.map((option, i) => <PropertySelectorOption option={option} key={'property-option-'+i} />)}
+            {property.options.map((option, i) => <PropertySelectorOption
+                handleClick={handleClick}
+                title={property.title}
+                option={option}
+                key={'property-option-'+i}
+                selected={selected}
+            />)}
         </div>
     </div>;
 }
-const ProductDetails = (product) => {
+
+const ProductDetails = (props) => {
     const {
         id,
         title,
@@ -62,54 +71,52 @@ const ProductDetails = (product) => {
         description,
         images,
         discount,
-    } = product
+        properties,
+    } = props
 
     const router = useRouter()
     const modules = useModules()
     const isMobile = useIsMobile()
     const { t, i18n } = useTranslation();
-    const shop = useShop()
+    const shopData = useShop()
     const [mainImage, setMainImage] = useState(undefined)
-    const [isActive, setIsActive] = useState(false)
-    const properties = [
-        {
-            name: 'Размер',
-            value: '8',
-            options: [
-                {
-                    name: '8',
-                    value: '8'
-                },
-                {
-                    name: '8.5',
-                    value: '8.5'
-                },
-                {
-                    name: '9',
-                    value: '9'
-                },
-                {
-                    name: '9.5',
-                    value: '9.5'
-                },
-                {
-                    name: '10',
-                    value: '10'
+    const [selectedProps, setSelectedProps] = useState([])
+
+    useEffect(() => {
+        if(properties) {
+            setSelectedProps(properties.map(prop => {
+                return {
+                    title: prop.title,
+                    value: null
                 }
-            ]
+            }))
         }
-    ]
+    }, [properties])
 
     const handleImageClick = (src) => {
         setMainImage(src)
     }
 
     const handleBasketClick = () => {
-        auth.isAuthorized ? basket.addItem(id, product) : auth.openLogin()
+        auth.isAuthorized ? basket.addItem(id, props, 1, selectedProps) : auth.openLogin()
     }
 
-    const onZoom = () => setIsActive(true)
-    const onClose = () => setIsActive(false)
+    const handleBuyClick = () => {
+        shop.setSelectedProps({
+            id,
+            properties: selectedProps
+        })
+        router.push($routes.checkout + ('?product_id='+id))
+    }
+
+    const handleSelectProperty = (title, value) => {
+        if(selectedProps) {
+            setSelectedProps(selectedProps.map(prop => {
+                if(prop.title === title) prop.value = value
+                return prop;
+            }))
+        }
+    }
 
     useEffect(() => {
         if(images) {
@@ -117,7 +124,13 @@ const ProductDetails = (product) => {
         }
     }, [images])
 
-    return (
+    function getSelected(title) {
+        const prop = selectedProps.find(prop => prop.title === title);
+
+        return prop ? prop.value : null;
+    }
+
+    return id ? (
         <div className={styles.product + ' white-block'}>
             <Row>
                 <Col>
@@ -144,16 +157,16 @@ const ProductDetails = (product) => {
                         <span className={styles.product__title}>{title}</span>
                         <span className={styles.product__price + ' contrast'}>
                             {discount ? <span className={'discount contrast_bg'}>-{discount}%</span> : null}
-                            {discount ? price - (price / 100 * discount) : price}{shop.currency}
+                            {discount ? price - (price / 100 * discount) : price}{shopData.currency}
                         </span>
                     </div>
                     <div className={styles.product__subtitle}>{subtitle}</div>
                     <div className={styles.product__description}>
                         {description}
                     </div>
-                    {/*<div className={styles.product__properties}>*/}
-                    {/*    {properties.map((property, i) => <PropertySelector property={property} key={'property-selector-'+i} />)}*/}
-                    {/*</div>*/}
+                    <div className={styles.product__properties}>
+                        {properties.map((property, i) => <PropertySelector selected={getSelected(property.title)} handleClick={handleSelectProperty} property={property} key={'property-selector-'+i} />)}
+                    </div>
                     <div className={styles.product__footer}>
                         {modules.get($modules.basket) && auth.isAuthorized ? (basket.hasItem(id) ? <Link href={$routes.basket}>
                             <button className={styles.product__button + ' contrast_bg'}>
@@ -161,12 +174,12 @@ const ProductDetails = (product) => {
                             </button>
                         </Link> : <button onClick={handleBasketClick} className={styles.product__button + ' contrast_bg'}>
                             <BasketIcon /> {t('add to basket')}
-                        </button>) : <CheckoutBtn product_id={id} size={'lg'}>{t('buy')}</CheckoutBtn>}
+                        </button>) : <button onClick={handleBuyClick} className={'button button_lg'}>{t('buy')}</button>}
                     </div>
                 </Col>
             </Row>
         </div>
-    );
+    ) : null;
 };
 
 export default observer(ProductDetails);

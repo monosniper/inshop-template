@@ -23,6 +23,7 @@ import {$modules} from "../utils/config";
 import {useModules} from "../hooks/useModules";
 import {useShop} from "../hooks/useShop";
 import {v4 as uuid} from 'uuid';
+import {toJS} from "mobx";
 
 function OrderHelpText({orderId}) {
     const shop_data = useShop()
@@ -46,8 +47,13 @@ const Checkout = () => {
     const { t, i18n } = useTranslation();
     const [showModal, setShowModal] = useState(false)
     const items = useMemo(() => product_id ? [
-        shop.getProduct(product_id)
-    ] : (modules.get($modules.basket) ? basket.items.map(item => item.product) : []), [modules, basket.items, router.query])
+        {
+            id: null,
+            product: shop.getProduct(product_id),
+            count: 1,
+            properties: shop.selectedProperties ? (shop.selectedProperties.id+'' === product_id ? shop.selectedProperties.properties : []) : []
+        }
+    ] : (modules.get($modules.basket) ? basket.items : []), [modules, basket.items, router.query, shop.selectedProperties])
     const [sum, setSum] = useState(0)
     const [orderCreated, setOrderCreated] = useState(false)
 
@@ -56,9 +62,15 @@ const Checkout = () => {
 
     const handleSubmit = () => {
         const billId = uuid();
+
         shop.makeOrder(billId, {
             name, email, phone, address
-        }, items.map(item => item.id)).then((rs) => {
+        }, items.map(item => item.product.id), items.map(item => {
+            return {
+                id: item.product.id,
+                properties: item.properties
+            }
+        })).then((rs) => {
             // router.push($routes.successOrder
             if(modules.get($modules.payment.qiwi)) {
                 const params = {
@@ -66,12 +78,12 @@ const Checkout = () => {
                     'customFields[themeCode]': shop.options.qiwiTheme,
                     // successUrl: 'http://localhost:3004/success',
                     successUrl: 'https://' + shop.domain + $routes.successOrder,
-                    comment: ' - ' + items.map(item => item.title).join(', '),
+                    comment: ' - ' + items.map(item => item.product.title).join(', '),
                     // account : '79643210393',
                     phone,
                     email,
                     billId,
-                    amount: basket.getSum(items),
+                    amount: basket.getSum(items.map(item => item.product)),
                 }
 
                 let url = 'https://oplata.qiwi.com/create?' + new URLSearchParams(params).toString();
@@ -86,7 +98,7 @@ const Checkout = () => {
     }
 
     useEffect(() => {
-        setSum(basket.getSum(items))
+        setSum(basket.getSum(items.map(item => item.product)))
     }, [items])
 
     return (
@@ -97,7 +109,7 @@ const Checkout = () => {
                 <Container>
                     <SubHeader text={t('new order')} />
 
-                    <CheckList items={items} />
+                    <CheckList items={items.map(item => item.product)} />
 
                     <Row className={'mb'}>
                         <Col className={'mt'} lg={4} sm={12} md={6}><EmailField email={email} setEmail={setEmail} /></Col>
