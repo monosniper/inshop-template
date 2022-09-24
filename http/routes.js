@@ -19,6 +19,7 @@ export const $apiRoutes = {
     user: '/user',
     login: (shop_id) => `/shops/${shop_id}/login`,
     register: (shop_id) => `/shops/${shop_id}/register`,
+    promocode: (shop_id, code) => `/shops/${shop_id}/promocodes/${code}`,
     refresh: `/shops/refresh`,
     products: {
         list: (shop_id) => `shops/${shop_id}/products`,

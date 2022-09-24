@@ -200,10 +200,14 @@ class Shop {
         return filtered_products
     }
 
-    async makeOrder(billId, shipping_data, products, properties) {
-        const response = await ShopService.makeOrder(this.id, {billId, shipping_data, products, properties})
+    async makeOrder(billId, shipping_data, products, promocode) {
+        const response = await ShopService.makeOrder(this.id, {billId, shipping_data, products, promocode})
 
         return response.data
+    }
+
+    async checkPromo(code) {
+        return await ShopService.checkPromo(this.id, code)
     }
 
     getInstagramLink() {

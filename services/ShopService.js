@@ -45,4 +45,16 @@ export default class ShopService {
 
         return response.data.data;
     }
+
+    static async checkPromo(shop_id, code) {
+        let response = {data: {data: null}}
+
+        try {
+            response = await $api.get($apiRoutes.promocode(shop_id, code));
+        } catch (e) {
+
+        }
+
+        return response.data.data;
+    }
 }

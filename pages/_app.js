@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }) {
         if(rs && rs.id) {
           setTimeout(() => {
             setLoading(false)
-          }, 3000)
+          }, 2000)
 
           i18n.changeLanguage(shop.options.language)
         }

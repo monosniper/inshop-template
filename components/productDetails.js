@@ -47,6 +47,13 @@ const PropertySelectorOption = ({ option, handleClick, title, selected }) => {
 const PropertySelector = ({ property, handleClick, selected }) => {
     const { t, i18n } = useTranslation();
 
+    return <div style={{marginBottom: '1rem'}}>
+        <b>{property.title}:</b>
+        <span style={{marginLeft: '10px'}}>
+            {property.options.join(', ')}
+        </span>
+    </div>;
+
     return <div className={styles['property-selector']}>
         <span className={styles['property-selector__name']}>{t('choose')} {property.title}</span>
         <div className={styles['property-selector__options']}>

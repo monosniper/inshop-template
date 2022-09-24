@@ -19,11 +19,12 @@ import {useTranslation} from "react-i18next";
 import styles from "../styles/components/Filters.module.scss";
 import ReactModal from "react-modal";
 import store from "../store/store";
-import {$modules} from "../utils/config";
+import {$modules, $promoTypes} from "../utils/config";
 import {useModules} from "../hooks/useModules";
 import {useShop} from "../hooks/useShop";
 import {v4 as uuid} from 'uuid';
 import {toJS} from "mobx";
+import PromoField from "../components/checkout/PromoField";
 
 function OrderHelpText({orderId}) {
     const shop_data = useShop()
@@ -43,6 +44,7 @@ const Checkout = () => {
     const [name, setName] = useState(auth.data.fio)
     const [phone, setPhone] = useState(auth.data.phone)
     const [address, setAddress] = useState(auth.data.address)
+    const [promo, setPromo] = useState('')
     const [orderId, setOrderId] = useState(null)
     const { t, i18n } = useTranslation();
     const [showModal, setShowModal] = useState(false)
@@ -55,6 +57,7 @@ const Checkout = () => {
         }
     ] : (modules.get($modules.basket) ? basket.items : []), [modules, basket.items, router.query, shop.selectedProperties])
     const [sum, setSum] = useState(0)
+    const [total, setTotal] = useState(0)
     const [orderCreated, setOrderCreated] = useState(false)
 
     const handleOpenModal = () => setShowModal(true)
@@ -65,12 +68,7 @@ const Checkout = () => {
 
         shop.makeOrder(billId, {
             name, email, phone, address
-        }, items.map(item => item.product.id), items.map(item => {
-            return {
-                id: item.product.id,
-                properties: item.properties
-            }
-        })).then((rs) => {
+        }, items.map(item => item.product.id), promo.data ? promo.data.id : null).then((rs) => {
             // router.push($routes.successOrder
             if(modules.get($modules.payment.qiwi)) {
                 const params = {
@@ -83,7 +81,7 @@ const Checkout = () => {
                     phone,
                     email,
                     billId,
-                    amount: basket.getSum(items.map(item => item.product)),
+                    amount: rs.data.total,
                 }
 
                 let url = 'https://oplata.qiwi.com/create?' + new URLSearchParams(params).toString();
@@ -99,7 +97,19 @@ const Checkout = () => {
 
     useEffect(() => {
         setSum(basket.getSum(items.map(item => item.product)))
-    }, [items])
+
+        let total = sum;
+
+        if(promo.data) {
+            if(promo.type === $promoTypes.percent) {
+                total -= sum / 100 * promo.data.value
+            } else {
+                total -= promo.data.value
+            }
+        }
+
+        setTotal(total)
+    }, [items, promo])
 
     return (
         <>
@@ -119,8 +129,9 @@ const Checkout = () => {
 
                     <Row className={'mb'}>
                         <Col className={'mt'} lg={4} sm={12} md={6}><AddressField address={address} setAddress={setAddress} /></Col>
+                        <Col className={'mt'} lg={4} sm={12} md={6}><PromoField promo={promo} setPromo={setPromo} /></Col>
                         <Col className={'mt'} lg={4} sm={12} md={6}>
-                            <TotalField sum={sum}/>
+                            <TotalField total={total} promo={promo} sum={sum}/>
                         </Col>
                     </Row>
                     {orderCreated ? <>

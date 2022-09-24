@@ -53,6 +53,11 @@ const $filters = {
     pricing: 'pricing',
 }
 
+const $promoTypes = {
+    percent: 'percent',
+    sum: 'sum',
+}
+
 // Add slug ton children e.g.
 // icons => categories.icons
 for(let option in $layout) {
@@ -68,4 +73,5 @@ export {
     $layout,
     $colors,
     $filters,
+    $promoTypes,
 }

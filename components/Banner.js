@@ -1,7 +1,6 @@
 import React, {useMemo} from 'react';
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
-import {useEffect, useState} from "react";
 import shop from "../store/shop";
 import {observer} from "mobx-react-lite";
 import {useIsMobile} from "../hooks/useIsMobile";
