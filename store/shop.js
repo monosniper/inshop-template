@@ -4,6 +4,7 @@ import store from "./store";
 import constructor from "./constructor";
 import {forEach} from "react-bootstrap/ElementChildren";
 import {$layout} from "../utils/config";
+import auth from "./auth";
 
 class Shop {
     id = null
@@ -201,13 +202,13 @@ class Shop {
     }
 
     async makeOrder(billId, shipping_data, products, promocode) {
-        const response = await ShopService.makeOrder(this.id, {billId, shipping_data, products, promocode})
+        const response = await ShopService.makeOrder(this.id, {billId, shipping_data, products, promocode, client_id: auth.data.id})
 
         return response.data
     }
 
     async checkPromo(code) {
-        return await ShopService.checkPromo(this.id, code)
+        return await ShopService.checkPromo(this.id, code, auth.data.id)
     }
 
     getInstagramLink() {

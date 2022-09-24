@@ -46,11 +46,11 @@ export default class ShopService {
         return response.data.data;
     }
 
-    static async checkPromo(shop_id, code) {
+    static async checkPromo(shop_id, code, client_id) {
         let response = {data: {data: null}}
 
         try {
-            response = await $api.get($apiRoutes.promocode(shop_id, code));
+            response = await $api.post($apiRoutes.promocode(shop_id, code), {client_id});
         } catch (e) {
 
         }
