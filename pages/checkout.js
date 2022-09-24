@@ -129,7 +129,8 @@ const Checkout = () => {
 
                     <Row className={'mb'}>
                         <Col className={'mt'} lg={4} sm={12} md={6}><AddressField address={address} setAddress={setAddress} /></Col>
-                        <Col className={'mt'} lg={4} sm={12} md={6}><PromoField promo={promo} setPromo={setPromo} /></Col>
+                        {modules.get($modules.promocodes) ? <Col className={'mt'} lg={4} sm={12} md={6}><PromoField promo={promo}
+                                                                                 setPromo={setPromo}/></Col> : null}
                         <Col className={'mt'} lg={4} sm={12} md={6}>
                             <TotalField total={total} promo={promo} sum={sum}/>
                         </Col>

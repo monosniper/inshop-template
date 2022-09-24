@@ -8,6 +8,7 @@ const $modules = {
     reviews: 'reviews',
     adult_content: 'content.adult',
     image_zoom: 'image_zoom',
+    promocodes: 'promocodes',
     payment: {
         qiwi: 'payment.qiwi'
     },
