@@ -44,7 +44,10 @@ const Checkout = () => {
     const [name, setName] = useState(auth.data.fio)
     const [phone, setPhone] = useState(auth.data.phone)
     const [address, setAddress] = useState(auth.data.address)
-    const [promo, setPromo] = useState('')
+    const [promo, setPromo] = useState({
+        code: '',
+        data: null
+    })
     const [orderId, setOrderId] = useState(null)
     const { t, i18n } = useTranslation();
     const [showModal, setShowModal] = useState(false)
@@ -96,19 +99,21 @@ const Checkout = () => {
     }
 
     useEffect(() => {
-        setSum(basket.getSum(items.map(item => item.product)))
+        let _total = sum + (parseInt(shop.options.delivery) || 0);
 
-        let total = sum;
-
-        if(promo.data) {
+        if(promo.data && promo.isCorrect) {
             if(promo.type === $promoTypes.percent) {
-                total -= sum / 100 * promo.data.value
+                _total -= sum / 100 * promo.data.value
             } else {
-                total -= promo.data.value
+                _total -= promo.data.value
             }
         }
 
-        setTotal(total)
+        setTotal(_total)
+    }, [sum, promo])
+
+    useEffect(() => {
+        setSum(basket.getSum(items.map(item => item.product)))
     }, [items, promo])
 
     return (

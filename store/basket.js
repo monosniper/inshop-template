@@ -89,7 +89,7 @@ class Basket {
         })
 
         // Delivery
-        sum += (parseInt(shop.options.delivery) || 0)
+        // sum += (parseInt(shop.options.delivery) || 0)
 
         return sum
     }

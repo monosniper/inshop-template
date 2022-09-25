@@ -18,9 +18,18 @@ const PromoField = ({promo, setPromo}) => {
     const handleChangePromo = (e) => {
         setPromo({
             code: e.target.value,
+            isCorrect,
             data: promocode
         })
     }
+
+    useEffect(() => {
+        setPromo({
+            code: promo.code,
+            isCorrect,
+            data: promocode
+        })
+    }, [promocode])
 
     useEffect(() => {
         if(value) {
@@ -30,6 +39,7 @@ const PromoField = ({promo, setPromo}) => {
                         setPromocode(rs)
                         setIsCorrect(true)
                     } else {
+                        setPromocode(null)
                         setIsCorrect(false)
                     }
                 })

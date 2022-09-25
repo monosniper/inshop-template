@@ -11,12 +11,12 @@ const TotalField = ({ sum, promo, total }) => {
     const { t, i18n } = useTranslation();
     const shop = useShop()
     const modules = useModules()
-
+    console.log(sum, total)
     return (
         <Field title={t('total')}>
             <div className={styles.row}>
                 <span>{t('order sum')}:</span>
-                <span className={styles.price + ' contrast'}>{sum - shop.delivery}{shop.currency}</span>
+                <span className={styles.price + ' contrast'}>{sum}{shop.currency}</span>
             </div>
             <div className={styles.row}>
                 <span>{t('delivery')}:</span>
@@ -24,7 +24,7 @@ const TotalField = ({ sum, promo, total }) => {
             </div>
             {modules.get($modules.promocodes) ? <div className={styles.row}>
                 <span>{t('promocode')}:</span>
-                <span className={styles.price + ' contrast'}>{promo.data ? '-' + (promo.data.type === $promoTypes.percent ? promo.data.value + '%' : promo.data.value + shop.currency) : '-'}</span>
+                <span className={styles.price + ' contrast'}>{promo.data && promo.isCorrect ? '-' + (promo.data.type === $promoTypes.percent ? promo.data.value + '%' : promo.data.value + shop.currency) : '-'}</span>
             </div> : null}
             <div className={styles.row + ' ' + styles.row_total}>
                 <span>{t('all total')}:</span>
