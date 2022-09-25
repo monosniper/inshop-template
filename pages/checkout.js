@@ -98,23 +98,41 @@ const Checkout = () => {
         })
     }
 
-    useEffect(() => {
+    const getSum = () => {
+         return basket.getSum(items.map(item => item.product))
+    }
+
+    const getTotal = () => {
         let _total = sum + (parseInt(shop.options.delivery) || 0);
 
         if(promo.data && promo.isCorrect) {
-            if(promo.type === $promoTypes.percent) {
+            if(promo.data.type === $promoTypes.percent) {
                 _total -= sum / 100 * promo.data.value
             } else {
                 _total -= promo.data.value
             }
         }
 
-        setTotal(_total)
-    }, [sum, promo])
+        return _total
+    }
 
     useEffect(() => {
-        setSum(basket.getSum(items.map(item => item.product)))
-    }, [items, promo])
+        setSum(getSum())
+        setTotal(getTotal())
+    }, [items, sum])
+
+    const setPromoForUpd = (_promo) => {
+        setSum(getSum())
+        setTotal(getTotal())
+    }
+
+    // useEffect(() => {
+    //     getTotal()
+    // }, [sum, promo])
+    //
+    // useEffect(() => {
+    //     getSum()
+    // }, [items, promo])
 
     return (
         <>
@@ -135,7 +153,7 @@ const Checkout = () => {
                     <Row className={'mb'}>
                         <Col className={'mt'} lg={4} sm={12} md={6}><AddressField address={address} setAddress={setAddress} /></Col>
                         {modules.get($modules.promocodes) ? <Col className={'mt'} lg={4} sm={12} md={6}><PromoField promo={promo}
-                                                                                 setPromo={setPromo}/></Col> : null}
+                                                                                 setPromo={setPromo} setPromoForUpd={setPromoForUpd} /></Col> : null}
                         <Col className={'mt'} lg={4} sm={12} md={6}>
                             <TotalField total={total} promo={promo} sum={sum}/>
                         </Col>

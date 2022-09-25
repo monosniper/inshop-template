@@ -8,7 +8,7 @@ import shop from "../../store/shop";
 import {showMessage} from "../../utils/showMessage";
 import {showError} from "../../utils/showError";
 
-const PromoField = ({promo, setPromo}) => {
+const PromoField = ({promo, setPromo, setPromoForUpd}) => {
     const { t, i18n } = useTranslation();
     const [value] = useDebounce(promo, 500)
     const [isCorrect, setIsCorrect] = useState(null)
@@ -24,23 +24,25 @@ const PromoField = ({promo, setPromo}) => {
     }
 
     useEffect(() => {
-        setPromo({
-            code: promo.code,
-            isCorrect,
-            data: promocode
-        })
-    }, [promocode])
-
-    useEffect(() => {
         if(value) {
             if(value.code.trim() !== '') {
                 shop.checkPromo(value.code.trim()).then(rs => {
                     if(rs) {
                         setPromocode(rs)
                         setIsCorrect(true)
+                        setPromoForUpd({
+                            code: promo.code,
+                            isCorrect: true,
+                            data: rs
+                        })
                     } else {
                         setPromocode(null)
                         setIsCorrect(false)
+                        setPromoForUpd({
+                            code: promo.code,
+                            isCorrect: false,
+                            data: null
+                        })
                     }
                 })
             } else {

@@ -19,6 +19,7 @@ class Shop {
     banners = []
     social_networks = []
     custom_pages = []
+    total = 0
     reviews = []
     selectedProperties = {}
     logo_url = ''
@@ -124,6 +125,10 @@ class Shop {
 
     setCategories(categories) {
         this.categories = categories
+    }
+
+    setTotal(total) {
+        this.total = total
     }
 
     setSelectedProps(data) {

@@ -11,7 +11,7 @@ const TotalField = ({ sum, promo, total }) => {
     const { t, i18n } = useTranslation();
     const shop = useShop()
     const modules = useModules()
-    console.log(sum, total)
+
     return (
         <Field title={t('total')}>
             <div className={styles.row}>
