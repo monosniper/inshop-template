@@ -28,9 +28,19 @@ function MyApp({ Component, pageProps }) {
         auth.refresh()
 
         if(rs && rs.id) {
-          setTimeout(() => {
-            setLoading(false)
-          }, 2000)
+          if(modules.loaded()) {
+            if(modules.get($modules.custom.loading)) {
+              setTimeout(() => {
+                setLoading(false)
+              }, 2000)
+            } else {
+              setLoading(false)
+            }
+          } else {
+            setTimeout(() => {
+              setLoading(false)
+            }, 2000)
+          }
 
           i18n.changeLanguage(shop.options.language)
         }
