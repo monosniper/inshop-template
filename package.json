@@ -21,7 +21,6 @@
     "mobx-react-lite": "^3.3.0",
     "next": "12.1.0",
     "next-i18next": "^11.0.0",
-    "node-sass": "^7.0.1",
     "noty": "^3.2.0-beta-deprecated",
     "prop-types": "^15.8.1",
     "proxify-vercel": "^1.0.4",
@@ -35,6 +34,7 @@
     "react-icons": "^4.4.0",
     "react-image-zoom": "^1.3.1",
     "react-modal": "^3.14.4",
+    "sass": "^1.55.0",
     "url-loader": "^4.1.1",
     "use-debounce": "^8.0.4",
     "uuid": "^9.0.0"
