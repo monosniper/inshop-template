@@ -64,7 +64,6 @@ const Checkout = () => {
     const [total, setTotal] = useState(0)
     const [orderCreated, setOrderCreated] = useState(false)
     const [sumLessThanMin, setSumLessThanMin] = useState(sum < 500)
-    console.log(sum, sumLessThanMin)
 
     const handleOpenModal = () => setShowModal(true)
     const handleCloseModal = () => setShowModal(false)
@@ -167,11 +166,11 @@ const Checkout = () => {
                         <OrderHelpText orderId={orderId} />
                     </> : null}
 
-                    <br/>
-
                     {sumLessThanMin ? <div className="alert">
                         {t('min_order_sum')} - 500{shopData.currency}
                     </div> : null}
+
+                    <br/>
 
                     <button onClick={handleSubmit} disabled={orderCreated || sumLessThanMin} className={'button button_lg mb mx-auto'}>{t('make order')}</button>
                 </Container>
