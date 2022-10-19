@@ -18,7 +18,7 @@ const PromoField = ({promocode, isCorrect, setPromoForUpd}) => {
 
     useEffect(() => {
         if(value) {
-            setPromoForUpd(value.code.trim())
+            setPromoForUpd(value.trim())
 
         }
     }, [value])
