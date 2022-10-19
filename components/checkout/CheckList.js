@@ -11,7 +11,7 @@ function CheckListItem(props) {
     return <div className={styles.item}>
         <div className={styles.item__left}>
             <div className={styles.item__img}>
-                <img src={props.preview_url} alt={props.title}/>
+                <img src={props.preview_url} style={{borderRadius: 10}} alt={props.title}/>
             </div>
             <span className={styles.item__title}>{props.title}</span>
             <span className={styles.item__count}>x{count}</span>

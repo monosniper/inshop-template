@@ -121,6 +121,7 @@ const Checkout = () => {
     useEffect(() => {
         setSum(getSum())
         setTotal(getTotal())
+        setSumLessThanMin(sum < 500)
     }, [items, sum])
 
     const setPromoForUpd = (_promo) => {
