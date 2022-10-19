@@ -74,7 +74,7 @@ const Checkout = () => {
 
         shop.makeOrder(billId, {
             name, email, phone, address
-        }, items.map(item => item.product.id), promo.data ? promo.data.id : null).then((rs) => {
+        }, items.map(item => item.product.id), promocode.data ? promocode.data.id : null).then((rs) => {
             // router.push($routes.successOrder
             if(modules.get($modules.payment.qiwi)) {
                 const params = {
