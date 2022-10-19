@@ -25,7 +25,7 @@ const PromoField = ({promocode, isCorrect, setPromoForUpd}) => {
 
     useEffect(() => {
         setIsCorrectText(isCorrect !== null ? <p style={{color: isCorrect ? '#37c737' : 'red'}}>
-            {isCorrect ? t('promo_correct') + ' ' + promocode.code + ': ' : t('promo_incorrect')} {isCorrect ? '-'+(promocode.type === $promoTypes.percent ? promocode.value + '%' : promocode.value + shop.options.currency) : ''}
+            {isCorrect ? t('promo_correct') + ' ' + promocode.data.code + ': ' : t('promo_incorrect')} {isCorrect ? '-'+(promocode.data.type === $promoTypes.percent ? promocode.data.value + '%' : promocode.data.value + shop.options.currency) : ''}
         </p> : null)
     }, [isCorrect])
 
