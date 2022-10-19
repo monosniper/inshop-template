@@ -24,6 +24,7 @@
     "success-pay": "Payment was successful",
     "back to main": "Back to the main page",
     "order sum": "Order sum",
+    "min_order_sum": "The minimum sum of order is ",
     "delivery": "Delivery",
     "promocode": "Promocode",
     "all total": "Total + Delivery",

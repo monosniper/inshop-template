@@ -39,6 +39,7 @@ function OrderHelpTitle({orderId}) {
 const Checkout = () => {
     const router = useRouter()
     const modules = useModules()
+    const shopData = useShop()
     const {product_id} = router.query
     const [email, setEmail] = useState(auth.data.email)
     const [name, setName] = useState(auth.data.fio)
@@ -62,6 +63,7 @@ const Checkout = () => {
     const [sum, setSum] = useState(0)
     const [total, setTotal] = useState(0)
     const [orderCreated, setOrderCreated] = useState(false)
+    const [sumLessThanMin, setSumLessThanMin] = useState(sum < 500)
 
     const handleOpenModal = () => setShowModal(true)
     const handleCloseModal = () => setShowModal(false)
@@ -162,8 +164,11 @@ const Checkout = () => {
                         <OrderHelpTitle orderId={orderId} />
                         <OrderHelpText orderId={orderId} />
                     </> : null}
-                    <br/>
-                    <button onClick={handleSubmit} disabled={orderCreated} className={'button button_lg mb mx-auto'}>{t('make order')}</button>
+                    {sumLessThanMin ? <div className="alert">
+                        {t('min_order_sum')} - 500{shopData.currency}
+                    </div> : null}
+
+                    <button onClick={handleSubmit} disabled={orderCreated || sumLessThanMin} className={'button button_lg mb mx-auto'}>{t('make order')}</button>
                 </Container>
             </div>
 
