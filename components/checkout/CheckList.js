@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from "../../styles/components/Checklist.module.scss";
-import * as PropTypes from "prop-types";
 import {useShop} from "../../hooks/useShop";
 import {observer} from "mobx-react-lite";
 

@@ -45,7 +45,7 @@ const Checkout = () => {
     const [name, setName] = useState(auth.data.fio)
     const [phone, setPhone] = useState(auth.data.phone)
     const [address, setAddress] = useState(auth.data.address)
-    const [promo, setPromo] = useState({
+    const [promocode, setPromocode] = useState({
         code: '',
         data: null
     })
@@ -63,6 +63,7 @@ const Checkout = () => {
     const [sum, setSum] = useState(0)
     const [total, setTotal] = useState(0)
     const [orderCreated, setOrderCreated] = useState(false)
+    const [promocodeIsCorrect, setIsCorrectPromocode] = useState(null)
     const [sumLessThanMin, setSumLessThanMin] = useState(sum < 500)
 
     const handleOpenModal = () => setShowModal(true)
@@ -107,11 +108,11 @@ const Checkout = () => {
     const getTotal = () => {
         let _total = sum + (parseInt(shop.options.delivery) || 0);
 
-        if(promo.data && promo.isCorrect) {
-            if(promo.data.type === $promoTypes.percent) {
-                _total -= sum / 100 * promo.data.value
+        if(promocode.data && promocode.isCorrect) {
+            if(promocode.data.type === $promoTypes.percent) {
+                _total -= sum / 100 * promocode.data.value
             } else {
-                _total -= promo.data.value
+                _total -= promocode.data.value
             }
         }
 
@@ -124,10 +125,25 @@ const Checkout = () => {
         setSumLessThanMin(sum < 500)
     }, [items, sum])
 
-    const setPromoForUpd = (_promo) => {
+    const setPromoForUpd = (value) => {
         setSum(getSum())
         setTotal(getTotal())
+        if(value !== '') {
+            shop.checkPromo(value).then(rs => {
+                if(rs) {
+                    setPromocode({isCorrect: true, data: rs})
+                    setIsCorrectPromocode(true)
+                } else {
+                    setPromocode({isCorrect: false, data: null})
+                    setIsCorrectPromocode(false)
+                }
+            })
+        } else {
+            setPromocode({isCorrect: false, data: null})
+            setIsCorrectPromocode(null)
+        }
     }
+
 
     // useEffect(() => {
     //     getTotal()
@@ -154,11 +170,20 @@ const Checkout = () => {
                     </Row>
 
                     <Row className={'mb'}>
-                        <Col className={'mt'} lg={4} sm={12} md={6}><AddressField address={address} setAddress={setAddress} /></Col>
-                        {modules.get($modules.promocodes) ? <Col className={'mt'} lg={4} sm={12} md={6}><PromoField promo={promo}
-                                                                                 setPromo={setPromo} setPromoForUpd={setPromoForUpd} /></Col> : null}
                         <Col className={'mt'} lg={4} sm={12} md={6}>
-                            <TotalField total={total} promo={promo} sum={sum}/>
+                            <AddressField address={address} setAddress={setAddress} />
+                        </Col>
+                        {modules.get($modules.promocodes) ? (
+                            <Col className={'mt'} lg={4} sm={12} md={6}>
+                                <PromoField
+                                    promocode={promocode}
+                                    isCorrect={promocodeIsCorrect}
+                                    setPromoForUpd={setPromoForUpd}
+                                />
+                            </Col>
+                        ) : null}
+                        <Col className={'mt'} lg={4} sm={12} md={6}>
+                            <TotalField total={total} promo={promocode} sum={sum} />
                         </Col>
                     </Row>
 
