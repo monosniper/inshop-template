@@ -167,7 +167,7 @@ const Checkout = () => {
                     </> : null}
 
                     {sumLessThanMin ? <div className="alert">
-                        {t('min_order_sum')} - 500{shopData.currency}
+                        {t('min_order_sum')} 500{shopData.currency}
                     </div> : null}
 
                     <br/>
