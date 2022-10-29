@@ -17,14 +17,17 @@ import {$modules} from "../utils/config";
 import {useModules} from "../hooks/useModules";
 import ConfigStyles from "../components/ConfigStyles";
 import AdultModal from "../components/modals/AdultModal";
+import Head from "next/head";
+import {useShop} from "../hooks/useShop";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const shopData = useShop();
   const [loading, setLoading] = useState(true);
   const modules = useModules()
 
   useEffect(() => {
-      shop.requestData().then(rs => {
+      shop.requestData().then(async rs => {
         auth.refresh()
 
         if(rs && rs.id) {
@@ -42,9 +45,9 @@ function MyApp({ Component, pageProps }) {
             }, 2000)
           }
 
-          i18n.changeLanguage(shop.options.language)
+          await i18n.changeLanguage(shop.options.language)
         }
-        else router.push($routes.undefined)
+        else await router.push($routes.undefined)
       })
   }, [])
 
@@ -53,6 +56,9 @@ function MyApp({ Component, pageProps }) {
   }, [modules, auth])
 
   return loading ? <Loader /> : <>
+    <Head>
+      <title>{shopData.title}</title>
+    </Head>
     <div className="layout">
       <ConfigStyles />
       {modules.get($modules.adult_content) ? <AdultModal /> : null}

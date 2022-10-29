@@ -48,7 +48,7 @@ const Product = ({className, product}) => {
 
             <Link href={$routes.product(product.id)}>
                 <div className={styles.product__image}>
-                    <img src={product.images[0]} alt={product.name}/>
+                    <img src={product.preview_url !== '' ? product.preview_url : product.images[0]} alt={product.name}/>
                 </div>
             </Link>
             <div className={styles.product__footer}>
