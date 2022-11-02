@@ -16,10 +16,10 @@ class Basket {
             shop.id,
             auth.data.basket_id,
             {items: items.map(item => {
-                return {
+                return item.product ? {
                     id: item.product.id,
                     properties: item.properties
-                }
+                } : false;
             })}
         )
     }
