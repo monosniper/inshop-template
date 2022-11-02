@@ -30,7 +30,7 @@ const Products = ({ items, pagination = true }) => {
     return (
         <>
             <div className={styles.products}>
-                {pageProducts.map((product, i) => <Product key={'product-'+i} product={product} />)}
+                {pageProducts.map((product, i) => product ? <Product key={'product-'+i} product={product} /> : null)}
             </div>
 
             {pagination ? <Pagination
