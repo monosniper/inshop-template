@@ -19,7 +19,7 @@ class Basket {
                 return item.product ? {
                     id: item.product.id,
                     properties: item.properties
-                } : false;
+                } : null;
             })}
         )
     }
