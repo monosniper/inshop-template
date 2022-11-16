@@ -1,7 +1,7 @@
 FROM node:lts as dependencies
 WORKDIR /inshop-template
 COPY package.json ./
-RUN npm install
+RUN npm install --force
 
 FROM node:lts as builder
 WORKDIR /inshop-template
